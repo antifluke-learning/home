@@ -1,306 +1,738 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>V Academy — Power BI Masterclass</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');</style>
-  <style>
-    :root {
-      --ink: #0a0a0f;
-      --accent: #c8ff00;
-      --accent2: #00e5c8;
-      --muted: #6b6b7a;
-      --card-bg: #13131a;
-      --border: rgba(255,255,255,0.07);
-    }
-    * { box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; font-feature-settings: 'cv02','cv03','cv04','cv11'; background: var(--ink); color: #e8e6e0; overflow-x: hidden; }
-    h1,h2,h3,.syne { font-family: 'Inter', sans-serif; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V Academy — Power BI Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #080810;
+  --ink2: #0e0e1a;
+  --lime: #c8ff00;
+  --lime2: #d6ff33;
+  --cyan: #00e5c8;
+  --muted: #5a5a6e;
+  --muted2: #8a8a9e;
+  --text: #e2e0f0;
+  --text2: #c0bdd8;
+  --card: #0f0f1c;
+  --card2: #13131f;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(200,255,0,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--ink);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 
-    .grid-lines {
-      background-image: linear-gradient(rgba(200,255,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,255,0,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .btn-primary {
-      background: var(--accent); color: var(--ink);
-      font-family: 'Inter', sans-serif; font-weight: 700;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-      display: inline-block;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,255,0,0.35); background: #d6ff33; }
-    .btn-primary:active { transform: translateY(0); }
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.025;
+  pointer-events:none;
+  z-index:0;
+}
 
-    .module-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-    }
-    .module-card:hover { border-color: rgba(200,255,0,0.3); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2rem;
+  backdrop-filter:blur(20px);
+  background:rgba(8,8,16,0.85);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;
+  color:#fff;
+  letter-spacing:-0.02em;
+}
+.nav-logo span{color:var(--lime)}
+.nav-cta{
+  background:var(--lime);color:var(--ink);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:.85rem;
+  padding:.55rem 1.3rem;border-radius:100px;
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  letter-spacing:.01em;
+}
+.nav-cta:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,255,0,.3)}
 
-    .problem-item { border-left: 2px solid rgba(200,255,0,0.2); transition: border-color 0.2s; }
-    .problem-item:hover { border-left-color: var(--accent); }
+/* ── TICKER ── */
+.ticker{
+  overflow:hidden;white-space:nowrap;
+  background:var(--lime);color:var(--ink);
+  padding:.45rem 0;
+}
+.ticker-inner{
+  display:inline-flex;
+  animation:tick 24s linear infinite;
+  font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.12em;
+}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    .big-num {
-      font-family: 'Inter', sans-serif; font-size: clamp(3rem,8vw,6rem); font-weight: 800; line-height: 1;
-      color: rgba(200,255,0,0.1); position: absolute; top: -0.2em; left: -0.1em; pointer-events: none; user-select: none;
-    }
-    .section-label { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
-    .badge { background: rgba(200,255,0,0.1); border: 1px solid rgba(200,255,0,0.25); color: var(--accent); font-family: 'Inter', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
-    .price-old { text-decoration: line-through; color: var(--muted); }
-    .stat-num { font-family: 'Inter', sans-serif; font-weight: 800; color: var(--accent); }
-    .dot-lime { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; box-shadow: 0 0 6px rgba(200,255,0,0.5); }
-    .bq { border-left: 3px solid var(--accent); background: linear-gradient(135deg, rgba(200,255,0,0.04), transparent); }
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:grid;place-items:center;
+  padding:6rem 2rem 4rem;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(200,255,0,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,229,200,.04) 0%, transparent 60%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+.hero-inner{
+  position:relative;z-index:1;
+  max-width:900px;width:100%;margin:0 auto;
+}
+.hero-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--lime);
+  border:1px solid rgba(200,255,0,.2);
+  padding:.35rem .9rem;border-radius:100px;
+  margin-bottom:2rem;
+  background:rgba(200,255,0,.04);
+}
+.hero-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime);flex-shrink:0}
 
-    .ticker-strip { background: var(--accent); color: var(--ink); overflow: hidden; white-space: nowrap; }
-    .ticker-inner { display: inline-flex; animation: ticker 22s linear infinite; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+h1.hero-h{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.6rem,6vw,5rem);
+  line-height:1.05;
+  letter-spacing:-.03em;
+  color:#fff;
+  margin-bottom:1.5rem;
+  max-width:14ch;
+}
+h1.hero-h em{
+  font-style:italic;
+  color:var(--lime);
+}
+.hero-sub{
+  font-size:1.05rem;color:var(--muted2);
+  max-width:44ch;line-height:1.7;
+  margin-bottom:2.5rem;
+}
+.hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.btn-main{
+  background:var(--lime);color:var(--ink);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;
+  padding:.85rem 2rem;border-radius:12px;
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  display:inline-block;
+}
+.btn-main:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,255,0,.35)}
+.btn-ghost{
+  font-size:.9rem;color:var(--muted2);
+  text-decoration:none;
+  border:1px solid var(--border);
+  padding:.8rem 1.5rem;border-radius:12px;
+  transition:color .2s,border-color .2s;
+  display:inline-block;
+}
+.btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,.2)}
 
-    nav { backdrop-filter: blur(12px); background: rgba(10,10,15,0.9); border-bottom: 1px solid var(--border); }
+.hero-stats{
+  display:flex;gap:3rem;flex-wrap:wrap;
+  margin-top:3.5rem;
+  padding-top:2rem;
+  border-top:1px solid var(--border);
+}
+.stat-item{}
+.stat-n{
+  font-family:'DM Serif Display',serif;
+  font-size:2.2rem;color:var(--lime);line-height:1;
+}
+.stat-l{font-size:.8rem;color:var(--muted);margin-top:.25rem;letter-spacing:.03em}
 
-    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+/* ── FLOATING DASHBOARD MOCKUP ── */
+.hero-visual{
+  position:absolute;right:-5%;top:50%;transform:translateY(-50%);
+  width:420px;
+  opacity:.25;
+  pointer-events:none;
+}
+@media(max-width:900px){.hero-visual{display:none}}
 
-    .logo-img { height: 36px; width: auto; display: inline-block; }
-    .logo-img-sm { height: 30px; width: auto; display: inline-block; }
-  </style>
+/* ── SECTIONS ── */
+section{padding:5rem 2rem;position:relative;z-index:1}
+.container{max-width:1000px;margin:0 auto}
+.section-tag{
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lime);margin-bottom:1rem;display:block;
+}
+h2.section-h{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  line-height:1.1;letter-spacing:-.02em;color:#fff;
+  margin-bottom:1rem;
+}
+h2.section-h em{font-style:italic;color:var(--lime)}
+
+/* ── FOR WHOM ── */
+.for-whom-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1px;
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  margin-top:3rem;
+}
+.fw-card{
+  background:var(--card);
+  padding:2rem 1.8rem;
+  transition:background .25s;
+}
+.fw-card:hover{background:var(--card2)}
+.fw-num{
+  font-family:'DM Mono',monospace;font-size:.75rem;color:var(--lime);
+  letter-spacing:.1em;margin-bottom:1rem;opacity:.7;
+}
+.fw-title{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:.5rem}
+.fw-desc{font-size:.9rem;color:var(--muted2);line-height:1.6}
+
+/* ── RESULT ── */
+.result-section{background:var(--ink2)}
+.result-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+}
+@media(max-width:760px){.result-inner{grid-template-columns:1fr}}
+.result-text p{font-size:1rem;color:var(--muted2);line-height:1.7;margin-bottom:1.5rem}
+.dash-mock{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:16px;padding:1.5rem;
+  position:relative;overflow:hidden;
+}
+.dash-mock::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(200,255,0,.08),transparent 70%);
+  pointer-events:none;
+}
+.dash-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.2rem;
+}
+.dash-title{font-size:.8rem;font-weight:600;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+.dash-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:1rem}
+.kpi{background:rgba(255,255,255,.04);border-radius:10px;padding:.8rem;border:1px solid rgba(255,255,255,.05)}
+.kpi-label{font-size:.65rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.kpi-val{font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--lime)}
+.kpi-val.c{color:var(--cyan)}
+.kpi-val.w{color:#fff}
+.bar-section{margin-bottom:.8rem}
+.bar-label{font-size:.65rem;color:var(--muted);margin-bottom:.4rem;letter-spacing:.05em}
+.bars{display:flex;flex-direction:column;gap:.35rem}
+.bar-row{display:flex;align-items:center;gap:.6rem}
+.bar-name{font-size:.65rem;color:var(--muted2);width:50px;flex-shrink:0;text-align:right}
+.bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:var(--lime)}
+.bar-fill.c2{background:var(--cyan)}
+.bar-pct{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);width:28px}
+.trend-row{display:flex;align-items:flex-end;gap:3px;height:40px;margin-top:.5rem}
+.trend-bar{flex:1;border-radius:2px 2px 0 0;background:rgba(200,255,0,.2);min-height:4px;transition:background .3s}
+.trend-bar.hi{background:var(--lime)}
+.dash-badge{
+  position:absolute;bottom:1rem;right:1rem;
+  font-family:'DM Mono',monospace;font-size:.6rem;color:var(--lime);
+  background:rgba(200,255,0,.07);border:1px solid rgba(200,255,0,.15);
+  padding:.25rem .6rem;border-radius:100px;letter-spacing:.1em;
+}
+
+/* ── PROGRAMA ── */
+.programa-section{background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 100%)}
+.bloques{display:grid;grid-template-columns:1fr;gap:1px;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:3rem}
+.bloque{
+  display:grid;grid-template-columns:80px 1fr;
+  background:var(--card);
+  transition:background .2s;
+  overflow:hidden;
+}
+.bloque:hover{background:var(--card2)}
+.bloque-num{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(200,255,0,.04);
+  border-right:1px solid var(--border);
+  padding:1.5rem 1rem;
+  gap:.3rem;
+}
+.b-n{
+  font-family:'DM Serif Display',serif;font-size:2rem;color:rgba(200,255,0,.2);line-height:1;
+}
+.b-time{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-align:center}
+.bloque-content{padding:1.5rem 2rem}
+.bloque-tag{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--lime);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+.bloque-title{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:.5rem}
+.bloque-desc{font-size:.9rem;color:var(--muted2);line-height:1.6}
+.bloque-tools{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.8rem}
+.tool-pill{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  color:var(--muted2);padding:.2rem .6rem;border-radius:100px;
+}
+
+/* ── INSTRUCTOR ── */
+.instructor-section{}
+.instructor-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+@media(max-width:760px){.instructor-grid{grid-template-columns:1fr}}
+.instructor-points{display:flex;flex-direction:column;gap:1.2rem}
+.i-point{display:flex;gap:1rem;align-items:flex-start}
+.i-dot{
+  width:28px;height:28px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(200,255,0,.08);border:1px solid rgba(200,255,0,.15);
+  border-radius:8px;margin-top:.1rem;
+}
+.i-dot svg{width:13px;height:13px;stroke:var(--lime);fill:none;stroke-width:2;stroke-linecap:round}
+.i-label{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.2rem}
+.i-sub{font-size:.88rem;color:var(--muted2);line-height:1.6}
+.cred-card{
+  background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:1.5rem;
+}
+.cred-title{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--lime);margin-bottom:1.2rem;
+}
+.cred-item{
+  display:flex;align-items:flex-start;gap:.8rem;
+  padding:.9rem 0;border-bottom:1px solid var(--border);
+}
+.cred-item:last-child{border-bottom:none;padding-bottom:0}
+.cred-icon{
+  width:32px;height:32px;flex-shrink:0;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.cred-icon.l{background:rgba(200,255,0,.1)}
+.cred-icon.c{background:rgba(0,229,200,.1)}
+.cred-icon svg{width:14px;height:14px;fill:none;stroke-width:1.8;stroke-linecap:round}
+.cred-icon.l svg{stroke:var(--lime)}
+.cred-icon.c svg{stroke:var(--cyan)}
+.cred-name{font-size:.9rem;font-weight:500;color:#fff;margin-bottom:.15rem}
+.cred-desc{font-size:.8rem;color:var(--muted)}
+
+/* ── PRECIO ── */
+.precio-section{background:var(--ink2)}
+.price-card{
+  max-width:560px;margin:0 auto;
+  background:var(--card);border:1px solid var(--border2);border-radius:24px;overflow:hidden;
+  margin-top:3rem;
+}
+.price-card-top{
+  background:rgba(200,255,0,.05);
+  border-bottom:1px solid var(--border2);
+  padding:1rem 1.8rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.price-badge{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--lime);
+  background:rgba(200,255,0,.1);border:1px solid rgba(200,255,0,.2);
+  padding:.25rem .7rem;border-radius:100px;
+}
+.price-note{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.08em}
+.price-body{padding:2rem 1.8rem}
+.price-includes{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.include-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem}
+.include-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;color:var(--text2)}
+.check-dot{
+  width:18px;height:18px;flex-shrink:0;border-radius:50%;
+  background:rgba(200,255,0,.12);
+  display:flex;align-items:center;justify-content:center;
+  margin-top:.1rem;
+}
+.check-dot svg{width:9px;height:9px;stroke:var(--lime);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.price-row{display:flex;align-items:flex-end;gap:1rem;margin-bottom:1.5rem}
+.price-old{font-size:.95rem;color:var(--muted);text-decoration:line-through;margin-bottom:.2rem}
+.price-main{
+  font-family:'DM Serif Display',serif;
+  font-size:3.8rem;color:#fff;line-height:1;
+}
+.price-main span{font-family:'Outfit',sans-serif;font-size:1rem;color:var(--muted);font-weight:400;margin-left:.3rem}
+.price-off{
+  font-family:'DM Mono',monospace;font-size:.75rem;font-weight:500;
+  background:rgba(200,255,0,.1);border:1px solid rgba(200,255,0,.2);color:var(--lime);
+  padding:.3rem .7rem;border-radius:8px;margin-bottom:.5rem;letter-spacing:.1em;
+}
+.btn-price{
+  display:block;text-align:center;
+  background:var(--lime);color:var(--ink);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;
+  padding:1rem;border-radius:12px;
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  margin-bottom:.8rem;
+}
+.btn-price:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,255,0,.35)}
+.price-reassure{font-size:.8rem;color:var(--muted);text-align:center}
+
+.discord-block{
+  margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);
+  text-align:center;
+}
+.discord-block p{font-size:.85rem;color:var(--muted);margin-bottom:.8rem}
+.btn-discord{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.25);
+  color:#8a9ef0;font-size:.85rem;font-weight:500;
+  padding:.65rem 1.3rem;border-radius:10px;
+  text-decoration:none;transition:background .2s,border-color .2s;
+}
+.btn-discord:hover{background:rgba(88,101,242,.18);border-color:rgba(88,101,242,.4)}
+.btn-discord svg{width:16px;height:11px;fill:#8a9ef0;flex-shrink:0}
+
+/* ── FAQ ── */
+.faq-section{}
+.faq-list{margin-top:3rem;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  width:100%;background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.4rem 1.8rem;
+  font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:500;color:#fff;text-align:left;
+  transition:background .2s;
+}
+.faq-q:hover{background:var(--card)}
+.faq-q svg{width:16px;height:16px;stroke:var(--lime);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .3s}
+.faq-item.open .faq-q svg{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease,padding .35s ease;
+  padding:0 1.8rem;
+  font-size:.9rem;color:var(--muted2);line-height:1.7;
+}
+.faq-item.open .faq-a{max-height:200px;padding:0 1.8rem 1.4rem}
+
+/* ── FOOTER ── */
+footer{
+  padding:2rem;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+  position:relative;z-index:1;
+}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff}
+.footer-logo span{color:var(--lime)}
+.footer-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.footer-links a{
+  font-size:.8rem;color:var(--muted);text-decoration:none;
+  display:flex;align-items:center;gap:.4rem;
+  transition:color .2s;
+}
+.footer-links a:hover{color:var(--lime)}
+.footer-links a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
+.footer-copy{font-size:.75rem;color:var(--muted);width:100%;text-align:center;margin-top:.5rem}
+
+/* ── FADE IN ── */
+.fi{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fi.v{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  nav{padding:.85rem 1.2rem}
+  section{padding:3.5rem 1.2rem}
+  .hero{padding:5rem 1.2rem 3rem}
+  .hero-stats{gap:2rem}
+  .bloque{grid-template-columns:60px 1fr}
+  .bloque-content{padding:1.2rem 1.2rem}
+  footer{padding:1.5rem 1.2rem}
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="sticky top-0 z-50 px-6 py-4">
-  <div class="max-w-6xl mx-auto flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <img src="logo.png" alt="V Academy" class="logo-img" />
-      <span class="syne font-bold text-white text-lg tracking-tight">V Academy<span style="color:var(--accent)">.</span></span>
-    </div>
-    <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-primary text-sm px-5 py-2 rounded-full">
-      Reservar cupo →
-    </a>
-  </div>
+<nav>
+  <div class="nav-logo">V<span>.</span>Academy</div>
+  <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="nav-cta">Reservar cupo →</a>
 </nav>
 
 <!-- TICKER -->
-<div class="ticker-strip py-2">
-  <div class="ticker-inner font-bold text-xs tracking-widest">
-    <span style="padding-right:4rem">⬛ PREVENTA ACTIVA · CUPOS LIMITADOS · ACCESO INTRODUCCIÓN · 40% DESCUENTO · POWER BI MASTERCLASS · V ACADEMY ·&nbsp;</span>
-    <span style="padding-right:4rem">⬛ PREVENTA ACTIVA · CUPOS LIMITADOS · ACCESO INTRODUCCIÓN · 40% DESCUENTO · POWER BI MASTERCLASS · V ACADEMY ·&nbsp;</span>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span style="padding-right:3rem">PREVENTA ACTIVA &nbsp;·&nbsp; CUPOS LIMITADOS &nbsp;·&nbsp; 40% DESCUENTO &nbsp;·&nbsp; POWER BI MASTERCLASS &nbsp;·&nbsp; V ACADEMY &nbsp;·&nbsp; GUATEMALA &nbsp;·&nbsp;</span>
+    <span style="padding-right:3rem">PREVENTA ACTIVA &nbsp;·&nbsp; CUPOS LIMITADOS &nbsp;·&nbsp; 40% DESCUENTO &nbsp;·&nbsp; POWER BI MASTERCLASS &nbsp;·&nbsp; V ACADEMY &nbsp;·&nbsp; GUATEMALA &nbsp;·&nbsp;</span>
   </div>
 </div>
 
 <!-- HERO -->
-<section class="grid-lines relative min-h-screen flex flex-col justify-center px-6 py-24">
-  <div class="absolute top-1/4 right-0 w-96 h-96 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(200,255,0,0.06) 0%,transparent 70%);filter:blur(40px);"></div>
-  <div class="absolute bottom-1/4 left-0 w-80 h-80 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(0,229,200,0.05) 0%,transparent 70%);filter:blur(40px);"></div>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
 
-  <div class="max-w-6xl mx-auto w-full">
-    <div class="fade-up mb-6">
-      <span class="badge px-3 py-1 rounded-full">Masterclass Intensiva &amp; Certificada por V Academy</span>
+  <!-- Floating dashboard mock -->
+  <div class="hero-visual" aria-hidden="true">
+    <div class="dash-mock">
+      <div class="dash-header">
+        <div class="dash-title">Dashboard Ventas</div>
+        <div class="dash-dot"></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-label">Ventas</div><div class="kpi-val">Q1.2M</div></div>
+        <div class="kpi"><div class="kpi-label">Margen</div><div class="kpi-val c">38.4%</div></div>
+        <div class="kpi"><div class="kpi-label">Ticket</div><div class="kpi-val w">Q184</div></div>
+      </div>
+      <div class="bar-section">
+        <div class="bar-label">VENTAS POR TIENDA</div>
+        <div class="bars">
+          <div class="bar-row"><span class="bar-name">T-01</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><span class="bar-pct">85%</span></div>
+          <div class="bar-row"><span class="bar-name">T-02</span><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><span class="bar-pct">72%</span></div>
+          <div class="bar-row"><span class="bar-name">T-03</span><div class="bar-track"><div class="bar-fill c2" style="width:61%"></div></div><span class="bar-pct">61%</span></div>
+          <div class="bar-row"><span class="bar-name">T-04</span><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><span class="bar-pct">48%</span></div>
+        </div>
+      </div>
+      <div class="bar-label" style="margin-top:.5rem">TENDENCIA MENSUAL</div>
+      <div class="trend-row">
+        <div class="trend-bar" style="height:35%"></div>
+        <div class="trend-bar" style="height:50%"></div>
+        <div class="trend-bar" style="height:45%"></div>
+        <div class="trend-bar" style="height:70%"></div>
+        <div class="trend-bar" style="height:60%"></div>
+        <div class="trend-bar" style="height:80%"></div>
+        <div class="trend-bar hi" style="height:100%"></div>
+        <div class="trend-bar" style="height:75%"></div>
+        <div class="trend-bar hi" style="height:90%"></div>
+        <div class="trend-bar" style="height:65%"></div>
+        <div class="trend-bar hi" style="height:95%"></div>
+        <div class="trend-bar hi" style="height:88%"></div>
+      </div>
+      <div class="dash-badge">CONSTRUIDO POR TI</div>
     </div>
+  </div>
 
-    <h1 class="fade-up syne font-black leading-none mb-8" style="font-size:clamp(2.4rem,6vw,5rem);max-width:14ch;letter-spacing:-0.03em;">
-      Deja de hacer reportes manuales.<br/>
-      <span style="color:var(--accent)">Diseña tableros automáticos</span> que resuelven problemas de negocio reales.
+  <div class="hero-inner">
+    <div class="hero-label fi">Masterclass intensiva · 3 horas en vivo</div>
+    <h1 class="hero-h fi">
+      En 3 horas construyes<br>
+      <em>tu primer dashboard</em><br>
+      profesional en Power BI
     </h1>
-
-    <p class="fade-up text-base sm:text-lg mb-10 max-w-xl" style="color:#9e9eb0;line-height:1.7;">
-      Domina Power BI desde las bases teóricas hasta el despliegue de tu primer modelo de datos profesional. Sin tecnicismos absurdos, guiado por un especialista activo en la industria.
+    <p class="hero-sub fi">
+      Sin tecnicismos absurdos. Guiado por un especialista activo en la industria. Con un caso de negocio guatemalteco real que construyes tú mismo, paso a paso.
     </p>
-
-    <div class="fade-up">
-      <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-primary text-base px-8 py-4 rounded-xl">
-        Registrarme a la Preventa con 40% de Descuento
-      </a>
+    <div class="hero-actions fi">
+      <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-main">Reservar mi cupo con 40% OFF</a>
+      <a href="#programa" class="btn-ghost">Ver el programa</a>
     </div>
-    <p class="fade-up mt-3 text-xs" style="color:var(--muted);">⚡ Cupos limitados · Precio de introducción.</p>
-
-    <div class="fade-up mt-16 pt-8 border-t flex flex-wrap gap-10" style="border-color:var(--border);">
-      <div><div class="stat-num text-3xl">100%</div><div class="text-xs mt-1" style="color:var(--muted);">Aplicado a casos reales</div></div>
-      <div><div class="stat-num text-3xl">4</div><div class="text-xs mt-1" style="color:var(--muted);">Módulos progresivos</div></div>
-      <div><div class="stat-num text-3xl">40%</div><div class="text-xs mt-1" style="color:var(--muted);">Descuento de introducción</div></div>
-      <div><div class="stat-num text-3xl">Live</div><div class="text-xs mt-1" style="color:var(--muted);">Sesiones en vivo + grabadas</div></div>
+    <div class="hero-stats fi">
+      <div class="stat-item">
+        <div class="stat-n">3h</div>
+        <div class="stat-l">Sesión en vivo + grabación</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">100%</div>
+        <div class="stat-l">Práctica desde el primer minuto</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">40%</div>
+        <div class="stat-l">Descuento de preventa</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">✓</div>
+        <div class="stat-l">Certificado digital verificable</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- EL PROBLEMA -->
-<section class="px-6 py-24">
-  <div class="max-w-6xl mx-auto">
-    <div class="fade-up mb-4"><span class="section-label">El Problema</span></div>
-    <h2 class="fade-up syne font-bold mb-16" style="font-size:clamp(1.8rem,4vw,3rem);max-width:18ch;letter-spacing:-0.02em;">
-      ¿Te pasa esto en tu día a día laboral?
-    </h2>
-
-    <div class="grid md:grid-cols-3 gap-6 mb-16">
-      <div class="fade-up problem-item pl-6 py-2">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" class="mb-4">
-          <rect x="4" y="6" width="24" height="20" rx="2" stroke="rgba(200,255,0,0.4)" stroke-width="1.5"/>
-          <path d="M4 11h24" stroke="rgba(200,255,0,0.4)" stroke-width="1.5"/>
-          <path d="M9 16h6M9 20h10" stroke="rgba(200,255,0,0.25)" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M22 17l3 3-3 3" stroke="#c8ff00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <p class="text-base leading-relaxed" style="color:#c5c3cc;">Pasas más tiempo <strong style="color:white;">limpiando archivos de Excel</strong> que analizando la estrategia.</p>
+<!-- PARA QUIÉN -->
+<section>
+  <div class="container">
+    <span class="section-tag fi">¿Es para mí?</span>
+    <h2 class="section-h fi">Esta masterclass es para ti si…</h2>
+    <div class="for-whom-grid fi">
+      <div class="fw-card">
+        <div class="fw-num">01</div>
+        <div class="fw-title">Usas Excel todos los días</div>
+        <div class="fw-desc">y sabes que hay herramientas más potentes, pero no has dado el salto porque no sabes por dónde empezar.</div>
       </div>
-      <div class="fade-up problem-item pl-6 py-2">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" class="mb-4">
-          <circle cx="16" cy="16" r="11" stroke="rgba(200,255,0,0.4)" stroke-width="1.5"/>
-          <path d="M16 10v6l4 2" stroke="#c8ff00" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M9 7l2 2M21 23l2 2" stroke="rgba(200,255,0,0.25)" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <p class="text-base leading-relaxed" style="color:#c5c3cc;">Tus jefes piden <strong style="color:white;">cambios de última hora</strong> y tienes que rehacer todo el reporte.</p>
+      <div class="fw-card">
+        <div class="fw-num">02</div>
+        <div class="fw-title">Eres analista o reportero de datos</div>
+        <div class="fw-desc">y pasas horas actualizando reportes manuales que deberían tardar minutos con el modelo correcto.</div>
       </div>
-      <div class="fade-up problem-item pl-6 py-2">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" class="mb-4">
-          <path d="M6 24l6-8 5 4 4-6 5 10" stroke="rgba(200,255,0,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="24" cy="10" r="3" stroke="#c8ff00" stroke-width="1.5"/>
-          <path d="M22.5 8.5L25.5 11.5M25.5 8.5L22.5 11.5" stroke="#c8ff00" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        <p class="text-base leading-relaxed" style="color:#c5c3cc;">Sabes que los datos tienen valor, pero <strong style="color:white;">no sabes cómo conectarlos</strong> ni modelarlos de forma eficiente.</p>
+      <div class="fw-card">
+        <div class="fw-num">03</div>
+        <div class="fw-title">Quieres entrar al mundo del BI</div>
+        <div class="fw-desc">y necesitas un punto de partida concreto —no un curso de 40 horas— para mostrar lo que puedes hacer.</div>
       </div>
-    </div>
-
-    <div class="fade-up bq p-8 rounded-xl max-w-3xl">
-      <svg width="28" height="20" viewBox="0 0 28 20" fill="none" class="mb-4">
-        <path d="M0 20V12C0 8 1.33333 4.66667 4 2L7 0L9 2C6.66667 3.33333 5.33333 5.33333 5 8H10V20H0ZM16 20V12C16 8 17.3333 4.66667 20 2L23 0L25 2C22.6667 3.33333 21.3333 5.33333 21 8H26V20H16Z" fill="rgba(200,255,0,0.3)"/>
-      </svg>
-      <p class="text-lg sm:text-xl leading-relaxed italic" style="color:#dddbe8;">
-        "Las empresas ya no buscan personas que 'sepan usar Excel'. Buscan profesionales capaces de <strong style="color:var(--accent);font-style:normal;">transformar datos crudos en decisiones visuales e inmediatas.</strong>"
-      </p>
     </div>
   </div>
 </section>
 
-<!-- MÓDULOS -->
-<section class="px-6 py-24" style="background:linear-gradient(180deg,var(--ink) 0%,#0d0d16 100%);">
-  <div class="max-w-6xl mx-auto">
-    <div class="fade-up mb-4"><span class="section-label">El Programa</span></div>
-    <h2 class="fade-up syne font-bold mb-6" style="font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-0.02em;">¿Qué vas a lograr en este taller?</h2>
-    <p class="fade-up mb-14 text-base" style="color:var(--muted);max-width:50ch;line-height:1.7;">
-      Trabajaremos sobre un <strong style="color:white;">caso de estudio real de negocio</strong>, de inicio a fin, para que cada concepto lo veas aplicado en contexto profesional.
-    </p>
-
-    <div class="grid sm:grid-cols-2 gap-5">
-      <!-- Módulo 1 -->
-      <div class="fade-up module-card rounded-2xl p-8 relative overflow-hidden">
-        <div class="big-num">01</div>
-        <div class="relative">
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(200,255,0,0.1);border:1px solid rgba(200,255,0,0.2);">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h12M3 9h8M3 13h10" stroke="#c8ff00" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="13" r="2.5" stroke="#c8ff00" stroke-width="1.2"/><path d="M15.7 14.7l1.5 1.5" stroke="#c8ff00" stroke-width="1.2" stroke-linecap="round"/></svg>
-            </div>
-            <span class="badge px-2 py-0.5 rounded text-xs">Módulo 1</span>
-          </div>
-          <h3 class="syne font-bold text-white text-xl mb-2">Conexión y Limpieza</h3>
-          <p class="text-sm mb-2 font-medium" style="color:var(--accent);">Power Query</p>
-          <p class="text-sm leading-relaxed" style="color:#8a8a9e;">Conecta tus fuentes y automatiza la limpieza de datos para no volver a tocar un Excel manualmente.</p>
-        </div>
+<!-- LO QUE VAS A CONSTRUIR -->
+<section class="result-section">
+  <div class="container">
+    <div class="result-inner">
+      <div class="result-text fi">
+        <span class="section-tag">El entregable</span>
+        <h2 class="section-h">Sales con un dashboard que funciona, <em>no con diapositivas</em></h2>
+        <p>Al terminar la sesión habrás conectado datos desde Excel, limpiado 5 errores intencionales en Power Query, construido un modelo estrella con relaciones reales y diseñado 5 visualizaciones con filtros funcionales.</p>
+        <p>Todo sobre un caso de negocio de una franquicia de comida rápida guatemalteca. Un dataset que reconoces, con problemas que resuelves tú mismo.</p>
+        <p style="font-size:.88rem;color:var(--muted);">El dashboard que construyes en la sesión es tuyo. Te lo llevas. Lo puedes publicar en LinkedIn ese mismo día.</p>
       </div>
-      <!-- Módulo 2 -->
-      <div class="fade-up module-card rounded-2xl p-8 relative overflow-hidden">
-        <div class="big-num">02</div>
-        <div class="relative">
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(0,229,200,0.08);border:1px solid rgba(0,229,200,0.2);">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#00e5c8" stroke-width="1.5"/><circle cx="9" cy="9" r="2" stroke="#00e5c8" stroke-width="1.2"/><path d="M9 3v2M9 13v2M3 9h2M13 9h2" stroke="#00e5c8" stroke-width="1.2" stroke-linecap="round"/></svg>
-            </div>
-            <span class="badge px-2 py-0.5 rounded text-xs" style="background:rgba(0,229,200,0.1);border-color:rgba(0,229,200,0.25);color:#00e5c8;">Módulo 2</span>
+      <div class="fi">
+        <div class="dash-mock">
+          <div class="dash-header">
+            <div class="dash-title">Franquicia GT — Dashboard final</div>
+            <div class="dash-dot"></div>
           </div>
-          <h3 class="syne font-bold text-white text-xl mb-2">Modelado de Datos</h3>
-          <p class="text-sm mb-2 font-medium" style="color:#00e5c8;">El Motor</p>
-          <p class="text-sm leading-relaxed" style="color:#8a8a9e;">Aprende a crear un modelo en Estrella rápido y escalable que soporta cualquier análisis futuro.</p>
-        </div>
-      </div>
-      <!-- Módulo 3 -->
-      <div class="fade-up module-card rounded-2xl p-8 relative overflow-hidden">
-        <div class="big-num">03</div>
-        <div class="relative">
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(200,255,0,0.1);border:1px solid rgba(200,255,0,0.2);">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="10" width="3" height="6" rx="0.5" fill="rgba(200,255,0,0.3)"/><rect x="7" y="7" width="3" height="9" rx="0.5" fill="rgba(200,255,0,0.5)"/><rect x="12" y="4" width="3" height="12" rx="0.5" fill="#c8ff00"/><path d="M2 8l4-3 5 2 5-5" stroke="#c8ff00" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <span class="badge px-2 py-0.5 rounded text-xs">Módulo 3</span>
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-label">Total Ventas</div><div class="kpi-val">Q1.2M</div></div>
+            <div class="kpi"><div class="kpi-label">Utilidad</div><div class="kpi-val c">Q461K</div></div>
+            <div class="kpi"><div class="kpi-label">Margen %</div><div class="kpi-val w">38.4%</div></div>
           </div>
-          <h3 class="syne font-bold text-white text-xl mb-2">Introducción a DAX</h3>
-          <p class="text-sm mb-2 font-medium" style="color:var(--accent);">Los Cálculos</p>
-          <p class="text-sm leading-relaxed" style="color:#8a8a9e;">Domina las funciones esenciales para KPIs y métricas de negocio con fórmulas que realmente importan.</p>
-        </div>
-      </div>
-      <!-- Módulo 4 -->
-      <div class="fade-up module-card rounded-2xl p-8 relative overflow-hidden">
-        <div class="big-num">04</div>
-        <div class="relative">
-          <div class="flex items-center gap-3 mb-5">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(0,229,200,0.08);border:1px solid rgba(0,229,200,0.2);">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1" stroke="#00e5c8" stroke-width="1.2"/><rect x="10" y="2" width="6" height="6" rx="1" stroke="#00e5c8" stroke-width="1.2"/><rect x="2" y="10" width="6" height="6" rx="1" stroke="#00e5c8" stroke-width="1.2"/><rect x="10" y="10" width="6" height="6" rx="1" fill="rgba(0,229,200,0.2)" stroke="#00e5c8" stroke-width="1.2"/><path d="M12 12.5l1.5 1.5 2-2.5" stroke="#00e5c8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="bar-section">
+            <div class="bar-label">VENTAS POR TIENDA · SLICEABLE</div>
+            <div class="bars">
+              <div class="bar-row"><span class="bar-name">Zona 10</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span class="bar-pct">92%</span></div>
+              <div class="bar-row"><span class="bar-name">Zona 4</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span class="bar-pct">78%</span></div>
+              <div class="bar-row"><span class="bar-name">Mixco</span><div class="bar-track"><div class="bar-fill c2" style="width:65%"></div></div><span class="bar-pct">65%</span></div>
+              <div class="bar-row"><span class="bar-name">Villa N.</span><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><span class="bar-pct">44%</span></div>
             </div>
-            <span class="badge px-2 py-0.5 rounded text-xs" style="background:rgba(0,229,200,0.1);border-color:rgba(0,229,200,0.25);color:#00e5c8;">Módulo 4</span>
           </div>
-          <h3 class="syne font-bold text-white text-xl mb-2">Diseño Visual e Impacto</h3>
-          <p class="text-sm mb-2 font-medium" style="color:#00e5c8;">Estándares Gerenciales</p>
-          <p class="text-sm leading-relaxed" style="color:#8a8a9e;">Aplica estándares visuales para que tus tableros destaquen a nivel ejecutivo y cuenten la historia correcta.</p>
+          <div class="bar-label" style="margin-top:.7rem">TENDENCIA · TICKET PROMEDIO</div>
+          <div class="trend-row">
+            <div class="trend-bar" style="height:40%"></div>
+            <div class="trend-bar" style="height:55%"></div>
+            <div class="trend-bar" style="height:48%"></div>
+            <div class="trend-bar" style="height:72%"></div>
+            <div class="trend-bar" style="height:65%"></div>
+            <div class="trend-bar hi" style="height:85%"></div>
+            <div class="trend-bar" style="height:78%"></div>
+            <div class="trend-bar hi" style="height:92%"></div>
+            <div class="trend-bar hi" style="height:100%"></div>
+            <div class="trend-bar" style="height:88%"></div>
+            <div class="trend-bar hi" style="height:95%"></div>
+            <div class="trend-bar hi" style="height:90%"></div>
+          </div>
+          <div class="dash-badge">TU ENTREGABLE</div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- PROGRAMA -->
+<section class="programa-section" id="programa">
+  <div class="container">
+    <span class="section-tag fi">El programa</span>
+    <h2 class="section-h fi">3 horas. 4 bloques.<br><em>Un dashboard completo.</em></h2>
+    <div class="bloques fi">
+      <div class="bloque">
+        <div class="bloque-num">
+          <div class="b-n">01</div>
+          <div class="b-time">20 min</div>
+        </div>
+        <div class="bloque-content">
+          <div class="bloque-tag">Contexto y primer impacto</div>
+          <div class="bloque-title">Ves el resultado antes de empezar</div>
+          <div class="bloque-desc">El instructor muestra el dashboard terminado desde el minuto uno. Luego ves por qué Power BI resuelve lo que Excel no puede. Desde ese momento sabes exactamente a dónde vas.</div>
+        </div>
+      </div>
+      <div class="bloque">
+        <div class="bloque-num">
+          <div class="b-n">02</div>
+          <div class="b-time">40 min</div>
+        </div>
+        <div class="bloque-content">
+          <div class="bloque-tag">Conexión y limpieza</div>
+          <div class="bloque-title">Importas y limpias los datos tú mismo</div>
+          <div class="bloque-desc">Conectas 3 tablas desde Excel, entras a Power Query y corriges 5 errores intencionales reales: fechas como texto, porcentajes como string, IDs inconsistentes, filas vacías y cantidades negativas.</div>
+          <div class="bloque-tools"><span class="tool-pill">Power Query</span><span class="tool-pill">Transformaciones</span><span class="tool-pill">Limpieza de tipos</span></div>
+        </div>
+      </div>
+      <div class="bloque">
+        <div class="bloque-num">
+          <div class="b-n">03</div>
+          <div class="b-time">35 min</div>
+        </div>
+        <div class="bloque-content">
+          <div class="bloque-tag">Modelo y métricas</div>
+          <div class="bloque-title">Construyes el modelo estrella y tus primeras 4 medidas DAX</div>
+          <div class="bloque-desc">Creas las relaciones entre tablas y escribes las medidas que toda empresa necesita: Total Ventas, Utilidad Bruta, Margen % y Ticket Promedio. Aquí entiendes por qué el modelado importa más que los gráficos.</div>
+          <div class="bloque-tools"><span class="tool-pill">Modelo estrella</span><span class="tool-pill">DAX básico</span><span class="tool-pill">CALCULATE</span><span class="tool-pill">DIVIDE</span></div>
+        </div>
+      </div>
+      <div class="bloque">
+        <div class="bloque-num">
+          <div class="b-n">04</div>
+          <div class="b-time">40 min</div>
+        </div>
+        <div class="bloque-content">
+          <div class="bloque-tag">Dashboard completo</div>
+          <div class="bloque-title">Diseñas las 5 visualizaciones y los slicers</div>
+          <div class="bloque-desc">KPI cards, barras por tienda, tendencia mensual, distribución por departamento y tabla de margen. Filtros de fecha y región. Formato profesional mínimo que se ve bien en una presentación gerencial.</div>
+          <div class="bloque-tools"><span class="tool-pill">Visualizaciones</span><span class="tool-pill">Slicers</span><span class="tool-pill">Diseño visual</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:1rem;text-align:center;">+ 10 min de pausa entre bloque 2 y 3 · Sesión de preguntas al cierre</p>
   </div>
 </section>
 
 <!-- INSTRUCTOR -->
-<section class="px-6 py-24">
-  <div class="max-w-6xl mx-auto">
-    <div class="fade-up mb-4"><span class="section-label">Quiénes Enseñan</span></div>
-    <div class="fade-up grid md:grid-cols-2 gap-16 items-center">
-      <div>
-        <h2 class="syne font-bold mb-8" style="font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-0.02em;">Aprende de quien lo hace en el mundo real</h2>
-        <p class="text-base leading-relaxed mb-10" style="color:#9e9eb0;">
-          En V Academy no aprendes de teóricos. Nuestros instructores <strong style="color:white;">lideran proyectos de Business Intelligence activos en empresas reales</strong>, resuelven problemas de datos todos los días y traen esa experiencia directamente al aula.
-        </p>
-        <div class="space-y-5">
-          <div class="flex gap-4 items-start">
-            <div class="dot-lime"></div>
-            <p style="color:#c5c3cc;"><strong style="color:white;">Practican lo que enseñan</strong> — cada módulo refleja decisiones reales tomadas en proyectos corporativos activos.</p>
-          </div>
-          <div class="flex gap-4 items-start">
-            <div class="dot-lime"></div>
-            <p style="color:#c5c3cc;"><strong style="color:white;">Sin tutoriales genéricos</strong> — la metodología está construida sobre casos de uso reales, no sobre ejercicios de práctica inventados.</p>
-          </div>
-          <div class="flex gap-4 items-start">
-            <div class="dot-lime"></div>
-            <p style="color:#c5c3cc;"><strong style="color:white;">Comunicación directa</strong> — explican conceptos complejos sin tecnicismos absurdos, porque ya pasaron por la curva de aprendizaje.</p>
-          </div>
+<section class="instructor-section">
+  <div class="container">
+    <span class="section-tag fi">Quién enseña</span>
+    <h2 class="section-h fi">Aprende de quien lo hace <em>todos los días</em></h2>
+    <div class="instructor-grid">
+      <div class="instructor-points fi">
+        <div class="i-point">
+          <div class="i-dot"><svg viewBox="0 0 13 13"><polyline points="2,7 5,10 11,3"/></svg></div>
+          <div><div class="i-label">Practicante, no académico</div><div class="i-sub">Nuestros instructores trabajan activamente en proyectos de Business Intelligence en empresas reales de la región. Lo que enseñan es lo que usan hoy.</div></div>
+        </div>
+        <div class="i-point">
+          <div class="i-dot"><svg viewBox="0 0 13 13"><polyline points="2,7 5,10 11,3"/></svg></div>
+          <div><div class="i-label">Casos reales, no inventados</div><div class="i-sub">Cada decisión de diseño en la masterclass —el dataset, los errores, las medidas— viene de problemas que el instructor ya resolvió en un cliente real.</div></div>
+        </div>
+        <div class="i-point">
+          <div class="i-dot"><svg viewBox="0 0 13 13"><polyline points="2,7 5,10 11,3"/></svg></div>
+          <div><div class="i-label">Valida por V Academy</div><div class="i-sub">Para impartir en V Academy, cada instructor aprueba un assessment técnico y demuestra habilidades didácticas. No cualquiera puede enseñar aquí.</div></div>
         </div>
       </div>
-      <div class="fade-up">
-        <div class="module-card rounded-2xl p-8" style="background:#0d0d18;border-color:rgba(200,255,0,0.1);">
-          <p class="section-label mb-6">Perfil del Instructor</p>
-          <div class="space-y-4">
-            <div class="flex gap-4 items-start p-4 rounded-xl" style="background:rgba(200,255,0,0.04);border:1px solid rgba(200,255,0,0.08);">
-              <div class="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center" style="background:rgba(200,255,0,0.1);">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L9.8 6.2L14 7L11 10L11.6 14.2L8 12.2L4.4 14.2L5 10L2 7L6.2 6.2L8 2Z" stroke="#c8ff00" stroke-width="1.2" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <p class="text-sm font-medium text-white">Especialista activo en BI corporativo</p>
-                <p class="text-xs mt-1" style="color:var(--muted);">Liderando proyectos de datos en empresas hoy</p>
-              </div>
-            </div>
-            <div class="flex gap-4 items-start p-4 rounded-xl" style="background:rgba(0,229,200,0.04);border:1px solid rgba(0,229,200,0.08);">
-              <div class="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center" style="background:rgba(0,229,200,0.1);">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="9" rx="1.5" stroke="#00e5c8" stroke-width="1.2"/><path d="M5 13h6" stroke="#00e5c8" stroke-width="1.2" stroke-linecap="round"/><path d="M5 7h2M5 9.5h6" stroke="#00e5c8" stroke-width="1.2" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <p class="text-sm font-medium text-white">Certificado por V Academy</p>
-                <p class="text-xs mt-1" style="color:var(--muted);">Programa validado con estándares de industria</p>
-              </div>
-            </div>
-            <div class="flex gap-4 items-start p-4 rounded-xl" style="background:rgba(200,255,0,0.04);border:1px solid rgba(200,255,0,0.08);">
-              <div class="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center" style="background:rgba(200,255,0,0.1);">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#c8ff00" stroke-width="1.2"/><path d="M8 5.5v3l2 1.5" stroke="#c8ff00" stroke-width="1.2" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <p class="text-sm font-medium text-white">Metodología basada en práctica real</p>
-                <p class="text-xs mt-1" style="color:var(--muted);">Casos de uso directos de proyectos corporativos</p>
-              </div>
-            </div>
+      <div class="cred-card fi">
+        <div class="cred-title">Perfil del instructor</div>
+        <div class="cred-item">
+          <div class="cred-icon l">
+            <svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5"/><polyline points="7,4 7,7 9,9"/></svg>
           </div>
+          <div><div class="cred-name">Especialista BI activo</div><div class="cred-desc">Cargo actual en empresa real — ingeniería de analítica, BI development o data science</div></div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon c">
+            <svg viewBox="0 0 14 14"><rect x="1.5" y="2" width="11" height="9" rx="1.5"/><line x1="4.5" y1="12" x2="9.5" y2="12"/><line x1="7" y1="11" x2="7" y2="12"/></svg>
+          </div>
+          <div><div class="cred-name">Assessment aprobado</div><div class="cred-desc">Evaluación técnica de Power BI más demostración de habilidades didácticas</div></div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon l">
+            <svg viewBox="0 0 14 14"><path d="M7 1.5L8.8 5.2L13 6L10 9L10.6 13.2L7 11.2L3.4 13.2L4 9L1 6L5.2 5.2Z" stroke-linejoin="round"/></svg>
+          </div>
+          <div><div class="cred-name">Material construido en industria</div><div class="cred-desc">Dataset y ejercicios diseñados a partir de proyectos corporativos reales de Guatemala</div></div>
         </div>
       </div>
     </div>
@@ -308,47 +740,48 @@
 </section>
 
 <!-- PRECIO -->
-<section class="px-6 py-24" id="precio" style="background:linear-gradient(180deg,#0d0d16 0%,#0a0a0f 100%);">
-  <div class="max-w-4xl mx-auto">
-    <div class="fade-up mb-4 text-center"><span class="section-label">Acceso Anticipado</span></div>
-    <h2 class="fade-up syne font-black text-center mb-6" style="font-size:clamp(2rem,5vw,4rem);letter-spacing:-0.03em;">Precio de Introducción</h2>
-    <p class="fade-up text-center mb-14 text-base" style="color:var(--muted);max-width:40ch;margin-inline:auto;line-height:1.7;">
-      Asegura tu acceso anticipado con beneficios exclusivos para los primeros en registrarse.
-    </p>
-
-    <div class="fade-up module-card rounded-3xl overflow-hidden max-w-2xl mx-auto" style="border-color:rgba(200,255,0,0.15);">
-      <div class="px-8 py-5 flex items-center justify-between" style="background:rgba(200,255,0,0.05);border-bottom:1px solid rgba(200,255,0,0.1);">
-        <span class="badge px-3 py-1 rounded-full text-xs">🔒 Preventa Activa</span>
-        <span class="text-xs" style="color:var(--muted);">Introducción · Cupos Limitados</span>
+<section class="precio-section" id="precio">
+  <div class="container">
+    <span class="section-tag fi" style="text-align:center;display:block">Acceso anticipado</span>
+    <h2 class="section-h fi" style="text-align:center">Precio de introducción</h2>
+    <div class="price-card fi">
+      <div class="price-card-top">
+        <span class="price-badge">🔒 Preventa activa</span>
+        <span class="price-note">Cupos limitados</span>
       </div>
-      <div class="p-8 sm:p-10">
-        <p class="text-xs font-semibold tracking-widest uppercase mb-6" style="color:var(--muted);">¿Qué incluye?</p>
-        <div class="space-y-4 mb-10">
-          <div class="flex gap-3 items-start"><div class="dot-lime"></div><p style="color:#c5c3cc;">Acceso a <strong style="color:white;">sesiones en vivo y grabadas</strong> con el instructor</p></div>
-          <div class="flex gap-3 items-start"><div class="dot-lime"></div><p style="color:#c5c3cc;"><strong style="color:white;">Plantillas de Diseño</strong> exclusivas de V Academy</p></div>
-          <div class="flex gap-3 items-start"><div class="dot-lime"></div><p style="color:#c5c3cc;"><strong style="color:white;">Certificado de finalización</strong> por V Academy</p></div>
-        </div>
-
-        <div class="flex items-end gap-4 mb-8">
+      <div class="price-body">
+        <div class="price-includes">¿Qué incluye?</div>
+        <ul class="include-list">
+          <li>
+            <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
+            <span>Acceso a la <strong style="color:#fff">sesión en vivo</strong> y grabación disponible para inscritos</span>
+          </li>
+          <li>
+            <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
+            <span><strong style="color:#fff">Dataset completo</strong> — franquicia guatemalteca lista para usar</span>
+          </li>
+          <li>
+            <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
+            <span><strong style="color:#fff">Plantillas de diseño</strong> exclusivas de V Academy</span>
+          </li>
+          <li>
+            <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
+            <span><strong style="color:#fff">Certificado digital verificable</strong> compartible en LinkedIn vía Certifier</span>
+          </li>
+        </ul>
+        <div class="price-row">
           <div>
-            <p class="text-sm price-old mb-1">$99 USD precio regular</p>
-            <div class="flex items-baseline gap-2">
-              <span class="syne font-black text-white" style="font-size:3.5rem;line-height:1;">$49</span>
-              <span style="color:var(--muted);">USD</span>
-            </div>
+            <div class="price-old">Q750 precio regular</div>
+            <div class="price-main">Q375 <span>GTQ</span></div>
           </div>
-          <div class="mb-2"><span class="badge px-3 py-1.5 rounded-lg font-bold" style="font-size:0.85rem;">40% OFF</span></div>
+          <div class="price-off">40% OFF</div>
         </div>
-
-        <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-primary block text-center text-base px-8 py-5 rounded-xl mb-4">
-          Asegurar mi cupo con 40% de descuento →
-        </a>
-        <p class="text-center text-xs" style="color:var(--muted);">⚡ Cupos limitados · Sin riesgo · Pago seguro</p>
-
-        <div class="mt-8 pt-8 border-t text-center" style="border-color:var(--border);">
-          <p class="text-sm mb-4" style="color:var(--muted);">¿Tienes dudas antes de registrarte? Únete a la comunidad de V Academy en Discord.</p>
-          <a href="https://discord.gg/5HUCunxFjS" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all" style="background:rgba(88,101,242,0.12);border:1px solid rgba(88,101,242,0.25);color:#8a9ef0;">
-            <svg width="18" height="14" viewBox="0 0 18 14" fill="none"><path d="M15.24 1.18A14.84 14.84 0 0 0 11.49 0c-.17.3-.37.7-.5 1.02a13.72 13.72 0 0 0-4.99 0A10.7 10.7 0 0 0 5.5 0 14.87 14.87 0 0 0 1.74 1.19C.25 3.6-.15 5.95.05 8.27a15.06 15.06 0 0 0 4.57 2.34c.37-.5.7-1.04.98-1.6a9.66 9.66 0 0 1-1.54-.74l.38-.3a10.65 10.65 0 0 0 9.12 0l.38.3c-.49.29-1 .54-1.54.74.28.56.61 1.1.98 1.6a15.01 15.01 0 0 0 4.57-2.34c.24-2.67-.42-5-.77-7.1ZM6.01 6.78c-1.08 0-1.97-.99-1.97-2.2s.87-2.2 1.97-2.2c1.1 0 1.98.98 1.97 2.2 0 1.21-.87 2.2-1.97 2.2Zm5.98 0c-1.09 0-1.97-.99-1.97-2.2s.87-2.2 1.97-2.2c1.1 0 1.97.98 1.97 2.2 0 1.21-.87 2.2-1.97 2.2Z" fill="#8a9ef0"/></svg>
+        <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-price">Asegurar mi cupo con 40% de descuento →</a>
+        <p class="price-reassure">⚡ Cupos limitados · Precio de introducción · Pago seguro</p>
+        <div class="discord-block">
+          <p>¿Tienes dudas antes de registrarte? Únete a la comunidad en Discord.</p>
+          <a href="https://discord.gg/5HUCunxFjS" target="_blank" rel="noopener" class="btn-discord">
+            <svg viewBox="0 0 18 14"><path d="M15.24 1.18A14.84 14.84 0 0 0 11.49 0c-.17.3-.37.7-.5 1.02a13.72 13.72 0 0 0-4.99 0A10.7 10.7 0 0 0 5.5 0 14.87 14.87 0 0 0 1.74 1.19C.25 3.6-.15 5.95.05 8.27a15.06 15.06 0 0 0 4.57 2.34c.37-.5.7-1.04.98-1.6a9.66 9.66 0 0 1-1.54-.74l.38-.3a10.65 10.65 0 0 0 9.12 0l.38.3c-.49.29-1 .54-1.54.74.28.56.61 1.1.98 1.6a15.01 15.01 0 0 0 4.57-2.34c.24-2.67-.42-5-.77-7.1ZM6.01 6.78c-1.08 0-1.97-.99-1.97-2.2s.87-2.2 1.97-2.2c1.1 0 1.98.98 1.97 2.2 0 1.21-.87 2.2-1.97 2.2Zm5.98 0c-1.09 0-1.97-.99-1.97-2.2s.87-2.2 1.97-2.2c1.1 0 1.97.98 1.97 2.2 0 1.21-.87 2.2-1.97 2.2Z"/></svg>
             Unirse a la comunidad en Discord
           </a>
         </div>
@@ -357,32 +790,81 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="px-6 py-10 border-t" style="border-color:var(--border);">
-  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <img src="logo.png" alt="V Academy" class="logo-img-sm" />
-      <span class="syne text-white text-sm">V Academy</span>
-    </div>
-    <div class="flex items-center gap-5 flex-wrap justify-center sm:justify-end">
-      <a href="https://www.instagram.com/somosvacademy" target="_blank" rel="noopener" class="flex items-center gap-2 text-xs transition-all" style="color:var(--muted);" onmouseover="this.style.color='#c8ff00'" onmouseout="this.style.color='var(--muted)'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-        </svg>
-        @somosvacademy
-      </a>
-      <p class="text-xs" style="color:var(--muted);">© 2025 V Academy · Todos los derechos reservados</p>
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <span class="section-tag fi">Preguntas frecuentes</span>
+    <h2 class="section-h fi">Lo que se preguntan <em>antes de inscribirse</em></h2>
+    <div class="faq-list fi">
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Necesito saber algo de Power BI o programación antes?
+          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        </button>
+        <div class="faq-a">No. El único prerequisito es saber usar Excel de forma básica. La masterclass empieza desde cero en Power BI y no requiere ningún conocimiento de programación.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Qué pasa si no puedo asistir en vivo?
+          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        </button>
+        <div class="faq-a">Todos los inscritos reciben acceso a la grabación completa de la sesión. Puedes seguirla a tu ritmo, pausar y replicar cada paso cuantas veces necesites.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Qué necesito instalar antes de la sesión?
+          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        </button>
+        <div class="faq-a">Solo Power BI Desktop, que es gratuito. Recibirás un email 48 horas antes con instrucciones de instalación y el dataset para descargar. Es el único software necesario.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Cuándo se define la fecha de la próxima sesión?
+          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        </button>
+        <div class="faq-a">La fecha se anuncia por Instagram y se notifica directamente a quienes ya se registraron. Al inscribirte en la preventa, eres de los primeros en recibir la confirmación de fecha y el link de acceso.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿El certificado tiene validez real?
+          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        </button>
+        <div class="faq-a">Sí. Los certificados son digitales, verificables y distribuidos por Certifier. Tienen un link único que cualquiera puede validar. Puedes añadirlo directamente a tu perfil de LinkedIn con un clic.</div>
+      </div>
     </div>
   </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">V<span>.</span>Academy</div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/somosvacademy" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      @somosvacademy
+    </a>
+    <a href="mailto:somos.vacademy@gmail.com">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+      somos.vacademy@gmail.com
+    </a>
+  </div>
+  <p class="footer-copy">© 2025 V Academy · Guatemala · Todos los derechos reservados</p>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('v') });
+}, {threshold: 0.08});
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
+});
 </script>
 </body>
 </html>
