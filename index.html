@@ -1,393 +1,377 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>V Academy — Power BI Masterclass</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Masterclass Power BI — Antifluke Learning</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #080810;
-  --ink2: #0e0e1a;
-  --lime: #c8ff00;
-  --lime2: #d6ff33;
-  --cyan: #00e5c8;
-  --muted: #5a5a6e;
-  --muted2: #8a8a9e;
-  --text: #e2e0f0;
-  --text2: #c0bdd8;
-  --card: #0f0f1c;
-  --card2: #13131f;
-  --border: rgba(255,255,255,0.06);
-  --border2: rgba(200,255,0,0.12);
+  --midnight: #0B1020;
+  --midnight2: #0f1528;
+  --violet: #7B61FF;
+  --violet2: #9580ff;
+  --blue: #3DA9FC;
+  --green: #9BE564;
+  --white: #FFFFFF;
+  --gray-light: #F5F7FA;
+  --gray-mid: #A3A8B8;
+  --gray-dark: #1D2438;
+  --border: rgba(123,97,255,0.12);
+  --border2: rgba(123,97,255,0.22);
+  --card: #111827;
+  --card2: #141c2e;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Outfit',sans-serif;
-  background:var(--ink);
-  color:var(--text);
+  font-family:'Inter',sans-serif;
+  background:var(--midnight);
+  color:#c8cdd8;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
-
-/* ── NOISE OVERLAY ── */
 body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity:.025;
-  pointer-events:none;
-  z-index:0;
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.02;pointer-events:none;z-index:0;
 }
 
-/* ── NAV — fondo siempre oscuro, nunca cambia con el tema del SO ── */
+/* ── NAV ── */
 nav{
   position:sticky;top:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:.75rem 2rem;
   backdrop-filter:blur(20px);
-  background:#080810 !important;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  color-scheme:dark;
+  background:rgba(11,16,32,.92);
+  border-bottom:1px solid var(--border);
 }
-.nav-logo{
-  display:flex;align-items:center;gap:.65rem;
-  text-decoration:none;
+.nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.nav-logo-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--violet),var(--blue));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
-.nav-logo img{
-  width:32px;height:32px;
-  object-fit:contain;
-  display:block;
-  flex-shrink:0;
-}
-.nav-logo-text{
-  font-family:'Outfit',sans-serif;
-  font-weight:600;
-  font-size:1.1rem;
-  color:#fff;
-  letter-spacing:-.01em;
-  white-space:nowrap;
-}
+.nav-logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
+.nav-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:#fff;letter-spacing:-.01em}
+.nav-logo-sub{font-size:.7rem;color:var(--gray-mid);letter-spacing:.04em}
 .nav-cta{
-  background:var(--lime);color:var(--ink);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:.85rem;
-  padding:.55rem 1.3rem;border-radius:100px;
-  text-decoration:none;
-  transition:transform .2s,box-shadow .2s,background .2s;
-  letter-spacing:.01em;
+  background:var(--violet);color:#fff;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.85rem;
+  padding:.55rem 1.3rem;border-radius:8px;text-decoration:none;
+  transition:transform .2s,box-shadow .2s,background .2s;letter-spacing:-.01em;
 }
-.nav-cta:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,255,0,.3)}
+.nav-cta:hover{background:var(--violet2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(123,97,255,.4)}
 
 /* ── TICKER ── */
-.ticker{
-  overflow:hidden;white-space:nowrap;
-  background:var(--lime);color:var(--ink);
-  padding:.45rem 0;
-}
+.ticker{overflow:hidden;white-space:nowrap;background:var(--violet);padding:.4rem 0}
 .ticker-inner{
-  display:inline-flex;
-  animation:tick 24s linear infinite;
-  font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.12em;
+  display:inline-flex;animation:tick 28s linear infinite;
+  font-family:'Space Grotesk',monospace;font-size:.65rem;font-weight:500;letter-spacing:.14em;color:#fff;
 }
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── HERO ── */
 .hero{
-  position:relative;
-  min-height:100svh;
+  position:relative;min-height:100svh;
   display:grid;place-items:center;
-  padding:6rem 2rem 4rem;
-  overflow:hidden;
+  padding:6rem 2rem 4rem;overflow:hidden;
 }
 .hero-bg{
   position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(200,255,0,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,229,200,.04) 0%, transparent 60%);
+    radial-gradient(ellipse 55% 45% at 75% 35%, rgba(123,97,255,.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 15% 75%, rgba(61,169,252,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 85% 80%, rgba(155,229,100,.03) 0%, transparent 60%);
 }
 .hero-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size:48px 48px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+    linear-gradient(rgba(123,97,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,97,255,.04) 1px, transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%, black, transparent);
 }
-.hero-inner{
-  position:relative;z-index:1;
-  max-width:900px;width:100%;margin:0 auto;
-}
+.hero-inner{position:relative;z-index:1;max-width:860px;width:100%;margin:0 auto}
 .hero-label{
   display:inline-flex;align-items:center;gap:.5rem;
-  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--lime);
-  border:1px solid rgba(200,255,0,.2);
-  padding:.35rem .9rem;border-radius:100px;
-  margin-bottom:2rem;
-  background:rgba(200,255,0,.04);
+  font-family:'Space Grotesk',sans-serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--violet2);border:1px solid rgba(123,97,255,.25);
+  padding:.35rem .9rem;border-radius:100px;margin-bottom:2rem;
+  background:rgba(123,97,255,.06);
 }
-.hero-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime);flex-shrink:0}
+.hero-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--violet);box-shadow:0 0 8px var(--violet);flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
 
 h1.hero-h{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(2.6rem,6vw,5rem);
-  line-height:1.05;
-  letter-spacing:-.03em;
-  color:#fff;
-  margin-bottom:1.5rem;
-  max-width:14ch;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.4rem,5.5vw,4.4rem);
+  font-weight:700;line-height:1.06;letter-spacing:-.03em;
+  color:#fff;margin-bottom:1.5rem;max-width:16ch;
 }
-h1.hero-h em{font-style:italic;color:var(--lime)}
+h1.hero-h .accent{
+  background:linear-gradient(90deg,var(--violet),var(--blue),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
 .hero-sub{
-  font-size:1.05rem;color:var(--muted2);
-  max-width:44ch;line-height:1.7;
-  margin-bottom:2.5rem;
+  font-size:1.05rem;color:var(--gray-mid);
+  max-width:46ch;line-height:1.75;margin-bottom:2.5rem;
 }
 .hero-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .btn-main{
-  background:var(--lime);color:var(--ink);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;
-  padding:.85rem 2rem;border-radius:12px;
-  text-decoration:none;
-  transition:transform .2s,box-shadow .2s,background .2s;
-  display:inline-block;
+  background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;
+  padding:.9rem 2.2rem;border-radius:10px;text-decoration:none;
+  transition:transform .2s,box-shadow .2s;display:inline-block;letter-spacing:-.01em;
 }
-.btn-main:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,255,0,.35)}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(123,97,255,.4)}
 .btn-ghost{
-  font-size:.9rem;color:var(--muted2);
-  text-decoration:none;
-  border:1px solid var(--border);
-  padding:.8rem 1.5rem;border-radius:12px;
-  transition:color .2s,border-color .2s;
-  display:inline-block;
+  font-size:.9rem;color:var(--gray-mid);text-decoration:none;
+  border:1px solid var(--border);padding:.85rem 1.6rem;border-radius:10px;
+  transition:color .2s,border-color .2s;display:inline-block;font-family:'Space Grotesk',sans-serif;
 }
-.btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+.btn-ghost:hover{color:#fff;border-color:rgba(123,97,255,.4)}
 .hero-stats{
-  display:flex;gap:3rem;flex-wrap:wrap;
-  margin-top:3.5rem;
-  padding-top:2rem;
-  border-top:1px solid var(--border);
+  display:flex;gap:3rem;flex-wrap:wrap;margin-top:3.5rem;
+  padding-top:2rem;border-top:1px solid var(--border);
 }
-.stat-n{
-  font-family:'DM Serif Display',serif;
-  font-size:2.2rem;color:var(--lime);line-height:1;
-}
-.stat-l{font-size:.8rem;color:var(--muted);margin-top:.25rem;letter-spacing:.03em}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#fff;line-height:1}
+.stat-n span{background:linear-gradient(90deg,var(--violet),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:.78rem;color:var(--gray-mid);margin-top:.3rem;letter-spacing:.02em}
 
-/* ── FLOATING DASHBOARD MOCKUP ── */
+/* ── DASHBOARD VISUAL ── */
 .hero-visual{
-  position:absolute;right:-5%;top:50%;transform:translateY(-50%);
-  width:420px;opacity:.25;pointer-events:none;
+  position:absolute;right:-3%;top:50%;transform:translateY(-50%);
+  width:400px;opacity:.18;pointer-events:none;
 }
 @media(max-width:900px){.hero-visual{display:none}}
+.dash-mock{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:16px;padding:1.4rem;
+}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.dash-title{font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:#fff;letter-spacing:.06em;text-transform:uppercase}
+.dash-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.55rem;margin-bottom:1rem}
+.kpi{background:rgba(255,255,255,.04);border-radius:8px;padding:.75rem;border:1px solid rgba(255,255,255,.05)}
+.kpi-label{font-size:.6rem;color:var(--gray-mid);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem}
+.kpi-val{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600}
+.kpi-val.v{color:var(--violet2)}
+.kpi-val.b{color:var(--blue)}
+.kpi-val.g{color:var(--green)}
+.bar-label{font-size:.6rem;color:var(--gray-mid);margin-bottom:.4rem;letter-spacing:.06em;text-transform:uppercase}
+.bars{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.9rem}
+.bar-row{display:flex;align-items:center;gap:.5rem}
+.bar-name{font-size:.6rem;color:#888;width:46px;flex-shrink:0;text-align:right;font-family:'Space Grotesk',sans-serif}
+.bar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--violet),var(--blue))}
+.bar-fill.g{background:linear-gradient(90deg,var(--blue),var(--green))}
+.bar-pct{font-family:'Space Grotesk',sans-serif;font-size:.58rem;color:#666;width:24px}
+.trend-row{display:flex;align-items:flex-end;gap:3px;height:36px;margin-top:.4rem}
+.trend-bar{flex:1;border-radius:2px 2px 0 0;background:rgba(123,97,255,.2);min-height:4px}
+.trend-bar.hi{background:var(--violet)}
+.dash-badge{
+  margin-top:.9rem;text-align:right;
+  font-family:'Space Grotesk',sans-serif;font-size:.55rem;color:var(--green);
+  background:rgba(155,229,100,.07);border:1px solid rgba(155,229,100,.15);
+  display:inline-block;padding:.2rem .55rem;border-radius:100px;letter-spacing:.1em;float:right;
+}
 
 /* ── SECTIONS ── */
 section{padding:5rem 2rem;position:relative;z-index:1}
-.container{max-width:1000px;margin:0 auto}
+.container{max-width:980px;margin:0 auto}
 .section-tag{
-  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--lime);margin-bottom:1rem;display:block;
+  font-family:'Space Grotesk',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--violet2);margin-bottom:1rem;display:block;
 }
 h2.section-h{
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(1.8rem,3.5vw,2.8rem);
-  line-height:1.1;letter-spacing:-.02em;color:#fff;
-  margin-bottom:1rem;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(1.7rem,3.2vw,2.6rem);
+  line-height:1.1;letter-spacing:-.025em;color:#fff;margin-bottom:1.2rem;
 }
-h2.section-h em{font-style:italic;color:var(--lime)}
+h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ── FOR WHOM ── */
+/* ── PARA QUIÉN ── */
 .for-whom-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:1px;border:1px solid var(--border);border-radius:16px;overflow:hidden;
-  margin-top:3rem;
+  gap:1px;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:2.5rem;
 }
 .fw-card{background:var(--card);padding:2rem 1.8rem;transition:background .25s}
 .fw-card:hover{background:var(--card2)}
-.fw-num{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--lime);letter-spacing:.1em;margin-bottom:1rem;opacity:.7}
-.fw-title{font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:.5rem}
-.fw-desc{font-size:.9rem;color:var(--muted2);line-height:1.6}
+.fw-num{font-family:'Space Grotesk',sans-serif;font-size:.7rem;color:var(--violet2);letter-spacing:.1em;margin-bottom:1rem;opacity:.7}
+.fw-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:#fff;margin-bottom:.5rem}
+.fw-desc{font-size:.88rem;color:var(--gray-mid);line-height:1.65}
 
-/* ── RESULT ── */
-.result-section{background:var(--ink2)}
-.result-text p{font-size:1rem;color:var(--muted2);line-height:1.7;margin-bottom:1.5rem}
+/* ── RESULTADO ── */
+.result-section{background:var(--midnight2)}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:720px){.result-grid{grid-template-columns:1fr}}
+.result-text p{font-size:.97rem;color:var(--gray-mid);line-height:1.75;margin-bottom:1.2rem}
+.result-text p strong{color:#fff}
 
-/* ── PROGRAMA — versión compacta ── */
-.programa-section{background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 100%)}
-.bloques{display:grid;grid-template-columns:1fr;gap:1px;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:3rem}
-.bloque{
-  display:grid;grid-template-columns:80px 1fr;
-  background:var(--card);transition:background .2s;overflow:hidden;
-}
+/* ── PROGRAMA ── */
+.programa-section{background:linear-gradient(180deg,var(--midnight) 0%,var(--midnight2) 100%)}
+.bloques{display:grid;grid-template-columns:1fr;gap:1px;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:2.5rem}
+.bloque{display:grid;grid-template-columns:72px 1fr;background:var(--card);transition:background .2s;overflow:hidden}
 .bloque:hover{background:var(--card2)}
 .bloque-num{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:rgba(200,255,0,.04);border-right:1px solid var(--border);
-  padding:1.4rem 1rem;gap:.3rem;
+  background:rgba(123,97,255,.04);border-right:1px solid var(--border);
+  padding:1.2rem .8rem;gap:.25rem;
 }
-.b-n{font-family:'DM Serif Display',serif;font-size:2rem;color:rgba(200,255,0,.2);line-height:1}
-.b-time{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-align:center}
-.bloque-content{padding:1.2rem 2rem;display:flex;flex-direction:column;justify-content:center}
-.bloque-tag{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--lime);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
-.bloque-title{font-size:1rem;font-weight:600;color:#fff}
+.b-n{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:rgba(123,97,255,.25);line-height:1}
+.b-time{font-family:'Space Grotesk',sans-serif;font-size:.58rem;color:var(--gray-mid);letter-spacing:.08em;text-align:center;text-transform:uppercase}
+.bloque-content{padding:1.1rem 1.8rem;display:flex;flex-direction:column;justify-content:center}
+.bloque-tag{font-family:'Space Grotesk',sans-serif;font-size:.6rem;color:var(--violet2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.bloque-title{font-family:'Space Grotesk',sans-serif;font-size:.97rem;font-weight:600;color:#fff}
+.bloque-desc{font-size:.82rem;color:var(--gray-mid);margin-top:.3rem;line-height:1.55}
 
 /* ── INSTRUCTOR ── */
-.instructor-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+.instructor-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:2.5rem}
 @media(max-width:760px){.instructor-grid{grid-template-columns:1fr}}
-.instructor-points{display:flex;flex-direction:column;gap:1.2rem}
+.instructor-points{display:flex;flex-direction:column;gap:1.4rem}
 .i-point{display:flex;gap:1rem;align-items:flex-start}
 .i-dot{
   width:28px;height:28px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(200,255,0,.08);border:1px solid rgba(200,255,0,.15);
+  background:rgba(123,97,255,.1);border:1px solid rgba(123,97,255,.2);
   border-radius:8px;margin-top:.1rem;
 }
-.i-dot svg{width:13px;height:13px;stroke:var(--lime);fill:none;stroke-width:2;stroke-linecap:round}
-.i-label{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.2rem}
-.i-sub{font-size:.88rem;color:var(--muted2);line-height:1.6}
-.cred-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:1.5rem}
-.cred-title{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--lime);margin-bottom:1.2rem}
-.cred-item{display:flex;align-items:flex-start;gap:.8rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.i-dot svg{width:12px;height:12px;stroke:var(--violet2);fill:none;stroke-width:2;stroke-linecap:round}
+.i-label{font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:600;color:#fff;margin-bottom:.25rem}
+.i-sub{font-size:.86rem;color:var(--gray-mid);line-height:1.65}
+.cred-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:1.5rem}
+.cred-title{font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--violet2);margin-bottom:1.2rem}
+.cred-item{display:flex;align-items:flex-start;gap:.8rem;padding:.85rem 0;border-bottom:1px solid var(--border)}
 .cred-item:last-child{border-bottom:none;padding-bottom:0}
-.cred-icon{width:32px;height:32px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.cred-icon.l{background:rgba(200,255,0,.1)}
-.cred-icon.c{background:rgba(0,229,200,.1)}
-.cred-icon svg{width:14px;height:14px;fill:none;stroke-width:1.8;stroke-linecap:round}
-.cred-icon.l svg{stroke:var(--lime)}
-.cred-icon.c svg{stroke:var(--cyan)}
-.cred-name{font-size:.9rem;font-weight:500;color:#fff;margin-bottom:.15rem}
-.cred-desc{font-size:.8rem;color:var(--muted)}
+.cred-icon{width:30px;height:30px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.cred-icon.v{background:rgba(123,97,255,.1)}
+.cred-icon.b{background:rgba(61,169,252,.1)}
+.cred-icon.g{background:rgba(155,229,100,.08)}
+.cred-icon.v svg{stroke:var(--violet2)}
+.cred-icon.b svg{stroke:var(--blue)}
+.cred-icon.g svg{stroke:var(--green)}
+.cred-icon svg{width:13px;height:13px;fill:none;stroke-width:1.8;stroke-linecap:round}
+.cred-name{font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:500;color:#fff;margin-bottom:.15rem}
+.cred-desc{font-size:.78rem;color:var(--gray-mid);line-height:1.5}
+
+/* ── RUTA ── */
+.ruta-section{background:var(--midnight2)}
+.ruta-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin-top:2.5rem;border:1px solid var(--border);border-radius:14px;overflow:hidden;
+}
+@media(max-width:720px){.ruta-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.ruta-steps{grid-template-columns:1fr}}
+.ruta-step{
+  padding:1.6rem 1.4rem;background:var(--card);
+  border-right:1px solid var(--border);position:relative;
+  transition:background .2s;
+}
+.ruta-step:last-child{border-right:none}
+.ruta-step:hover{background:var(--card2)}
+.ruta-step.active{background:rgba(123,97,255,.08)}
+.ruta-step-n{
+  font-family:'Space Grotesk',sans-serif;font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gray-mid);margin-bottom:.8rem;
+}
+.ruta-step-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.ruta-step-desc{font-size:.8rem;color:var(--gray-mid);line-height:1.55}
+.ruta-step-badge{
+  margin-top:.9rem;
+  font-family:'Space Grotesk',sans-serif;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+  display:inline-block;padding:.2rem .65rem;border-radius:100px;
+}
+.ruta-step-badge.here{background:rgba(155,229,100,.12);color:var(--green);border:1px solid rgba(155,229,100,.2)}
+.ruta-step-badge.next{background:rgba(123,97,255,.08);color:var(--violet2);border:1px solid rgba(123,97,255,.15)}
+.ruta-arrow{
+  position:absolute;right:-8px;top:50%;transform:translateY(-50%);
+  z-index:2;width:16px;height:16px;
+  background:var(--midnight2);border:1px solid var(--border);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+@media(max-width:720px){.ruta-arrow{display:none}}
+.ruta-arrow svg{width:8px;height:8px;stroke:var(--violet2);fill:none;stroke-width:2.5;stroke-linecap:round}
 
 /* ── PRECIO ── */
-.precio-section{background:var(--ink2)}
+.precio-section{background:var(--midnight)}
 .price-card{
-  max-width:560px;margin:3rem auto 0;
-  background:var(--card);border:1px solid var(--border2);border-radius:24px;overflow:hidden;
+  max-width:540px;margin:2.5rem auto 0;
+  background:var(--card);border:1px solid var(--border2);border-radius:20px;overflow:hidden;
 }
 .price-card-top{
-  background:rgba(200,255,0,.05);border-bottom:1px solid var(--border2);
+  background:rgba(123,97,255,.07);border-bottom:1px solid var(--border2);
   padding:1rem 1.8rem;display:flex;align-items:center;justify-content:space-between;
 }
 .price-badge{
-  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--lime);background:rgba(200,255,0,.1);border:1px solid rgba(200,255,0,.2);
+  font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--violet2);background:rgba(123,97,255,.12);border:1px solid rgba(123,97,255,.2);
   padding:.25rem .7rem;border-radius:100px;
 }
-.price-note{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.08em}
+.price-note{font-family:'Space Grotesk',sans-serif;font-size:.62rem;color:var(--gray-mid);letter-spacing:.06em}
 .price-body{padding:2rem 1.8rem}
-.price-includes{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
-.include-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem}
-.include-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:.95rem;color:var(--text2)}
+.price-includes{font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:1.2rem}
+.include-list{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
+.include-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:.93rem;color:#b0b5c5}
 .check-dot{
   width:18px;height:18px;flex-shrink:0;border-radius:50%;
-  background:rgba(200,255,0,.12);display:flex;align-items:center;justify-content:center;margin-top:.1rem;
+  background:rgba(155,229,100,.14);display:flex;align-items:center;justify-content:center;margin-top:.1rem;
 }
-.check-dot svg{width:9px;height:9px;stroke:var(--lime);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.check-dot svg{width:9px;height:9px;stroke:var(--green);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .price-row{display:flex;align-items:flex-end;gap:1rem;margin-bottom:1.5rem}
-.price-old{font-size:.95rem;color:var(--muted);text-decoration:line-through;margin-bottom:.2rem}
-.price-main{font-family:'DM Serif Display',serif;font-size:3.8rem;color:#fff;line-height:1}
-.price-main span{font-family:'Outfit',sans-serif;font-size:1rem;color:var(--muted);font-weight:400;margin-left:.3rem}
+.price-old{font-size:.9rem;color:var(--gray-mid);text-decoration:line-through;margin-bottom:.2rem;font-family:'Space Grotesk',sans-serif}
+.price-main{font-family:'Space Grotesk',sans-serif;font-size:3.5rem;font-weight:700;color:#fff;line-height:1}
+.price-main span{font-size:.9rem;color:var(--gray-mid);font-weight:400;margin-left:.3rem}
 .price-off{
-  font-family:'DM Mono',monospace;font-size:.75rem;font-weight:500;
-  background:rgba(200,255,0,.1);border:1px solid rgba(200,255,0,.2);color:var(--lime);
-  padding:.3rem .7rem;border-radius:8px;margin-bottom:.5rem;letter-spacing:.1em;
+  font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:600;
+  background:rgba(155,229,100,.1);border:1px solid rgba(155,229,100,.2);color:var(--green);
+  padding:.3rem .7rem;border-radius:8px;margin-bottom:.4rem;letter-spacing:.08em;
 }
 .btn-price{
   display:block;text-align:center;
-  background:var(--lime);color:var(--ink);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;
-  padding:1rem;border-radius:12px;text-decoration:none;
-  transition:transform .2s,box-shadow .2s,background .2s;margin-bottom:.8rem;
+  background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;
+  padding:1rem;border-radius:10px;text-decoration:none;
+  transition:transform .2s,box-shadow .2s;margin-bottom:.8rem;letter-spacing:-.01em;
 }
-.btn-price:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,255,0,.35)}
-.price-reassure{font-size:.8rem;color:var(--muted);text-align:center}
+.btn-price:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(123,97,255,.4)}
+.price-reassure{font-size:.78rem;color:var(--gray-mid);text-align:center;font-family:'Space Grotesk',sans-serif}
 
 /* ── FAQ ── */
-.faq-list{margin-top:3rem;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.faq-list{margin-top:2.5rem;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .faq-item{border-bottom:1px solid var(--border)}
 .faq-item:last-child{border-bottom:none}
 .faq-q{
   width:100%;background:none;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:1.4rem 1.8rem;
-  font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:500;color:#fff;text-align:left;
+  padding:1.3rem 1.8rem;
+  font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:500;color:#fff;text-align:left;
   transition:background .2s;
 }
 .faq-q:hover{background:var(--card)}
-.faq-q svg{width:16px;height:16px;stroke:var(--lime);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .3s}
+.faq-q svg{width:15px;height:15px;stroke:var(--violet2);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .3s}
 .faq-item.open .faq-q svg{transform:rotate(45deg)}
-.faq-a{
-  max-height:0;overflow:hidden;
-  transition:max-height .35s ease,padding .35s ease;
-  padding:0 1.8rem;font-size:.9rem;color:var(--muted2);line-height:1.7;
-}
-.faq-item.open .faq-a{max-height:200px;padding:0 1.8rem 1.4rem}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 1.8rem;font-size:.88rem;color:var(--gray-mid);line-height:1.7}
+.faq-item.open .faq-a{max-height:220px;padding:0 1.8rem 1.4rem}
 
 /* ── FOOTER ── */
 footer{
   padding:2rem;border-top:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:1rem;position:relative;z-index:1;
-  background:#080810 !important;
-  color-scheme:dark;
+  background:rgba(11,16,32,.95);
 }
-.footer-logo{
-  display:flex;align-items:center;gap:.6rem;text-decoration:none;
-}
-.footer-logo img{width:28px;height:28px;object-fit:contain;display:block}
-.footer-logo-text{
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:1rem;color:#fff;
-}
+.footer-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.footer-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.95rem;color:#fff}
 .footer-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
-.footer-links a{
-  font-size:.8rem;color:var(--muted);text-decoration:none;
-  display:flex;align-items:center;gap:.4rem;transition:color .2s;
-}
-.footer-links a:hover{color:var(--lime)}
+.footer-links a{font-size:.8rem;color:var(--gray-mid);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;font-family:'Space Grotesk',sans-serif}
+.footer-links a:hover{color:var(--violet2)}
 .footer-links a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
-.footer-copy{font-size:.75rem;color:var(--muted);width:100%;text-align:center;margin-top:.5rem}
-
-/* ── DASH MOCK (hero visual + result) ── */
-.dash-mock{
-  background:var(--card);border:1px solid var(--border2);
-  border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;
-}
-.dash-mock::before{
-  content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;
-  background:radial-gradient(circle,rgba(200,255,0,.08),transparent 70%);pointer-events:none;
-}
-.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
-.dash-title{font-size:.8rem;font-weight:600;color:#fff;letter-spacing:.05em;text-transform:uppercase}
-.dash-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
-.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:1rem}
-.kpi{background:rgba(255,255,255,.04);border-radius:10px;padding:.8rem;border:1px solid rgba(255,255,255,.05)}
-.kpi-label{font-size:.65rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
-.kpi-val{font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--lime)}
-.kpi-val.c{color:var(--cyan)}
-.kpi-val.w{color:#fff}
-.bar-section{margin-bottom:.8rem}
-.bar-label{font-size:.65rem;color:var(--muted);margin-bottom:.4rem;letter-spacing:.05em}
-.bars{display:flex;flex-direction:column;gap:.35rem}
-.bar-row{display:flex;align-items:center;gap:.6rem}
-.bar-name{font-size:.65rem;color:var(--muted2);width:50px;flex-shrink:0;text-align:right}
-.bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
-.bar-fill{height:100%;border-radius:3px;background:var(--lime)}
-.bar-fill.c2{background:var(--cyan)}
-.bar-pct{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted);width:28px}
-.trend-row{display:flex;align-items:flex-end;gap:3px;height:40px;margin-top:.5rem}
-.trend-bar{flex:1;border-radius:2px 2px 0 0;background:rgba(200,255,0,.2);min-height:4px}
-.trend-bar.hi{background:var(--lime)}
-.dash-badge{
-  position:absolute;bottom:1rem;right:1rem;
-  font-family:'DM Mono',monospace;font-size:.6rem;color:var(--lime);
-  background:rgba(200,255,0,.07);border:1px solid rgba(200,255,0,.15);
-  padding:.25rem .6rem;border-radius:100px;letter-spacing:.1em;
-}
+.footer-copy{font-size:.72rem;color:var(--gray-mid);width:100%;text-align:center;margin-top:.5rem;font-family:'Space Grotesk',sans-serif}
 
 /* ── FADE IN ── */
-.fi{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.fi{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .fi.v{opacity:1;transform:translateY(0)}
 
 /* ── RESPONSIVE ── */
@@ -407,17 +391,21 @@ footer{
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <img src="logo.png" alt="V Academy logo" />
-    <span class="nav-logo-text">V Academy</span>
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="14"/><line x1="2" y1="8" x2="5" y2="8"/><line x1="11" y1="8" x2="14" y2="8"/></svg>
+    </div>
+    <div>
+      <div class="nav-logo-text">Antifluke Learning</div>
+    </div>
   </a>
-  <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="nav-cta">Reservar cupo →</a>
+  <a href="#precio" class="nav-cta">Reservar cupo →</a>
 </nav>
 
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span style="padding-right:3rem">PREVENTA ACTIVA &nbsp;·&nbsp; CUPOS LIMITADOS &nbsp;·&nbsp; 50% DESCUENTO &nbsp;·&nbsp; POWER BI MASTERCLASS &nbsp;·&nbsp; V ACADEMY &nbsp;·&nbsp; GUATEMALA &nbsp;·&nbsp;</span>
-    <span style="padding-right:3rem">PREVENTA ACTIVA &nbsp;·&nbsp; CUPOS LIMITADOS &nbsp;·&nbsp; 50% DESCUENTO &nbsp;·&nbsp; POWER BI MASTERCLASS &nbsp;·&nbsp; V ACADEMY &nbsp;·&nbsp; GUATEMALA &nbsp;·&nbsp;</span>
+    <span style="padding-right:3rem">PREVENTA ACTIVA &nbsp;·&nbsp; CUPOS LIMITADOS &nbsp;·&nbsp; MASTERCLASS POWER BI &nbsp;·&nbsp; CASO REAL GUATEMALTECO &nbsp;·&nbsp; ANTIFLUKE LEARNING &nbsp;·&nbsp; GUATEMALA &nbsp;·&nbsp;</span>
+    <span style="padding-right:3rem">PREVENTA ACTIVA &nbsp;·&nbsp; CUPOS LIMITADOS &nbsp;·&nbsp; MASTERCLASS POWER BI &nbsp;·&nbsp; CASO REAL GUATEMALTECO &nbsp;·&nbsp; ANTIFLUKE LEARNING &nbsp;·&nbsp; GUATEMALA &nbsp;·&nbsp;</span>
   </div>
 </div>
 
@@ -429,71 +417,69 @@ footer{
   <div class="hero-visual" aria-hidden="true">
     <div class="dash-mock">
       <div class="dash-header">
-        <div class="dash-title">Dashboard Ventas</div>
+        <div class="dash-title">Burguer House · 2024</div>
         <div class="dash-dot"></div>
       </div>
       <div class="kpi-row">
-        <div class="kpi"><div class="kpi-label">Ventas</div><div class="kpi-val">Q1.2M</div></div>
-        <div class="kpi"><div class="kpi-label">Margen</div><div class="kpi-val c">38.4%</div></div>
-        <div class="kpi"><div class="kpi-label">Ticket</div><div class="kpi-val w">Q184</div></div>
+        <div class="kpi"><div class="kpi-label">Ventas</div><div class="kpi-val v">Q1.59M</div></div>
+        <div class="kpi"><div class="kpi-label">Margen</div><div class="kpi-val b">59.4%</div></div>
+        <div class="kpi"><div class="kpi-label">Tiendas</div><div class="kpi-val g">12</div></div>
       </div>
-      <div class="bar-section">
-        <div class="bar-label">VENTAS POR TIENDA</div>
-        <div class="bars">
-          <div class="bar-row"><span class="bar-name">T-01</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><span class="bar-pct">85%</span></div>
-          <div class="bar-row"><span class="bar-name">T-02</span><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><span class="bar-pct">72%</span></div>
-          <div class="bar-row"><span class="bar-name">T-03</span><div class="bar-track"><div class="bar-fill c2" style="width:61%"></div></div><span class="bar-pct">61%</span></div>
-          <div class="bar-row"><span class="bar-name">T-04</span><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><span class="bar-pct">48%</span></div>
-        </div>
+      <div class="bar-label">Ventas por tienda</div>
+      <div class="bars">
+        <div class="bar-row"><span class="bar-name">Zona Viva</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">100%</span></div>
+        <div class="bar-row"><span class="bar-name">Oakland</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><span class="bar-pct">88%</span></div>
+        <div class="bar-row"><span class="bar-name">Cayalá</span><div class="bar-track"><div class="bar-fill g" style="width:81%"></div></div><span class="bar-pct">81%</span></div>
+        <div class="bar-row"><span class="bar-name">Jalapa</span><div class="bar-track"><div class="bar-fill g" style="width:45%"></div></div><span class="bar-pct">45%</span></div>
       </div>
-      <div class="bar-label" style="margin-top:.5rem">TENDENCIA MENSUAL</div>
+      <div class="bar-label" style="margin-top:.5rem">Tendencia mensual</div>
       <div class="trend-row">
-        <div class="trend-bar" style="height:35%"></div>
-        <div class="trend-bar" style="height:50%"></div>
-        <div class="trend-bar" style="height:45%"></div>
-        <div class="trend-bar" style="height:70%"></div>
-        <div class="trend-bar" style="height:60%"></div>
-        <div class="trend-bar" style="height:80%"></div>
-        <div class="trend-bar hi" style="height:100%"></div>
         <div class="trend-bar" style="height:75%"></div>
-        <div class="trend-bar hi" style="height:90%"></div>
-        <div class="trend-bar" style="height:65%"></div>
+        <div class="trend-bar" style="height:87%"></div>
+        <div class="trend-bar" style="height:89%"></div>
+        <div class="trend-bar" style="height:90%"></div>
+        <div class="trend-bar" style="height:92%"></div>
+        <div class="trend-bar" style="height:91%"></div>
         <div class="trend-bar hi" style="height:95%"></div>
-        <div class="trend-bar hi" style="height:88%"></div>
+        <div class="trend-bar" style="height:92%"></div>
+        <div class="trend-bar" style="height:91%"></div>
+        <div class="trend-bar" style="height:80%"></div>
+        <div class="trend-bar" style="height:88%"></div>
+        <div class="trend-bar hi" style="height:100%"></div>
       </div>
-      <div class="dash-badge">CONSTRUIDO POR TI</div>
+      <div style="overflow:hidden"><div class="dash-badge">CONSTRUIDO POR TI</div></div>
     </div>
   </div>
 
   <div class="hero-inner">
     <div class="hero-label fi">Masterclass intensiva · 3 horas en vivo</div>
     <h1 class="hero-h fi">
-      En 3 horas construyes<br>
-      <em>tu primer dashboard</em><br>
-      profesional en Power BI
+      Tu primer dashboard<br>
+      <span class="accent">que genera decisiones</span>,<br>
+      no solo gráficas
     </h1>
     <p class="hero-sub fi">
-      Sin tecnicismos absurdos. Guiado por un especialista activo en la industria. Con un caso de negocio guatemalteco real que construyes tú mismo, paso a paso.
+      Aprende Power BI resolviendo un problema de negocio real de una cadena guatemalteca. Sin ejercicios artificiales. Guiado por un profesional que lo usa todos los días.
     </p>
     <div class="hero-actions fi">
-      <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-main">Reservar mi cupo con 50% OFF</a>
+      <a href="#precio" class="btn-main">Reservar mi cupo →</a>
       <a href="#programa" class="btn-ghost">Ver el programa</a>
     </div>
     <div class="hero-stats fi">
       <div class="stat-item">
-        <div class="stat-n">3h</div>
+        <div class="stat-n"><span>3h</span></div>
         <div class="stat-l">Sesión en vivo + grabación</div>
       </div>
       <div class="stat-item">
-        <div class="stat-n">100%</div>
+        <div class="stat-n"><span>100%</span></div>
         <div class="stat-l">Práctica desde el primer minuto</div>
       </div>
       <div class="stat-item">
-        <div class="stat-n">50%</div>
-        <div class="stat-l">Descuento de preventa</div>
+        <div class="stat-n"><span>1</span></div>
+        <div class="stat-l">Dashboard real que te llevas</div>
       </div>
       <div class="stat-item">
-        <div class="stat-n">✓</div>
+        <div class="stat-n"><span>✓</span></div>
         <div class="stat-l">Certificado digital verificable</div>
       </div>
     </div>
@@ -509,17 +495,17 @@ footer{
       <div class="fw-card">
         <div class="fw-num">01</div>
         <div class="fw-title">Usas Excel todos los días</div>
-        <div class="fw-desc">y sabes que hay herramientas más potentes, pero no has dado el salto porque no sabes por dónde empezar.</div>
+        <div class="fw-desc">Y sabes que hay herramientas más potentes, pero no has dado el salto porque no sabes por dónde empezar.</div>
       </div>
       <div class="fw-card">
         <div class="fw-num">02</div>
-        <div class="fw-title">Eres analista o reportero de datos</div>
-        <div class="fw-desc">y pasas horas actualizando reportes manuales que deberían tardar minutos con el modelo correcto.</div>
+        <div class="fw-title">Trabajas con reportes manuales</div>
+        <div class="fw-desc">Y pasas horas actualizando tablas que deberían tardar minutos si tuvieras el modelo correcto en Power BI.</div>
       </div>
       <div class="fw-card">
         <div class="fw-num">03</div>
         <div class="fw-title">Quieres entrar al mundo del BI</div>
-        <div class="fw-desc">y necesitas un punto de partida concreto —no un curso de 40 horas— para mostrar lo que puedes hacer.</div>
+        <div class="fw-desc">Y necesitas un punto de partida concreto —no un curso de 40 horas— para demostrar lo que puedes hacer.</div>
       </div>
     </div>
   </div>
@@ -528,12 +514,50 @@ footer{
 <!-- LO QUE VAS A CONSTRUIR -->
 <section class="result-section">
   <div class="container">
-    <div class="result-text fi" style="max-width:640px">
-      <span class="section-tag">El entregable</span>
-      <h2 class="section-h">Sales con un dashboard que funciona, <em>no con diapositivas</em></h2>
-      <p>Al terminar la sesión habrás conectado datos desde Excel, trabajado con datos que reflejan problemas reales del mundo en Power Query, construido un modelo estrella con relaciones reales y diseñado 5 visualizaciones con filtros funcionales.</p>
-      <p>Todo sobre un caso de negocio de una franquicia de comida rápida guatemalteca — un contexto que reconoces, con los mismos desafíos que encuentras en tu trabajo.</p>
-      <p style="font-size:.88rem;color:var(--muted);">El dashboard que construyes en la sesión es tuyo. Te lo llevas. Lo puedes publicar en LinkedIn ese mismo día.</p>
+    <div class="result-grid">
+      <div class="result-text fi">
+        <span class="section-tag">El entregable</span>
+        <h2 class="section-h">Sales con un dashboard que funciona, <em>no con diapositivas</em></h2>
+        <p>Trabajarás con datos reales de <strong>Burguer House</strong>, una cadena guatemalteca de 12 tiendas. El mismo tipo de problema que un analista enfrenta el primer día en cualquier empresa de la región.</p>
+        <p>Conectarás datos sucios desde Excel, los limpiarás en Power Query, construirás un modelo estrella y diseñarás tres vistas ejecutivas: resumen de negocio, análisis por tienda y análisis de productos.</p>
+        <p style="font-size:.85rem;color:var(--gray-mid);">El dashboard que construyes en la sesión es tuyo. Te lo llevas. Lo puedes publicar en LinkedIn ese mismo día.</p>
+      </div>
+      <div class="fi">
+        <div class="dash-mock" style="opacity:1;position:relative;width:auto">
+          <div class="dash-header">
+            <div class="dash-title">Resumen ejecutivo</div>
+            <div class="dash-dot"></div>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-label">Ingresos</div><div class="kpi-val v">Q1.59M</div></div>
+            <div class="kpi"><div class="kpi-label">Margen</div><div class="kpi-val b">59.4%</div></div>
+            <div class="kpi"><div class="kpi-label">Ticket prom.</div><div class="kpi-val g">Q369</div></div>
+          </div>
+          <div class="bar-label">Categorías por margen</div>
+          <div class="bars">
+            <div class="bar-row"><span class="bar-name">Bebidas</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">77%</span></div>
+            <div class="bar-row"><span class="bar-name">Postres</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><span class="bar-pct">66%</span></div>
+            <div class="bar-row"><span class="bar-name">Combos</span><div class="bar-track"><div class="bar-fill g" style="width:75%"></div></div><span class="bar-pct">58%</span></div>
+            <div class="bar-row"><span class="bar-name">Hamburgues</span><div class="bar-track"><div class="bar-fill g" style="width:68%"></div></div><span class="bar-pct">54%</span></div>
+          </div>
+          <div class="bar-label" style="margin-top:.7rem">Tendencia 2024</div>
+          <div class="trend-row">
+            <div class="trend-bar" style="height:75%"></div>
+            <div class="trend-bar" style="height:87%"></div>
+            <div class="trend-bar" style="height:89%"></div>
+            <div class="trend-bar" style="height:90%"></div>
+            <div class="trend-bar" style="height:92%"></div>
+            <div class="trend-bar" style="height:91%"></div>
+            <div class="trend-bar hi" style="height:95%"></div>
+            <div class="trend-bar" style="height:91%"></div>
+            <div class="trend-bar" style="height:91%"></div>
+            <div class="trend-bar" style="height:80%"></div>
+            <div class="trend-bar" style="height:88%"></div>
+            <div class="trend-bar hi" style="height:100%"></div>
+          </div>
+          <div style="overflow:hidden"><div class="dash-badge">Vista 1 de 3</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -545,47 +569,39 @@ footer{
     <h2 class="section-h fi">3 horas. 4 bloques.<br><em>Un dashboard completo.</em></h2>
     <div class="bloques fi">
       <div class="bloque">
-        <div class="bloque-num">
-          <div class="b-n">01</div>
-          <div class="b-time">20 min</div>
-        </div>
+        <div class="bloque-num"><div class="b-n">01</div><div class="b-time">30 min</div></div>
         <div class="bloque-content">
           <div class="bloque-tag">Contexto</div>
-          <div class="bloque-title">Introducción a Power BI y vista del resultado final</div>
+          <div class="bloque-title">El problema antes que la herramienta</div>
+          <div class="bloque-desc">Por qué la mayoría de dashboards no sirven para nada. Conoces el caso Burguer House y la pregunta que debes responder.</div>
         </div>
       </div>
       <div class="bloque">
-        <div class="bloque-num">
-          <div class="b-n">02</div>
-          <div class="b-time">40 min</div>
-        </div>
+        <div class="bloque-num"><div class="b-n">02</div><div class="b-time">60 min</div></div>
         <div class="bloque-content">
           <div class="bloque-tag">Datos</div>
-          <div class="bloque-title">Conexión, limpieza y transformación en Power Query</div>
+          <div class="bloque-title">Conexión, limpieza y modelo estrella en vivo</div>
+          <div class="bloque-desc">Conectas datos reales con errores intencionales, los limpias en Power Query y construyes el modelo. Así pasa en la industria.</div>
         </div>
       </div>
       <div class="bloque">
-        <div class="bloque-num">
-          <div class="b-n">03</div>
-          <div class="b-time">35 min</div>
-        </div>
-        <div class="bloque-content">
-          <div class="bloque-tag">Modelo</div>
-          <div class="bloque-title">Modelo estrella y primeras medidas DAX</div>
-        </div>
-      </div>
-      <div class="bloque">
-        <div class="bloque-num">
-          <div class="b-n">04</div>
-          <div class="b-time">40 min</div>
-        </div>
+        <div class="bloque-num"><div class="b-n">03</div><div class="b-time">45 min</div></div>
         <div class="bloque-content">
           <div class="bloque-tag">Dashboard</div>
-          <div class="bloque-title">Visualizaciones, slicers y formato profesional</div>
+          <div class="bloque-title">Tres vistas ejecutivas con visualizaciones funcionales</div>
+          <div class="bloque-desc">Construyes el resumen de negocio, el análisis por tienda y el análisis de productos. Con filtros y slicers reales.</div>
+        </div>
+      </div>
+      <div class="bloque">
+        <div class="bloque-num"><div class="b-n">04</div><div class="b-time">30 min</div></div>
+        <div class="bloque-content">
+          <div class="bloque-tag">Comunicación</div>
+          <div class="bloque-title">Cómo presentar el análisis y qué recomendar</div>
+          <div class="bloque-desc">Resolver el problema no es suficiente. Aprende a comunicar hallazgos y construir una recomendación ejecutiva.</div>
         </div>
       </div>
     </div>
-    <p style="font-size:.85rem;color:var(--muted);margin-top:1rem;text-align:center;">+ 10 min de pausa entre bloque 2 y 3 · Sesión de preguntas al cierre</p>
+    <p style="font-size:.82rem;color:var(--gray-mid);margin-top:1rem;text-align:center;">+ Sesión de preguntas al cierre · Dataset incluido · Grabación disponible para inscritos</p>
   </div>
 </section>
 
@@ -597,47 +613,83 @@ footer{
     <div class="instructor-grid">
       <div class="instructor-points fi">
         <div class="i-point">
-          <div class="i-dot"><svg viewBox="0 0 13 13"><polyline points="2,7 5,10 11,3"/></svg></div>
+          <div class="i-dot"><svg viewBox="0 0 12 12"><polyline points="1.5,6.5 4.5,9.5 10.5,2.5"/></svg></div>
           <div>
             <div class="i-label">Profesionales activos en la industria</div>
             <div class="i-sub">Nuestros instructores trabajan hoy en proyectos de Business Intelligence en empresas reales de la región. Lo que enseñan es exactamente lo que usan en su trabajo.</div>
           </div>
         </div>
         <div class="i-point">
-          <div class="i-dot"><svg viewBox="0 0 13 13"><polyline points="2,7 5,10 11,3"/></svg></div>
+          <div class="i-dot"><svg viewBox="0 0 12 12"><polyline points="1.5,6.5 4.5,9.5 10.5,2.5"/></svg></div>
           <div>
             <div class="i-label">Casos que reflejan el mundo real</div>
-            <div class="i-sub">El dataset, los ejercicios y los escenarios de la masterclass están diseñados a partir de los mismos problemas que se resuelven con datos en empresas guatemaltecas.</div>
+            <div class="i-sub">El dataset, los ejercicios y los errores de la masterclass están diseñados a partir de los mismos problemas que se resuelven con datos en empresas guatemaltecas.</div>
           </div>
         </div>
         <div class="i-point">
-          <div class="i-dot"><svg viewBox="0 0 13 13"><polyline points="2,7 5,10 11,3"/></svg></div>
+          <div class="i-dot"><svg viewBox="0 0 12 12"><polyline points="1.5,6.5 4.5,9.5 10.5,2.5"/></svg></div>
           <div>
-            <div class="i-label">Validados por V Academy</div>
-            <div class="i-sub">Cada instructor aprueba un assessment técnico de Power BI y demuestra habilidades didácticas antes de enseñar. No cualquiera puede impartir aquí.</div>
+            <div class="i-label">Estándar Antifluke</div>
+            <div class="i-sub">Cada instructor demuestra experiencia práctica demostrable y habilidades didácticas antes de enseñar. En Antifluke Learning enseñan personas que hacen el trabajo, no personas que solo hablan sobre él.</div>
           </div>
         </div>
       </div>
       <div class="cred-card fi">
         <div class="cred-title">Perfil del instructor</div>
         <div class="cred-item">
-          <div class="cred-icon l">
-            <svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5"/><polyline points="7,4 7,7 9,9"/></svg>
+          <div class="cred-icon v">
+            <svg viewBox="0 0 13 13"><circle cx="6.5" cy="5" r="3"/><path d="M1.5 12c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
           </div>
-          <div><div class="cred-name">Especialista BI activo</div><div class="cred-desc">Cargo actual en empresa real — ingeniería de analítica, BI development o data science</div></div>
+          <div><div class="cred-name">Especialista BI activo</div><div class="cred-desc">Cargo actual en empresa real — Business Intelligence, analítica de datos o consultoría</div></div>
         </div>
         <div class="cred-item">
-          <div class="cred-icon c">
-            <svg viewBox="0 0 14 14"><rect x="1.5" y="2" width="11" height="9" rx="1.5"/><line x1="4.5" y1="12" x2="9.5" y2="12"/><line x1="7" y1="11" x2="7" y2="12"/></svg>
+          <div class="cred-icon b">
+            <svg viewBox="0 0 13 13"><rect x="1.5" y="2" width="10" height="8" rx="1.5"/><line x1="4" y1="11" x2="9" y2="11"/><line x1="6.5" y1="10" x2="6.5" y2="11"/></svg>
           </div>
-          <div><div class="cred-name">Assessment aprobado</div><div class="cred-desc">Evaluación técnica de Power BI más demostración de habilidades didácticas</div></div>
+          <div><div class="cred-name">Experiencia demostrable</div><div class="cred-desc">Proyectos reales documentados en organizaciones de Guatemala y Latinoamérica</div></div>
         </div>
         <div class="cred-item">
-          <div class="cred-icon l">
-            <svg viewBox="0 0 14 14"><path d="M7 1.5L8.8 5.2L13 6L10 9L10.6 13.2L7 11.2L3.4 13.2L4 9L1 6L5.2 5.2Z" stroke-linejoin="round"/></svg>
+          <div class="cred-icon g">
+            <svg viewBox="0 0 13 13"><path d="M6.5 1.5L8 5l3.5.5-2.5 2.5.6 3.5L6.5 10 3 11.5l.6-3.5L1 5.5 4.5 5Z" stroke-linejoin="round"/></svg>
           </div>
-          <div><div class="cred-name">Material construido en industria</div><div class="cred-desc">Ejercicios diseñados a partir de proyectos corporativos reales de Guatemala</div></div>
+          <div><div class="cred-name">Material construido en industria</div><div class="cred-desc">Ejercicios y casos diseñados a partir de proyectos corporativos reales de la región</div></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RUTA PROFESIONAL -->
+<section class="ruta-section">
+  <div class="container">
+    <span class="section-tag fi">Más allá de la masterclass</span>
+    <h2 class="section-h fi">Esta sesión es solo <em>el primer paso</em></h2>
+    <p class="fi" style="color:var(--gray-mid);max-width:52ch;margin-bottom:0;line-height:1.7;">Antifluke Learning está diseñado para desarrollar capacidades duraderas, no para vender cursos. La masterclass es la entrada a una ruta profesional completa.</p>
+    <div class="ruta-steps fi" style="margin-top:2.5rem">
+      <div class="ruta-step active">
+        <div class="ruta-step-n">Nivel 1</div>
+        <div class="ruta-step-title">Explorar</div>
+        <div class="ruta-step-desc">Intro a datos, BI e inteligencia artificial aplicada al trabajo</div>
+        <div class="ruta-step-badge here">Empiezas aquí</div>
+        <div class="ruta-arrow"><svg viewBox="0 0 8 8"><polyline points="2,2 6,4 2,6"/></svg></div>
+      </div>
+      <div class="ruta-step">
+        <div class="ruta-step-n">Nivel 2</div>
+        <div class="ruta-step-title">Desarrollar</div>
+        <div class="ruta-step-desc">Certificación BI Analista: Power BI avanzado, modelado y storytelling</div>
+        <div class="ruta-step-badge next">Siguiente</div>
+        <div class="ruta-arrow"><svg viewBox="0 0 8 8"><polyline points="2,2 6,4 2,6"/></svg></div>
+      </div>
+      <div class="ruta-step">
+        <div class="ruta-step-n">Nivel 3</div>
+        <div class="ruta-step-title">Aplicar</div>
+        <div class="ruta-step-desc">BI + Analytics + IA Aplicada. Resolución de problemas reales</div>
+        <div class="ruta-arrow"><svg viewBox="0 0 8 8"><polyline points="2,2 6,4 2,6"/></svg></div>
+      </div>
+      <div class="ruta-step">
+        <div class="ruta-step-n">Nivel 4</div>
+        <div class="ruta-step-title">Liderar</div>
+        <div class="ruta-step-desc">Stack completo + pensamiento analítico + impacto organizacional</div>
       </div>
     </div>
   </div>
@@ -658,19 +710,19 @@ footer{
         <ul class="include-list">
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span>Acceso a la <strong style="color:#fff">sesión en vivo</strong> y grabación disponible para inscritos</span>
+            <span>Acceso a la <strong style="color:#fff">sesión en vivo</strong> y grabación para inscritos</span>
           </li>
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span><strong style="color:#fff">Dataset completo</strong> — franquicia guatemalteca lista para usar</span>
+            <span><strong style="color:#fff">Dataset completo de Burguer House</strong> — caso guatemalteco listo para usar</span>
           </li>
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span><strong style="color:#fff">Certificado digital verificable</strong> compartible en LinkedIn vía Certifier</span>
+            <span><strong style="color:#fff">Certificado digital verificable</strong> compartible en LinkedIn</span>
           </li>
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span>Acceso a la <strong style="color:#fff">comunidad de expertos en BI</strong> — aprende y conecta con profesionales de la región</span>
+            <span>Acceso a la <strong style="color:#fff">comunidad Antifluke</strong> — profesionales de datos de la región</span>
           </li>
         </ul>
         <div class="price-row">
@@ -680,7 +732,7 @@ footer{
           </div>
           <div class="price-off">50% OFF</div>
         </div>
-        <a href="https://forms.gle/hzicQcVkPqH8GRQw8" target="_blank" rel="noopener" class="btn-price">Asegurar mi cupo con 50% de descuento →</a>
+        <a href="#" class="btn-price">Asegurar mi cupo con 50% de descuento →</a>
         <p class="price-reassure">⚡ Cupos limitados · Precio de introducción · Pago seguro</p>
       </div>
     </div>
@@ -694,39 +746,28 @@ footer{
     <h2 class="section-h fi">Lo que se preguntan <em>antes de inscribirse</em></h2>
     <div class="faq-list fi">
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Necesito saber algo de Power BI o programación antes?
-          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
-        </button>
-        <div class="faq-a">No. El único prerequisito es saber usar Excel de forma básica. La masterclass empieza desde cero en Power BI y no requiere ningún conocimiento de programación.</div>
+        <button class="faq-q">¿Necesito saber algo de Power BI antes?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-a">No. El único prerequisito es saber usar Excel de forma básica. La masterclass empieza desde cero en Power BI y no requiere programación. Si usas Excel en tu trabajo, estás listo.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Qué pasa si no puedo asistir en vivo?
-          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
-        </button>
-        <div class="faq-a">Todos los inscritos reciben acceso a la grabación completa de la sesión. Puedes seguirla a tu ritmo, pausar y replicar cada paso cuantas veces necesites.</div>
+        <button class="faq-q">¿Qué pasa si no puedo asistir en vivo?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-a">Todos los inscritos reciben acceso a la grabación completa. Puedes seguirla a tu ritmo, pausar y replicar cada paso las veces que necesites.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Qué necesito instalar antes de la sesión?
-          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
-        </button>
-        <div class="faq-a">Solo Power BI Desktop, que es gratuito. Recibirás un email 48 horas antes con instrucciones de instalación y el dataset para descargar. Es el único software necesario.</div>
+        <button class="faq-q">¿Qué necesito instalar antes de la sesión?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-a">Solo Power BI Desktop, que es gratuito para Windows. Recibirás un email 48 horas antes con instrucciones de instalación y el dataset para descargar. Es el único software necesario.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">
-          ¿Cuándo se define la fecha de la próxima sesión?
-          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
-        </button>
-        <div class="faq-a">La fecha se anuncia por Instagram y se notifica directamente a quienes ya se registraron. Al inscribirte en la preventa, eres de los primeros en recibir la confirmación de fecha y el link de acceso.</div>
+        <button class="faq-q">¿Cuándo se define la fecha?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-a">La fecha se anuncia por Instagram y se notifica directamente a los inscritos. Al reservar tu cupo en preventa, eres el primero en recibir la confirmación y el link de acceso.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">
-          ¿El certificado tiene validez real?
-          <svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
-        </button>
-        <div class="faq-a">Sí. Los certificados son digitales, verificables y distribuidos por Certifier. Tienen un link único que cualquiera puede validar. Puedes añadirlo directamente a tu perfil de LinkedIn con un clic.</div>
+        <button class="faq-q">¿El certificado tiene validez real?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-a">Sí. Los certificados son digitales, verificables y tienen un link único que cualquiera puede validar. Se añaden directamente a LinkedIn con un clic. Antifluke Learning certifica capacidades demostradas, no asistencia.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Qué sigue después de la masterclass?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-a">La masterclass es la entrada a la ruta profesional de Business Intelligence de Antifluke Learning. Al terminar, conocerás exactamente cuáles son los siguientes pasos para obtener la Certificación BI Analista.</div>
       </div>
     </div>
   </div>
@@ -735,26 +776,28 @@ footer{
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo">
-    <img src="logo.png" alt="V Academy logo" />
-    <span class="footer-logo-text">V Academy</span>
+    <div class="nav-logo-mark" style="width:26px;height:26px;border-radius:6px">
+      <svg viewBox="0 0 16 16" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="14"/><line x1="2" y1="8" x2="5" y2="8"/><line x1="11" y1="8" x2="14" y2="8"/></svg>
+    </div>
+    <span class="footer-logo-text">Antifluke Learning</span>
   </a>
   <div class="footer-links">
-    <a href="https://www.instagram.com/somosvacademy" target="_blank" rel="noopener">
+    <a href="https://www.instagram.com/antifluke" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
-      @somosvacademy
+      @antifluke
     </a>
-    <a href="mailto:somos.vacademy@outlook.com">
+    <a href="mailto:hola@antifluke.com">
       <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-      somos.vacademy@outlook.com
+      hola@antifluke.com
     </a>
   </div>
-  <p class="footer-copy">© 2025 V Academy · Guatemala · Todos los derechos reservados</p>
+  <p class="footer-copy">© 2025 Antifluke Learning · Guatemala · Todos los derechos reservados</p>
 </footer>
 
 <script>
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('v') });
-}, {threshold: 0.08});
+}, {threshold: 0.06});
 document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 
 document.querySelectorAll('.faq-q').forEach(btn => {
