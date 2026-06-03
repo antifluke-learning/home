@@ -7,35 +7,79 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ── LIGHT THEME (default) ── */
 :root {
+  --midnight: #F5F7FA;
+  --midnight2: #ECEEF3;
+  --violet: #7B61FF;
+  --violet2: #6448f0;
+  --blue: #3DA9FC;
+  --green: #5dab1e;
+  --white: #FFFFFF;
+  --gray-light: #F5F7FA;
+  --gray-mid: #5a5f72;
+  --gray-dark: #1D2438;
+  --border: rgba(123,97,255,0.14);
+  --border2: rgba(123,97,255,0.24);
+  --card: #FFFFFF;
+  --card2: #F0F2F8;
+  --bg-body: #F5F7FA;
+  --text-body: #2a2e3e;
+  --text-heading: #0B1020;
+  --nav-bg: rgba(245,247,250,0.94);
+  --nav-border: rgba(123,97,255,0.12);
+  --footer-bg: rgba(245,247,250,0.98);
+  --noise-opacity: .018;
+  --dash-kpi-bg: rgba(0,0,0,.04);
+  --dash-kpi-border: rgba(0,0,0,.06);
+  --dash-bar-track: rgba(0,0,0,.07);
+  --dash-trend-inactive: rgba(123,97,255,.18);
+  --theme-icon-sun: block;
+  --theme-icon-moon: none;
+}
+
+/* ── DARK THEME ── */
+html.dark {
   --midnight: #0B1020;
   --midnight2: #0f1528;
   --violet: #7B61FF;
   --violet2: #9580ff;
   --blue: #3DA9FC;
   --green: #9BE564;
-  --white: #FFFFFF;
-  --gray-light: #F5F7FA;
   --gray-mid: #A3A8B8;
-  --gray-dark: #1D2438;
   --border: rgba(123,97,255,0.12);
   --border2: rgba(123,97,255,0.22);
   --card: #111827;
   --card2: #141c2e;
+  --bg-body: #0B1020;
+  --text-body: #c8cdd8;
+  --text-heading: #ffffff;
+  --nav-bg: rgba(11,16,32,.92);
+  --nav-border: rgba(123,97,255,0.12);
+  --footer-bg: rgba(11,16,32,.95);
+  --noise-opacity: .02;
+  --dash-kpi-bg: rgba(255,255,255,.04);
+  --dash-kpi-border: rgba(255,255,255,.05);
+  --dash-bar-track: rgba(255,255,255,.06);
+  --dash-trend-inactive: rgba(123,97,255,.2);
+  --theme-icon-sun: none;
+  --theme-icon-moon: block;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
   font-family:'Inter',sans-serif;
-  background:var(--midnight);
-  color:#c8cdd8;
+  background:var(--bg-body);
+  color:var(--text-body);
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
 }
 body::before{
   content:'';position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity:.02;pointer-events:none;z-index:0;
+  opacity:var(--noise-opacity);pointer-events:none;z-index:0;
 }
 
 /* ── NAV ── */
@@ -44,18 +88,27 @@ nav{
   display:flex;align-items:center;justify-content:space-between;
   padding:.75rem 2rem;
   backdrop-filter:blur(20px);
-  background:rgba(11,16,32,.92);
-  border-bottom:1px solid var(--border);
+  background:var(--nav-bg);
+  border-bottom:1px solid var(--nav-border);
+  transition:background .3s,border-color .3s;
 }
 .nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
-.nav-logo-mark{
-  width:30px;height:30px;border-radius:8px;
-  background:linear-gradient(135deg,var(--violet),var(--blue));
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+.nav-logo img{height:32px;width:auto;display:block;flex-shrink:0;object-fit:contain}
+.nav-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--text-heading);letter-spacing:-.02em;transition:color .3s}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+
+/* Theme toggle */
+.theme-toggle{
+  width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,border-color .3s,transform .2s;flex-shrink:0;
 }
-.nav-logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
-.nav-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:#fff;letter-spacing:-.01em}
-.nav-logo-sub{font-size:.7rem;color:var(--gray-mid);letter-spacing:.04em}
+.theme-toggle:hover{transform:scale(1.08)}
+.theme-toggle svg{width:16px;height:16px;fill:none;stroke:var(--violet);stroke-width:2;stroke-linecap:round;transition:stroke .3s}
+.icon-sun{display:var(--theme-icon-sun)}
+.icon-moon{display:var(--theme-icon-moon)}
+
 .nav-cta{
   background:var(--violet);color:#fff;
   font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.85rem;
@@ -108,7 +161,7 @@ h1.hero-h{
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(2.4rem,5.5vw,4.4rem);
   font-weight:700;line-height:1.06;letter-spacing:-.03em;
-  color:#fff;margin-bottom:1.5rem;max-width:16ch;
+  color:var(--text-heading);margin-bottom:1.5rem;max-width:16ch;transition:color .3s;
 }
 h1.hero-h .accent{
   background:linear-gradient(90deg,var(--violet),var(--blue),var(--green));
@@ -131,12 +184,12 @@ h1.hero-h .accent{
   border:1px solid var(--border);padding:.85rem 1.6rem;border-radius:10px;
   transition:color .2s,border-color .2s;display:inline-block;font-family:'Space Grotesk',sans-serif;
 }
-.btn-ghost:hover{color:#fff;border-color:rgba(123,97,255,.4)}
+.btn-ghost:hover{color:var(--text-heading);border-color:rgba(123,97,255,.4)}
 .hero-stats{
   display:flex;gap:3rem;flex-wrap:wrap;margin-top:3.5rem;
   padding-top:2rem;border-top:1px solid var(--border);
 }
-.stat-n{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#fff;line-height:1}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--text-heading);line-height:1;transition:color .3s}
 .stat-n span{background:linear-gradient(90deg,var(--violet),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stat-l{font-size:.78rem;color:var(--gray-mid);margin-top:.3rem;letter-spacing:.02em}
 
@@ -148,28 +201,28 @@ h1.hero-h .accent{
 @media(max-width:900px){.hero-visual{display:none}}
 .dash-mock{
   background:var(--card);border:1px solid var(--border2);
-  border-radius:16px;padding:1.4rem;
+  border-radius:16px;padding:1.4rem;transition:background .3s;
 }
 .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
-.dash-title{font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:#fff;letter-spacing:.06em;text-transform:uppercase}
+.dash-title{font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:var(--text-heading);letter-spacing:.06em;text-transform:uppercase;transition:color .3s}
 .dash-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
 .kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.55rem;margin-bottom:1rem}
-.kpi{background:rgba(255,255,255,.04);border-radius:8px;padding:.75rem;border:1px solid rgba(255,255,255,.05)}
+.kpi{background:var(--dash-kpi-bg);border-radius:8px;padding:.75rem;border:1px solid var(--dash-kpi-border)}
 .kpi-label{font-size:.6rem;color:var(--gray-mid);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem}
 .kpi-val{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600}
-.kpi-val.v{color:var(--violet2)}
+.kpi-val.v{color:var(--violet)}
 .kpi-val.b{color:var(--blue)}
 .kpi-val.g{color:var(--green)}
 .bar-label{font-size:.6rem;color:var(--gray-mid);margin-bottom:.4rem;letter-spacing:.06em;text-transform:uppercase}
 .bars{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.9rem}
 .bar-row{display:flex;align-items:center;gap:.5rem}
-.bar-name{font-size:.6rem;color:#888;width:46px;flex-shrink:0;text-align:right;font-family:'Space Grotesk',sans-serif}
-.bar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.bar-name{font-size:.6rem;color:var(--gray-mid);width:46px;flex-shrink:0;text-align:right;font-family:'Space Grotesk',sans-serif}
+.bar-track{flex:1;height:5px;background:var(--dash-bar-track);border-radius:3px;overflow:hidden}
 .bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--violet),var(--blue))}
 .bar-fill.g{background:linear-gradient(90deg,var(--blue),var(--green))}
-.bar-pct{font-family:'Space Grotesk',sans-serif;font-size:.58rem;color:#666;width:24px}
+.bar-pct{font-family:'Space Grotesk',sans-serif;font-size:.58rem;color:var(--gray-mid);width:24px}
 .trend-row{display:flex;align-items:flex-end;gap:3px;height:36px;margin-top:.4rem}
-.trend-bar{flex:1;border-radius:2px 2px 0 0;background:rgba(123,97,255,.2);min-height:4px}
+.trend-bar{flex:1;border-radius:2px 2px 0 0;background:var(--dash-trend-inactive);min-height:4px}
 .trend-bar.hi{background:var(--violet)}
 .dash-badge{
   margin-top:.9rem;text-align:right;
@@ -188,7 +241,7 @@ section{padding:5rem 2rem;position:relative;z-index:1}
 h2.section-h{
   font-family:'Space Grotesk',sans-serif;font-weight:700;
   font-size:clamp(1.7rem,3.2vw,2.6rem);
-  line-height:1.1;letter-spacing:-.025em;color:#fff;margin-bottom:1.2rem;
+  line-height:1.1;letter-spacing:-.025em;color:var(--text-heading);margin-bottom:1.2rem;transition:color .3s;
 }
 h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
@@ -199,8 +252,8 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
 }
 .fw-card{background:var(--card);padding:2rem 1.8rem;transition:background .25s}
 .fw-card:hover{background:var(--card2)}
-.fw-num{font-family:'Space Grotesk',sans-serif;font-size:.7rem;color:var(--violet2);letter-spacing:.1em;margin-bottom:1rem;opacity:.7}
-.fw-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:#fff;margin-bottom:.5rem}
+.fw-num{font-family:'Space Grotesk',sans-serif;font-size:.7rem;color:var(--violet);letter-spacing:.1em;margin-bottom:1rem;opacity:.7}
+.fw-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:var(--text-heading);margin-bottom:.5rem}
 .fw-desc{font-size:.88rem;color:var(--gray-mid);line-height:1.65}
 
 /* ── RESULTADO ── */
@@ -208,23 +261,23 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
 .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 @media(max-width:720px){.result-grid{grid-template-columns:1fr}}
 .result-text p{font-size:.97rem;color:var(--gray-mid);line-height:1.75;margin-bottom:1.2rem}
-.result-text p strong{color:#fff}
+.result-text p strong{color:var(--text-heading)}
 
 /* ── PROGRAMA ── */
 .programa-section{background:linear-gradient(180deg,var(--midnight) 0%,var(--midnight2) 100%)}
 .bloques{display:grid;grid-template-columns:1fr;gap:1px;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:2.5rem}
-.bloque{display:grid;grid-template-columns:72px 1fr;background:var(--card);transition:background .2s;overflow:hidden}
+.bloque{display:grid;grid-template-columns:72px 1fr;background:var(--card);transition:background .2s,color .3s;overflow:hidden}
 .bloque:hover{background:var(--card2)}
 .bloque-num{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:rgba(123,97,255,.04);border-right:1px solid var(--border);
   padding:1.2rem .8rem;gap:.25rem;
 }
-.b-n{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:rgba(123,97,255,.25);line-height:1}
+.b-n{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:rgba(123,97,255,.3);line-height:1}
 .b-time{font-family:'Space Grotesk',sans-serif;font-size:.58rem;color:var(--gray-mid);letter-spacing:.08em;text-align:center;text-transform:uppercase}
 .bloque-content{padding:1.1rem 1.8rem;display:flex;flex-direction:column;justify-content:center}
-.bloque-tag{font-family:'Space Grotesk',sans-serif;font-size:.6rem;color:var(--violet2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
-.bloque-title{font-family:'Space Grotesk',sans-serif;font-size:.97rem;font-weight:600;color:#fff}
+.bloque-tag{font-family:'Space Grotesk',sans-serif;font-size:.6rem;color:var(--violet);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem}
+.bloque-title{font-family:'Space Grotesk',sans-serif;font-size:.97rem;font-weight:600;color:var(--text-heading)}
 .bloque-desc{font-size:.82rem;color:var(--gray-mid);margin-top:.3rem;line-height:1.55}
 
 /* ── INSTRUCTOR ── */
@@ -238,22 +291,22 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
   background:rgba(123,97,255,.1);border:1px solid rgba(123,97,255,.2);
   border-radius:8px;margin-top:.1rem;
 }
-.i-dot svg{width:12px;height:12px;stroke:var(--violet2);fill:none;stroke-width:2;stroke-linecap:round}
-.i-label{font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:600;color:#fff;margin-bottom:.25rem}
+.i-dot svg{width:12px;height:12px;stroke:var(--violet);fill:none;stroke-width:2;stroke-linecap:round}
+.i-label{font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:600;color:var(--text-heading);margin-bottom:.25rem}
 .i-sub{font-size:.86rem;color:var(--gray-mid);line-height:1.65}
-.cred-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:1.5rem}
-.cred-title{font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--violet2);margin-bottom:1.2rem}
+.cred-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:1.5rem;transition:background .3s}
+.cred-title{font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);margin-bottom:1.2rem}
 .cred-item{display:flex;align-items:flex-start;gap:.8rem;padding:.85rem 0;border-bottom:1px solid var(--border)}
 .cred-item:last-child{border-bottom:none;padding-bottom:0}
 .cred-icon{width:30px;height:30px;flex-shrink:0;border-radius:8px;display:flex;align-items:center;justify-content:center}
 .cred-icon.v{background:rgba(123,97,255,.1)}
 .cred-icon.b{background:rgba(61,169,252,.1)}
 .cred-icon.g{background:rgba(155,229,100,.08)}
-.cred-icon.v svg{stroke:var(--violet2)}
+.cred-icon.v svg{stroke:var(--violet)}
 .cred-icon.b svg{stroke:var(--blue)}
 .cred-icon.g svg{stroke:var(--green)}
 .cred-icon svg{width:13px;height:13px;fill:none;stroke-width:1.8;stroke-linecap:round}
-.cred-name{font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:500;color:#fff;margin-bottom:.15rem}
+.cred-name{font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:500;color:var(--text-heading);margin-bottom:.15rem}
 .cred-desc{font-size:.78rem;color:var(--gray-mid);line-height:1.5}
 
 /* ── RUTA ── */
@@ -271,12 +324,12 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
 }
 .ruta-step:last-child{border-right:none}
 .ruta-step:hover{background:var(--card2)}
-.ruta-step.active{background:rgba(123,97,255,.08)}
+.ruta-step.active{background:rgba(123,97,255,.06)}
 .ruta-step-n{
   font-family:'Space Grotesk',sans-serif;font-size:.6rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--gray-mid);margin-bottom:.8rem;
 }
-.ruta-step-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.ruta-step-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--text-heading);margin-bottom:.4rem}
 .ruta-step-desc{font-size:.8rem;color:var(--gray-mid);line-height:1.55}
 .ruta-step-badge{
   margin-top:.9rem;
@@ -313,7 +366,7 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
 .price-body{padding:2rem 1.8rem}
 .price-includes{font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:1.2rem}
 .include-list{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem}
-.include-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:.93rem;color:#b0b5c5}
+.include-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:.93rem;color:var(--gray-mid)}
 .check-dot{
   width:18px;height:18px;flex-shrink:0;border-radius:50%;
   background:rgba(155,229,100,.14);display:flex;align-items:center;justify-content:center;margin-top:.1rem;
@@ -321,7 +374,7 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
 .check-dot svg{width:9px;height:9px;stroke:var(--green);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .price-row{display:flex;align-items:flex-end;gap:1rem;margin-bottom:1.5rem}
 .price-old{font-size:.9rem;color:var(--gray-mid);text-decoration:line-through;margin-bottom:.2rem;font-family:'Space Grotesk',sans-serif}
-.price-main{font-family:'Space Grotesk',sans-serif;font-size:3.5rem;font-weight:700;color:#fff;line-height:1}
+.price-main{font-family:'Space Grotesk',sans-serif;font-size:3.5rem;font-weight:700;color:var(--text-heading);line-height:1;transition:color .3s}
 .price-main span{font-size:.9rem;color:var(--gray-mid);font-weight:400;margin-left:.3rem}
 .price-off{
   font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:600;
@@ -346,27 +399,28 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
   width:100%;background:none;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
   padding:1.3rem 1.8rem;
-  font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:500;color:#fff;text-align:left;
+  font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:500;color:var(--text-heading);text-align:left;
   transition:background .2s;
 }
 .faq-q:hover{background:var(--card)}
-.faq-q svg{width:15px;height:15px;stroke:var(--violet2);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .3s}
+.faq-q svg{width:15px;height:15px;stroke:var(--violet);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .3s}
 .faq-item.open .faq-q svg{transform:rotate(45deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 1.8rem;font-size:.88rem;color:var(--gray-mid);line-height:1.7}
-.faq-item.open .faq-a{max-height:220px;padding:0 1.8rem 1.4rem}
+.faq-item.open .faq-a{max-height:260px;padding:0 1.8rem 1.4rem}
 
 /* ── FOOTER ── */
 footer{
   padding:2rem;border-top:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:1rem;position:relative;z-index:1;
-  background:rgba(11,16,32,.95);
+  background:var(--footer-bg);transition:background .3s;
 }
 .footer-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
-.footer-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.95rem;color:#fff}
+.footer-logo img{height:28px;width:auto;display:block;object-fit:contain}
+.footer-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:var(--text-heading);transition:color .3s}
 .footer-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
 .footer-links a{font-size:.8rem;color:var(--gray-mid);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;font-family:'Space Grotesk',sans-serif}
-.footer-links a:hover{color:var(--violet2)}
+.footer-links a:hover{color:var(--violet)}
 .footer-links a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
 .footer-copy{font-size:.72rem;color:var(--gray-mid);width:100%;text-align:center;margin-top:.5rem;font-family:'Space Grotesk',sans-serif}
 
@@ -391,14 +445,16 @@ footer{
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <div class="nav-logo-mark">
-      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="14"/><line x1="2" y1="8" x2="5" y2="8"/><line x1="11" y1="8" x2="14" y2="8"/></svg>
-    </div>
-    <div>
-      <div class="nav-logo-text">Antifluke Learning</div>
-    </div>
+    <img src="logo_sin_fondo.png" alt="Antifluke Learning" />
+    <span class="nav-logo-text">Antifluke Learning</span>
   </a>
-  <a href="#precio" class="nav-cta">Reservar cupo →</a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <a href="#precio" class="nav-cta">Reservar cupo →</a>
+  </div>
 </nav>
 
 <!-- TICKER -->
@@ -710,19 +766,19 @@ footer{
         <ul class="include-list">
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span>Acceso a la <strong style="color:#fff">sesión en vivo</strong> y grabación para inscritos</span>
+            <span>Acceso a la <strong style="color:var(--text-heading)">sesión en vivo</strong> y grabación para inscritos</span>
           </li>
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span><strong style="color:#fff">Dataset completo de Burguer House</strong> — caso guatemalteco listo para usar</span>
+            <span><strong style="color:var(--text-heading)">Dataset completo de Burguer House</strong> — descárgalo, replícalo y úsalo para construir proyectos propios en tu portafolio profesional</span>
           </li>
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span><strong style="color:#fff">Certificado digital verificable</strong> compartible en LinkedIn</span>
+            <span><strong style="color:var(--text-heading)">Certificado digital verificable</strong> compartible en LinkedIn</span>
           </li>
           <li>
             <div class="check-dot"><svg viewBox="0 0 9 9"><polyline points="1.5,4.5 3.5,7 7.5,2"/></svg></div>
-            <span>Acceso a la <strong style="color:#fff">comunidad Antifluke</strong> — profesionales de datos de la región</span>
+            <span>Acceso a la <strong style="color:var(--text-heading)">comunidad Antifluke</strong> — profesionales de datos de la región</span>
           </li>
         </ul>
         <div class="price-row">
@@ -767,7 +823,7 @@ footer{
       </div>
       <div class="faq-item">
         <button class="faq-q">¿Qué sigue después de la masterclass?<svg viewBox="0 0 16 16"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
-        <div class="faq-a">La masterclass es la entrada a la ruta profesional de Business Intelligence de Antifluke Learning. Al terminar, conocerás exactamente cuáles son los siguientes pasos para obtener la Certificación BI Analista.</div>
+        <div class="faq-a">La masterclass es solo el inicio. En Antifluke Learning tenemos tres niveles para seguir creciendo: cursos especializados en herramientas (Power BI avanzado, SQL, IA aplicada), certificaciones de capacidades que validan lo que puedes hacer en el mundo real —no el tiempo que pasaste frente a una pantalla— y rutas profesionales completas que te llevan desde analista hasta profesional capaz de generar impacto organizacional. No certificamos asistencia. Certificamos capacidades demostradas.</div>
       </div>
     </div>
   </div>
@@ -776,9 +832,7 @@ footer{
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo">
-    <div class="nav-logo-mark" style="width:26px;height:26px;border-radius:6px">
-      <svg viewBox="0 0 16 16" style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="8" y1="11" x2="8" y2="14"/><line x1="2" y1="8" x2="5" y2="8"/><line x1="11" y1="8" x2="14" y2="8"/></svg>
-    </div>
+    <img src="logo_sin_fondo.png" alt="Antifluke Learning" />
     <span class="footer-logo-text">Antifluke Learning</span>
   </a>
   <div class="footer-links">
@@ -795,11 +849,13 @@ footer{
 </footer>
 
 <script>
+// ── FADE IN ──
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('v') });
 }, {threshold: 0.06});
 document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 
+// ── FAQ ──
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.parentElement;
@@ -807,6 +863,20 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
     if(!isOpen) item.classList.add('open');
   });
+});
+
+// ── THEME TOGGLE ──
+const html = document.documentElement;
+const btn = document.getElementById('themeToggle');
+
+// Default: light (no .dark class on html)
+// Check localStorage for saved preference
+const saved = localStorage.getItem('af-theme');
+if (saved === 'dark') html.classList.add('dark');
+
+btn.addEventListener('click', () => {
+  const isDark = html.classList.toggle('dark');
+  localStorage.setItem('af-theme', isDark ? 'dark' : 'light');
 });
 </script>
 </body>
