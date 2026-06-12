@@ -410,19 +410,150 @@ h2.section-h em{font-style:normal;background:linear-gradient(90deg,var(--violet)
 
 /* ── FOOTER ── */
 footer{
-  padding:2rem;border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:1rem;position:relative;z-index:1;
+  padding:3.5rem 2rem 2.5rem;border-top:1px solid var(--border);
+  position:relative;z-index:1;
   background:var(--footer-bg);transition:background .3s;
 }
-.footer-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.footer-inner{
+  max-width:980px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;
+}
+@media(max-width:700px){.footer-inner{grid-template-columns:1fr;gap:2.5rem}}
+.footer-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;margin-bottom:.7rem}
 .footer-logo img{height:28px;width:auto;display:block;object-fit:contain}
 .footer-logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:var(--text-heading);transition:color .3s}
-.footer-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
-.footer-links a{font-size:.8rem;color:var(--gray-mid);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;font-family:'Space Grotesk',sans-serif}
-.footer-links a:hover{color:var(--violet)}
-.footer-links a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
-.footer-copy{font-size:.72rem;color:var(--gray-mid);width:100%;text-align:center;margin-top:.5rem;font-family:'Space Grotesk',sans-serif}
+.footer-tagline{font-size:.82rem;color:var(--gray-mid);line-height:1.65;max-width:30ch}
+.footer-copy{font-size:.7rem;color:var(--gray-mid);margin-top:1.75rem;line-height:1.7;font-family:'Space Grotesk',sans-serif}
+.footer-socials{display:flex;flex-direction:column;gap:.75rem}
+.footer-social-label{
+  font-family:'Space Grotesk',sans-serif;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--violet);margin-bottom:.15rem;
+}
+.social-card{
+  display:flex;gap:.9rem;align-items:flex-start;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1rem 1.1rem;
+  text-decoration:none;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.social-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(0,0,0,.10);
+}
+.social-card-icon{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+}
+.social-card-icon.li{background:rgba(10,102,194,.10)}
+.social-card-icon.ig{background:rgba(225,48,108,.09)}
+.social-card-icon svg{width:17px;height:17px;fill:none;stroke-width:1.8;stroke-linecap:round}
+.social-card-icon.li svg{stroke:#0A66C2}
+.social-card-icon.ig svg{stroke:#E1306C}
+.social-card-name{font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:600;color:var(--text-heading);margin-bottom:.2rem}
+.social-card-desc{font-size:.78rem;color:var(--gray-mid);line-height:1.55}
+.social-card-handle{
+  display:inline-flex;align-items:center;gap:.3rem;
+  margin-top:.45rem;
+  font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:500;color:var(--violet);
+}
+.social-card-handle svg{width:9px;height:9px;stroke:var(--violet);fill:none;stroke-width:2.5;stroke-linecap:round}
+
+/* ── 3D HERO DEPTH ── */
+:root     { --grid3d: rgba(123,97,255,.09); }
+html.dark { --grid3d: rgba(123,97,255,.14); }
+
+/* Receding floor grid */
+.hero-floor {
+  position:absolute;inset:0;
+  perspective:700px;
+  pointer-events:none;overflow:hidden;z-index:0;
+}
+.hero-floor-grid {
+  position:absolute;
+  bottom:-8%;left:-50%;right:-50%;height:72%;
+  transform:rotateX(74deg);
+  transform-origin:bottom center;
+  background-image:
+    linear-gradient(var(--grid3d) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid3d) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:linear-gradient(to top,black 0%,rgba(0,0,0,.28) 50%,transparent 82%);
+  mask-image:linear-gradient(to top,black 0%,rgba(0,0,0,.28) 50%,transparent 82%);
+}
+
+/* Wireframe sphere */
+.hero-sphere {
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:min(82vw,660px);height:min(82vw,660px);
+  perspective:1400px;
+  pointer-events:none;
+  opacity:.08;
+  z-index:0;
+}
+html.dark .hero-sphere { opacity:.16; }
+@media(max-width:640px){
+  .hero-sphere{opacity:.05}
+  html.dark .hero-sphere{opacity:.10}
+}
+.sphere-scene {
+  width:100%;height:100%;
+  transform-style:preserve-3d;
+  will-change:transform;
+  animation:sphere-turn 65s linear infinite;
+}
+@media(prefers-reduced-motion:reduce){
+  .sphere-scene{animation:none}
+}
+.sph-r {
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid;
+}
+.sph-r-a { border-color:rgba(123,97,255,1); }
+.sph-r-b { border-color:rgba(61,169,252,.8);   transform:rotateX(90deg); }
+.sph-r-c { border-color:rgba(155,229,100,.55); transform:rotateY(90deg); }
+.sph-r-d { inset:13%; border-color:rgba(123,97,255,.6); transform:rotateX(52deg) rotateZ(28deg); }
+.sph-r-e { inset:13%; border-color:rgba(61,169,252,.4);  transform:rotateX(-40deg) rotateZ(-22deg); }
+@keyframes sphere-turn {
+  from { transform:rotateX(18deg) rotateY(0deg)   }
+  to   { transform:rotateX(18deg) rotateY(360deg) }
+}
+
+/* ── RUTA DEPTH ── */
+.ruta-section { overflow:hidden; }
+
+.ruta-floor {
+  position:absolute;inset:0;
+  perspective:560px;
+  pointer-events:none;overflow:hidden;z-index:0;
+}
+.ruta-floor-grid {
+  position:absolute;
+  bottom:-6%;left:-50%;right:-50%;height:60%;
+  transform:rotateX(78deg);
+  transform-origin:bottom center;
+  background-image:
+    linear-gradient(var(--grid3d) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid3d) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.18) 50%,transparent 80%);
+  mask-image:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.18) 50%,transparent 80%);
+}
+
+/* Ground glow that anchors the step cards */
+.ruta-glow {
+  position:absolute;
+  bottom:-20%;left:50%;
+  transform:translateX(-50%);
+  width:90%;height:320px;
+  background:radial-gradient(ellipse 65% 55% at 50% 100%,rgba(123,97,255,.055) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+html.dark .ruta-glow {
+  background:radial-gradient(ellipse 65% 55% at 50% 100%,rgba(123,97,255,.10) 0%,transparent 70%);
+}
 
 /* ── FADE IN ── */
 .fi{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
@@ -436,7 +567,7 @@ footer{
   .hero-stats{gap:2rem}
   .bloque{grid-template-columns:60px 1fr}
   .bloque-content{padding:1rem 1rem}
-  footer{padding:1.5rem 1.2rem}
+  footer{padding:2.5rem 1.2rem}
 }
 </style>
 </head>
@@ -469,6 +600,22 @@ footer{
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
+
+  <!-- 3D: receding grid floor -->
+  <div class="hero-floor" aria-hidden="true">
+    <div class="hero-floor-grid"></div>
+  </div>
+
+  <!-- 3D: wireframe sphere -->
+  <div class="hero-sphere" aria-hidden="true">
+    <div class="sphere-scene">
+      <div class="sph-r sph-r-a"></div>
+      <div class="sph-r sph-r-b"></div>
+      <div class="sph-r sph-r-c"></div>
+      <div class="sph-r sph-r-d"></div>
+      <div class="sph-r sph-r-e"></div>
+    </div>
+  </div>
 
   <div class="hero-inner">
     <div class="hero-label fi">Decisiones con Datos · Masterclass Power BI · 3 horas en vivo</div>
@@ -615,7 +762,11 @@ footer{
 </section>
 
 <!-- RUTA PROFESIONAL -->
-<section class="ruta-section">
+<section class="ruta-section" style="position:relative">
+  <div class="ruta-floor" aria-hidden="true">
+    <div class="ruta-floor-grid"></div>
+  </div>
+  <div class="ruta-glow" aria-hidden="true"></div>
   <div class="container">
     <span class="section-tag fi">Más allá de la masterclass</span>
     <h2 class="section-h fi">Esta sesión es solo <em>el primer paso</em></h2>
@@ -769,21 +920,46 @@ footer{
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo">
-    <img src="logo.png" alt="Antifluke Learning" />
-    <span class="footer-logo-text">Antifluke Learning</span>
-  </a>
-  <div class="footer-links">
-    <a href="https://www.instagram.com/antifluke.learning" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
-      @antifluke.learning
-    </a>
-    <a href="https://www.linkedin.com/company/antifluke-learning" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-4a2 2 0 0 1 4 0v4"/><line x1="12" y1="11" x2="12" y2="17"/></svg>
-      LinkedIn
-    </a>
+  <div class="footer-inner">
+
+    <!-- Marca -->
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">
+        <img src="logo.png" alt="Antifluke Learning" />
+        <span class="footer-logo-text">Antifluke Learning</span>
+      </a>
+      <p class="footer-tagline">Certificamos capacidades demostradas, no asistencia ni herramientas.</p>
+      <p class="footer-copy">© 2025 Antifluke Learning · Guatemala<br>Todos los derechos reservados</p>
+    </div>
+
+    <!-- Redes sociales -->
+    <div class="footer-socials">
+      <div class="footer-social-label">Síguenos</div>
+
+      <a href="https://www.linkedin.com/company/antifluke-learning" target="_blank" rel="noopener" class="social-card">
+        <div class="social-card-icon li">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-4a2 2 0 0 1 4 0v4"/><line x1="12" y1="11" x2="12" y2="17"/></svg>
+        </div>
+        <div class="social-card-body">
+          <div class="social-card-name">LinkedIn</div>
+          <div class="social-card-desc">Sigue nuestra página para añadir tu certificado directamente a tu perfil y ser el primero en conocer nuevas rutas y certificaciones.</div>
+          <div class="social-card-handle">antifluke-learning <svg viewBox="0 0 9 9"><polyline points="2,2 7,4.5 2,7"/></svg></div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/antifluke.learning" target="_blank" rel="noopener" class="social-card">
+        <div class="social-card-icon ig">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div class="social-card-body">
+          <div class="social-card-name">Instagram</div>
+          <div class="social-card-desc">Reels y posts educativos sobre datos, BI e IA. Contenido que puedes aplicar en tu trabajo esta semana.</div>
+          <div class="social-card-handle">@antifluke.learning <svg viewBox="0 0 9 9"><polyline points="2,2 7,4.5 2,7"/></svg></div>
+        </div>
+      </a>
+
+    </div>
   </div>
-  <p class="footer-copy">© 2025 Antifluke Learning · Guatemala · Todos los derechos reservados</p>
 </footer>
 
 <script>
