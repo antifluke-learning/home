@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu clase: Decisiones con Datos — Antifluke Learning</title>
+<meta name="description" content="Accede a la clase grabada de la masterclass Decisiones con Datos.">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --midnight: #F5F7FA;
+  --midnight2: #ECEEF3;
+  --violet: #7B61FF;
+  --violet2: #6448f0;
+  --blue: #3DA9FC;
+  --gray-mid: #5a5f72;
+  --border: rgba(123,97,255,0.14);
+  --border2: rgba(123,97,255,0.24);
+  --card: #FFFFFF;
+  --bg-body: #F5F7FA;
+  --text-body: #2a2e3e;
+  --text-heading: #0B1020;
+  --nav-bg: rgba(245,247,250,0.94);
+  --nav-border: rgba(123,97,255,0.12);
+  --footer-bg: rgba(245,247,250,0.98);
+  --theme-icon-sun: block;
+  --theme-icon-moon: none;
+}
+html.dark {
+  --midnight: #0B1020;
+  --midnight2: #0f1528;
+  --violet: #7B61FF;
+  --violet2: #9580ff;
+  --blue: #3DA9FC;
+  --gray-mid: #A3A8B8;
+  --border: rgba(123,97,255,0.12);
+  --border2: rgba(123,97,255,0.22);
+  --card: #111827;
+  --bg-body: #0B1020;
+  --text-body: #c8cdd8;
+  --text-heading: #ffffff;
+  --nav-bg: rgba(11,16,32,.92);
+  --nav-border: rgba(123,97,255,0.12);
+  --footer-bg: rgba(11,16,32,.95);
+  --theme-icon-sun: none;
+  --theme-icon-moon: block;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg-body);
+  color:var(--text-body);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:var(--text-heading)}
+
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 2rem;
+  backdrop-filter:blur(20px);
+  background:var(--nav-bg);
+  border-bottom:1px solid var(--nav-border);
+}
+.nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.nav-logo img{height:32px;width:auto;display:block;object-fit:contain}
+.nav-logo-text{font-weight:700;font-size:1rem;color:var(--text-heading);letter-spacing:-.02em}
+
+.theme-toggle{
+  width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,border-color .3s,transform .2s;flex-shrink:0;
+}
+.theme-toggle:hover{transform:scale(1.08)}
+.theme-toggle svg{width:16px;height:16px;fill:none;stroke:var(--violet);stroke-width:2;stroke-linecap:round}
+.icon-sun{display:var(--theme-icon-sun)}
+.icon-moon{display:var(--theme-icon-moon)}
+
+main{flex:1;padding:3.5rem 2rem;display:flex;flex-direction:column;align-items:center;gap:2rem}
+.clase-header{text-align:center;max-width:600px}
+.clase-tag{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--violet2);background:rgba(123,97,255,.1);border:1px solid rgba(123,97,255,.2);
+  padding:.3rem .8rem;border-radius:999px;margin-bottom:1rem;
+}
+.clase-header h1{font-size:clamp(1.5rem,3.5vw,2.1rem);margin-bottom:.6rem}
+.clase-header p{color:var(--gray-mid);font-size:.95rem;line-height:1.55}
+
+#auth-gate{width:100%}
+
+footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);padding:1.5rem 2rem;text-align:center}
+footer p{font-size:.8rem;color:var(--gray-mid)}
+footer a{color:var(--violet2);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="Antifluke Learning">
+    <span class="nav-logo-text">Antifluke Learning</span>
+  </a>
+  <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+    <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"></line></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  </button>
+</nav>
+
+<main>
+  <div class="clase-header">
+    <span class="clase-tag">Decisiones con Datos</span>
+    <h1>Tu clase grabada</h1>
+    <p>Accede con el correo que usaste al inscribirte a la masterclass.</p>
+  </div>
+
+  <div id="auth-gate"></div>
+</main>
+
+<footer>
+  <p>¿Problemas para acceder? Escríbenos a <a href="https://wa.me/50238719307" target="_blank" rel="noopener">WhatsApp</a>.</p>
+</footer>
+
+<script>
+const html = document.documentElement;
+const btn = document.getElementById('themeToggle');
+const saved = localStorage.getItem('af-theme');
+if (saved === 'dark') html.classList.add('dark');
+btn.addEventListener('click', () => {
+  const isDark = html.classList.toggle('dark');
+  localStorage.setItem('af-theme', isDark ? 'dark' : 'light');
+});
+</script>
+
+<script type="module">
+import { initAuthGate } from './auth-gate.js';
+
+initAuthGate({
+  programa: 'decisiones-con-datos',
+  youtubeVideoId: 'REEMPLAZAR_CON_ID_DE_YOUTUBE', // TODO: pegar el ID del video no listado antes de publicar
+  mountEl: document.getElementById('auth-gate'),
+});
+</script>
+
+</body>
+</html>
