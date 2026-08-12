@@ -113,6 +113,27 @@ nav{
 }
 .nav-cta:hover{background:var(--violet2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(123,97,255,.4)}
 
+.nav-desktop-links{display:flex;align-items:center;gap:.75rem}
+.nav-menu-toggle{
+  display:none;width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
+  background:var(--card);cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;
+}
+.nav-menu-toggle svg{width:18px;height:18px;stroke:var(--text-heading);fill:none;stroke-width:2;stroke-linecap:round}
+.nav-mobile-menu{
+  display:none;flex-direction:column;gap:.9rem;
+  position:absolute;top:100%;left:0;right:0;
+  background:var(--card);border-bottom:1px solid var(--nav-border);
+  padding:1.2rem 2rem;
+}
+.nav-mobile-menu.open{display:flex}
+.nav-mobile-menu a{font-size:.95rem;font-weight:600;color:var(--text-heading);text-decoration:none}
+.nav-mobile-menu a.nav-cta{color:#fff;text-align:center}
+
+@media (max-width:640px){
+  .nav-desktop-links{display:none}
+  .nav-menu-toggle{display:flex}
+}
+
 .wrap{max-width:1100px;margin:0 auto;padding:0 2rem}
 
 /* HERO */
@@ -222,7 +243,16 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"></line></svg>
       <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-    <a href="decisiones-con-datos-clase.html" style="font-size:.85rem;font-weight:600;color:var(--violet2);text-decoration:none;margin-right:.4rem">¿Ya pagaste? Accede a tu clase</a>
+    <div class="nav-desktop-links">
+      <a href="decisiones-con-datos-clase.html" style="font-size:.85rem;font-weight:600;color:var(--violet2);text-decoration:none">Acceder</a>
+      <a href="#programas" class="nav-cta">Ver programas</a>
+    </div>
+    <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Abrir menú">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="navMobileMenu">
+    <a href="decisiones-con-datos-clase.html">Acceder</a>
     <a href="#programas" class="nav-cta">Ver programas</a>
   </div>
 </nav>
@@ -321,6 +351,15 @@ if (saved === 'dark') html.classList.add('dark');
 btn.addEventListener('click', () => {
   const isDark = html.classList.toggle('dark');
   localStorage.setItem('af-theme', isDark ? 'dark' : 'light');
+});
+
+const navMenuToggle = document.getElementById('navMenuToggle');
+const navMobileMenu = document.getElementById('navMobileMenu');
+navMenuToggle.addEventListener('click', () => {
+  navMobileMenu.classList.toggle('open');
+});
+navMobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navMobileMenu.classList.remove('open'));
 });
 </script>
 
