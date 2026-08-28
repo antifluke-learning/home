@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -137,22 +137,15 @@ nav{
 .wrap{max-width:1100px;margin:0 auto;padding:0 2rem}
 
 /* HERO */
-.hero{padding:6rem 2rem 5rem;text-align:center;position:relative}
-.hero-label{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--violet2);border:1px solid rgba(123,97,255,.25);
-  padding:.4rem .9rem;border-radius:999px;margin-bottom:1.6rem;
-}
-.hero-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--violet);box-shadow:0 0 8px var(--violet);flex-shrink:0}
-.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;max-width:760px;margin:0 auto 1.4rem}
+.hero{padding:6rem 2rem 5rem;position:relative;max-width:1100px;margin:0 auto}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;max-width:640px;margin:0 0 1.4rem}
 .hero h1 em{
   font-style:normal;
   background:linear-gradient(90deg,var(--violet),var(--blue));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.hero-sub{font-size:1.08rem;color:var(--gray-mid);max-width:560px;margin:0 auto 2.2rem;line-height:1.6}
-.hero-ctas{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+.hero-sub{font-size:1.08rem;color:var(--gray-mid);max-width:480px;margin:0 0 2.2rem;line-height:1.6}
+.hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap}
 .btn-primary{
   padding:.85rem 1.6rem;border-radius:10px;font-weight:600;font-size:.95rem;
   background:var(--violet);color:#fff;text-decoration:none;display:inline-block;
@@ -167,44 +160,68 @@ nav{
 .btn-secondary:hover{border-color:var(--violet);transform:translateY(-2px)}
 
 /* VALORES */
-.valores{background:var(--midnight2);padding:4.5rem 2rem}
-.valores-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
-.valor-card{
-  background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem;
-  transition:border-color .25s,transform .25s;
+.valores{background:var(--midnight2);padding:4.5rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.valores-prose{max-width:640px;margin:0 auto}
+.valores-prose p{font-size:1.05rem;line-height:1.85;color:var(--text-body)}
+.valores-prose strong{color:var(--text-heading);font-weight:600}
+.valores-prose a{color:var(--violet2);text-decoration:none;border-bottom:1px solid var(--border2)}
+
+/* INSTRUCTORES */
+.instructores{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.instructores h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:2.4rem;max-width:560px}
+.instructores h2 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--violet),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.valor-card:hover{border-color:var(--border2);transform:translateY(-4px)}
-.valor-icon{
-  width:40px;height:40px;border-radius:10px;background:rgba(123,97,255,.1);
-  display:flex;align-items:center;justify-content:center;margin-bottom:1rem;
+.instructor-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:800px){.instructor-cards{grid-template-columns:1fr}}
+.instructor-card{
+  background:var(--card);border:1px solid var(--border2);border-radius:16px;
+  padding:1.8rem;display:flex;gap:1.4rem;align-items:flex-start;
 }
-.valor-icon svg{width:20px;height:20px;stroke:var(--violet);fill:none;stroke-width:2;stroke-linecap:round}
-.valor-card h3{font-size:1.05rem;margin-bottom:.5rem}
-.valor-card p{font-size:.92rem;color:var(--gray-mid);line-height:1.55}
+.instructor-photo{
+  width:84px;height:84px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#fff;
+  overflow:hidden;
+}
+.instructor-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.instructor-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text-heading)}
+.instructor-role{display:block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet2);margin:.2rem 0 .7rem}
+.instructor-bio{font-size:.88rem;line-height:1.65;color:var(--gray-mid);margin-bottom:1rem}
+.instructor-creds{display:flex;flex-wrap:wrap;gap:.5rem}
+.cred-pill{
+  font-size:.68rem;font-weight:600;padding:.3rem .65rem;border-radius:999px;
+  background:rgba(123,97,255,.08);border:1px solid var(--border2);color:var(--gray-mid);
+}
+.instructor-card.placeholder{border-style:dashed;background:transparent}
+.instructor-card.placeholder .instructor-photo{
+  background:transparent;border:1px dashed var(--border2);color:var(--gray-mid);
+}
+.instructor-card.placeholder .instructor-bio{margin-bottom:0}
 
 /* PROGRAMAS */
-.programas{padding:5rem 2rem}
+.programas{padding:5rem 2rem;max-width:1100px;margin:0 auto}
 .section-label{
   display:block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--violet2);margin-bottom:.7rem;text-align:center;
+  color:var(--violet2);margin-bottom:.7rem;
 }
-.programas h2{font-size:clamp(1.6rem,3.5vw,2.2rem);text-align:center;margin-bottom:2.8rem}
-.programas-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-.programa-card{
-  background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;
-  display:flex;flex-direction:column;transition:border-color .25s,transform .25s,box-shadow .25s;
+.programas h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:2.4rem;max-width:560px}
+.programa-activo{
+  background:var(--card);border:1px solid var(--border2);border-radius:16px;
+  padding:2.4rem;max-width:640px;
 }
-.programa-card.disponible{border-color:var(--border2)}
-.programa-card:hover.disponible{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.12)}
 .programa-tag{
   font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
   color:var(--violet2);background:rgba(123,97,255,.1);border:1px solid rgba(123,97,255,.2);
-  padding:.3rem .7rem;border-radius:999px;display:inline-block;width:fit-content;margin-bottom:1rem;
+  padding:.3rem .7rem;border-radius:999px;display:inline-block;width:fit-content;margin-bottom:1.1rem;
 }
-.programa-card h3{font-size:1.25rem;margin-bottom:.6rem}
-.programa-card p{font-size:.9rem;color:var(--gray-mid);line-height:1.55;margin-bottom:1.4rem;flex-grow:1}
-.programa-card .btn-secondary{align-self:flex-start}
-.programa-card.proximamente{opacity:.6;border-style:dashed}
+.programa-activo h3{font-size:1.4rem;margin-bottom:.7rem}
+.programa-activo p{font-size:.95rem;color:var(--gray-mid);line-height:1.6;margin-bottom:1.6rem}
+.programas-next{font-size:.88rem;color:var(--gray-mid);line-height:1.6;margin-top:1.6rem;max-width:560px}
+.programas-next a{color:var(--violet2);font-weight:600;text-decoration:none;border-bottom:1px solid var(--border2)}
 
 /* CTA FINAL */
 .cta-final{background:var(--midnight2);padding:5rem 2rem;text-align:center}
@@ -259,32 +276,48 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-label">Guatemala · LATAM</div>
-  <h1>Desarrollo profesional en <em>BI, datos e IA</em>, aprendiendo con problemas reales</h1>
-  <p class="hero-sub">Formamos profesionales que resuelven problemas de negocio con datos — no solo que conocen herramientas. Certificamos capacidad demostrada, no asistencia.</p>
+  <h1>No enseñamos herramientas. Enseñamos a <em>resolver problemas</em> con BI, datos e IA.</h1>
+  <p class="hero-sub">Hoy eso significa Decisiones con Datos: una masterclass de Power BI construida sobre el caso real de una cadena guatemalteca de 12 tiendas.</p>
   <div class="hero-ctas">
     <a href="#programas" class="btn-primary">Ver programas</a>
-    <a href="https://wa.me/50238719307" target="_blank" rel="noopener" class="btn-secondary">Hablar por WhatsApp</a>
   </div>
 </section>
 
 <!-- VALORES -->
 <section class="valores">
-  <div class="valores-grid">
-    <div class="valor-card">
-      <div class="valor-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M7 14l4-4 4 3 5-6"></path></svg></div>
-      <h3>Proyectos reales, no teoría suelta</h3>
-      <p>Cada programa se construye alrededor de un problema de negocio real, de principio a fin — no ejercicios aislados.</p>
+  <div class="valores-prose">
+    <p>En Antifluke el certificado no se entrega por terminar un video. Se emite después de un checkpoint donde resuelves un caso nuevo y demuestras que puedes aplicarlo. Nace de ver, una y otra vez en la industria, cuántos certificados terminan siendo solo un PDF más — y de la convicción de que uno debería significar que la persona realmente puede hacer el trabajo.</p>
+  </div>
+</section>
+
+<!-- INSTRUCTORES -->
+<section class="instructores" id="instructores">
+  <span class="section-label">Conoce a los instructores</span>
+  <h2>Quién está <em>detrás del método</em></h2>
+  <div class="instructor-cards">
+    <div class="instructor-card">
+      <div class="instructor-photo">
+        <!-- TODO: reemplazar por <img src="eddson-sierra.jpg" alt="Eddson Sierra"> cuando se suba la foto al repo -->
+        ES
+      </div>
+      <div>
+        <span class="instructor-name">Eddson Sierra</span>
+        <span class="instructor-role">Senior BI &amp; Analytics Expert</span>
+        <p class="instructor-bio">Con más de 10 años de experiencia, Eddson ha diseñado soluciones de Business Intelligence en banca, telecomunicaciones, retail de alimentos y grandes corporaciones centroamericanas. Ha trabajado en analítica aplicada a marketing, people analytics y finanzas, convirtiendo datos de estas áreas en decisiones ejecutivas concretas. En Antifluke enseña desde la experiencia acumulada resolviendo problemas reales en la industria, no desde la teoría.</p>
+        <div class="instructor-creds">
+          <span class="cred-pill">MicroMasters MIT — Statistics &amp; Data Science</span>
+          <span class="cred-pill">Maestría en Data Science · Universidad Galileo</span>
+          <span class="cred-pill">Power BI · SQL · Python · R · Databricks</span>
+        </div>
+      </div>
     </div>
-    <div class="valor-card">
-      <div class="valor-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"></path></svg></div>
-      <h3>Instructores activos en la industria</h3>
-      <p>Aprendes de profesionales que resuelven estos problemas todos los días, no de material genérico.</p>
-    </div>
-    <div class="valor-card">
-      <div class="valor-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"></path></svg></div>
-      <h3>Certificación por capacidad, no por asistencia</h3>
-      <p>El certificado se emite solo tras demostrar que puedes aplicar lo aprendido, no por completar horas de video.</p>
+    <div class="instructor-card placeholder">
+      <div class="instructor-photo">+</div>
+      <div>
+        <span class="instructor-name">Próximo instructor</span>
+        <span class="instructor-role">Por confirmar</span>
+        <p class="instructor-bio">Estamos sumando más instructores activos en la industria para ampliar los programas de Antifluke.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -293,19 +326,13 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 <section class="programas" id="programas">
   <span class="section-label">Programas</span>
   <h2>Empieza por donde tu trabajo lo necesita</h2>
-  <div class="programas-grid">
-    <div class="programa-card disponible">
-      <span class="programa-tag">Masterclass · Power BI</span>
-      <h3>Decisiones con Datos</h3>
-      <p>Aprende Power BI resolviendo un problema real de negocio, de principio a fin. Masterclass en vivo con un profesional activo en la industria.</p>
-      <a href="decisiones-con-datos.html" class="btn-secondary">Ver detalles →</a>
-    </div>
-    <div class="programa-card proximamente">
-      <span class="programa-tag">Próximamente</span>
-      <h3>Nuevos programas en camino</h3>
-      <p>Estamos preparando más programas de analítica de datos e IA. Síguenos en redes o escríbenos para enterarte primero.</p>
-    </div>
+  <div class="programa-activo">
+    <span class="programa-tag">Masterclass · Power BI</span>
+    <h3>Decisiones con Datos</h3>
+    <p>Aprende Power BI resolviendo un problema real de negocio, de principio a fin, con un instructor activo en la industria.</p>
+    <a href="decisiones-con-datos.html" class="btn-secondary">Ver detalles →</a>
   </div>
+  <p class="programas-next">En desarrollo: certificaciones de capacidades y rutas profesionales más allá de una masterclass individual — sin fecha confirmada todavía. <a href="https://wa.me/50238719307" target="_blank" rel="noopener">Escríbenos</a> si quieres que te avisemos cuando estén listas.</p>
 </section>
 
 <!-- CTA FINAL -->
@@ -347,7 +374,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 const html = document.documentElement;
 const btn = document.getElementById('themeToggle');
 const saved = localStorage.getItem('af-theme');
-if (saved === 'dark') html.classList.add('dark');
+if (saved === 'light') html.classList.remove('dark');
 btn.addEventListener('click', () => {
   const isDark = html.classList.toggle('dark');
   localStorage.setItem('af-theme', isDark ? 'dark' : 'light');

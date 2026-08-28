@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,7 +135,7 @@ footer a{color:var(--violet2);text-decoration:none}
 const html = document.documentElement;
 const btn = document.getElementById('themeToggle');
 const saved = localStorage.getItem('af-theme');
-if (saved === 'dark') html.classList.add('dark');
+if (saved === 'light') html.classList.remove('dark');
 btn.addEventListener('click', () => {
   const isDark = html.classList.toggle('dark');
   localStorage.setItem('af-theme', isDark ? 'dark' : 'light');
