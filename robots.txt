@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://antifluke-learning.github.io/home/sitemap.xml

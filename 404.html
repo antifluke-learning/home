@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página no encontrada — Antifluke Learning</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --midnight: #F5F7FA;
+  --violet: #7B61FF;
+  --violet2: #6448f0;
+  --blue: #3DA9FC;
+  --gray-mid: #5a5f72;
+  --border: rgba(123,97,255,0.14);
+  --card: #FFFFFF;
+  --bg-body: #F5F7FA;
+  --text-body: #2a2e3e;
+  --text-heading: #0B1020;
+}
+html.dark {
+  --violet: #7B61FF;
+  --violet2: #9580ff;
+  --blue: #3DA9FC;
+  --gray-mid: #A3A8B8;
+  --border: rgba(123,97,255,0.12);
+  --card: #111827;
+  --bg-body: #0B1020;
+  --text-body: #c8cdd8;
+  --text-heading: #ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg-body);
+  color:var(--text-body);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:2rem;
+  text-align:center;
+  transition:background .3s,color .3s;
+}
+.wrap{max-width:480px}
+.wrap img{height:40px;width:auto;margin-bottom:2rem}
+.code{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:clamp(3rem,10vw,5rem);
+  background:linear-gradient(90deg,var(--violet),var(--blue));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  line-height:1;
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;
+  color:var(--text-heading);
+  font-size:clamp(1.3rem,3vw,1.6rem);
+  margin:1rem 0 .75rem;
+}
+p{color:var(--gray-mid);font-size:.95rem;line-height:1.6;margin-bottom:2rem}
+.btn{
+  display:inline-block;
+  background:var(--violet);
+  color:#fff;
+  font-weight:600;
+  font-size:.9rem;
+  padding:.85rem 1.8rem;
+  border-radius:10px;
+  text-decoration:none;
+  transition:background .2s,transform .2s;
+}
+.btn:hover{background:var(--violet2);transform:translateY(-1px)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <img src="logo.png" alt="Antifluke Learning">
+    <div class="code">404</div>
+    <h1>No encontramos esta página</h1>
+    <p>El enlace que seguiste puede estar roto o la página se movió. Volvamos a un lugar conocido.</p>
+    <a class="btn" href="/">Ir al inicio</a>
+  </div>
+
+<script>
+if (localStorage.getItem('af-theme') === 'light') {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+</body>
+</html>
