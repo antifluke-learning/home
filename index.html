@@ -212,19 +212,48 @@ nav{
   color:var(--violet2);margin-bottom:.7rem;
 }
 .programas h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:2.4rem;max-width:560px}
-.programa-activo{
-  background:var(--card);border:1px solid var(--border2);border-radius:16px;
-  padding:2.4rem;max-width:640px;
+
+.programa-cards{display:grid;grid-template-columns:1.15fr 1fr;gap:1.5rem;align-items:stretch}
+@media(max-width:800px){.programa-cards{grid-template-columns:1fr}}
+
+.programa-card{
+  border-radius:20px;display:flex;flex-direction:column;overflow:hidden;
 }
+
+/* Card destacada */
+.programa-card.featured{background:#0B1020;border:1px solid rgba(123,97,255,.35)}
+.programa-visual{padding:1.4rem 1.4rem 0}
+.programa-visual img{
+  width:100%;display:block;border-radius:12px;object-fit:cover;aspect-ratio:16/10;
+  border:1px solid rgba(255,255,255,.1);
+}
+.programa-card.featured .programa-body{padding:1.6rem 1.8rem 1.9rem}
 .programa-tag{
   font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--violet2);background:rgba(123,97,255,.1);border:1px solid rgba(123,97,255,.2);
-  padding:.3rem .7rem;border-radius:999px;display:inline-block;width:fit-content;margin-bottom:1.1rem;
+  padding:.3rem .7rem;border-radius:999px;display:inline-block;width:fit-content;margin-bottom:1rem;
 }
-.programa-activo h3{font-size:1.4rem;margin-bottom:.7rem}
-.programa-activo p{font-size:.95rem;color:var(--gray-mid);line-height:1.6;margin-bottom:1.6rem}
-.programas-next{font-size:.88rem;color:var(--gray-mid);line-height:1.6;margin-top:1.6rem;max-width:560px}
-.programas-next a{color:var(--violet2);font-weight:600;text-decoration:none;border-bottom:1px solid var(--border2)}
+.programa-card.featured .programa-tag{color:#c9bcff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.programa-card.featured h3{font-size:1.35rem;color:#fff;margin-bottom:.6rem}
+.programa-card.featured p{font-size:.92rem;color:#a8adc0;line-height:1.6;margin-bottom:1.1rem}
+.programa-check{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:#c9bcff;font-weight:600;margin-bottom:1.5rem}
+.programa-check svg{width:15px;height:15px;flex-shrink:0}
+.programa-card.featured .btn-primary{width:fit-content}
+
+/* Card próximamente */
+.programa-card.upcoming{
+  background:transparent;border:1.5px dashed var(--border2);
+  padding:1.6rem 1.8rem;justify-content:space-between;
+}
+.programa-card.upcoming .programa-tag{color:var(--gray-mid);background:rgba(123,97,255,.06);border:1px solid var(--border2)}
+.programa-lock{
+  width:100%;aspect-ratio:16/10;border-radius:12px;border:1.5px dashed var(--border2);
+  display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;background:var(--midnight2);
+}
+.programa-lock svg{width:26px;height:26px;stroke:var(--gray-mid)}
+.programa-card.upcoming h3{font-size:1.15rem;margin-bottom:.6rem}
+.programa-card.upcoming p{font-size:.88rem;color:var(--gray-mid);line-height:1.6;margin-bottom:1.3rem}
+.programa-notify{font-size:.85rem;font-weight:600;color:var(--violet2);text-decoration:none;border-bottom:1px solid var(--border2)}
+.programa-notify:hover{color:var(--violet)}
 
 /* CTA FINAL */
 .cta-final{background:var(--midnight2);padding:5rem 2rem;text-align:center}
@@ -328,13 +357,36 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 <section class="programas" id="programas">
   <span class="section-label">Programas</span>
   <h2>Empieza por donde tu trabajo lo necesita</h2>
-  <div class="programa-activo">
-    <span class="programa-tag">Masterclass · Power BI</span>
-    <h3>Decisiones con Datos</h3>
-    <p>Aprende Power BI resolviendo un problema real de negocio, de principio a fin, con un instructor activo en la industria.</p>
-    <a href="decisiones-con-datos.html" class="btn-secondary">Ver detalles →</a>
+
+  <div class="programa-cards">
+    <div class="programa-card featured">
+      <div class="programa-visual">
+        <img src="dashboard-preview.png" alt="Dashboard de Power BI construido en la masterclass Decisiones con Datos">
+      </div>
+      <div class="programa-body">
+        <span class="programa-tag">Masterclass · Power BI</span>
+        <h3>Decisiones con Datos</h3>
+        <p>Aprende Power BI resolviendo un problema real de negocio, de principio a fin, con un instructor activo en la industria.</p>
+        <span class="programa-check">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"></path></svg>
+          Certificado solo por capacidad demostrada
+        </span>
+        <a href="decisiones-con-datos.html" class="btn-primary">Ver detalles →</a>
+      </div>
+    </div>
+
+    <div class="programa-card upcoming">
+      <div>
+        <span class="programa-tag">Próximamente</span>
+        <div class="programa-lock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M7 10V7a5 5 0 0 1 10 0v3"></path></svg>
+        </div>
+        <h3>Nuevas certificaciones y rutas</h3>
+        <p>Certificaciones de capacidades y rutas profesionales más allá de una masterclass individual — sin fecha confirmada todavía.</p>
+      </div>
+      <a href="https://tally.so/r/MelrNE" target="_blank" rel="noopener" class="programa-notify">Avisarme →</a>
+    </div>
   </div>
-  <p class="programas-next">En desarrollo: certificaciones de capacidades y rutas profesionales más allá de una masterclass individual — sin fecha confirmada todavía. <a href="https://wa.me/50238719307" target="_blank" rel="noopener">Escríbenos</a> si quieres que te avisemos cuando estén listas.</p>
 </section>
 
 <!-- CTA FINAL -->
