@@ -46,6 +46,8 @@
   --nav-bg: rgba(245,247,250,0.94);
   --nav-border: rgba(123,97,255,0.12);
   --footer-bg: rgba(245,247,250,0.98);
+  --featured-bg: #232842;
+  --featured-border: rgba(123,97,255,.28);
   --theme-icon-sun: block;
   --theme-icon-moon: none;
 }
@@ -67,6 +69,8 @@ html.dark {
   --nav-bg: rgba(11,16,32,.92);
   --nav-border: rgba(123,97,255,0.12);
   --footer-bg: rgba(11,16,32,.95);
+  --featured-bg: #181e33;
+  --featured-border: rgba(123,97,255,.3);
   --theme-icon-sun: none;
   --theme-icon-moon: block;
 }
@@ -171,39 +175,94 @@ nav{
 
 /* INSTRUCTORES */
 .instructores{padding:5rem 2rem;max-width:1100px;margin:0 auto}
-.instructores h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:2.4rem;max-width:560px}
-.instructores h2 em{
+.instructores-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;margin-bottom:2rem}
+.instructores-head h2{font-size:clamp(1.6rem,3.5vw,2.2rem);max-width:560px}
+.instructores-head h2 em{
   font-style:normal;
   background:linear-gradient(90deg,var(--violet),var(--blue));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.instructor-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-@media(max-width:800px){.instructor-cards{grid-template-columns:1fr}}
+@media(max-width:640px){.instructores-head{flex-direction:column;align-items:flex-start}}
+
+.instructor-nav{display:flex;gap:.6rem;flex-shrink:0}
+.instructor-nav-btn{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--border2);background:var(--card);
+  color:var(--text-heading);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:border-color .2s,transform .2s;
+}
+.instructor-nav-btn:hover{border-color:var(--violet);transform:translateY(-1px)}
+.instructor-nav-btn:disabled{opacity:.35;cursor:default;transform:none}
+
+.instructor-carousel{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -2rem;padding:0 2rem}
+.instructor-carousel::-webkit-scrollbar{display:none}
+.instructor-track{display:flex;gap:1.5rem}
 .instructor-card{
-  background:var(--card);border:1px solid var(--border2);border-radius:16px;
-  padding:1.8rem;display:flex;gap:1.4rem;align-items:flex-start;
+  position:relative;flex:0 0 auto;width:280px;height:380px;border-radius:16px;
+  overflow:hidden;scroll-snap-align:start;
 }
-.instructor-photo{
-  width:84px;height:84px;border-radius:12px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--violet),var(--blue));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#fff;
-  overflow:hidden;
+@media(max-width:520px){.instructor-card{width:250px;height:350px}}
+
+.instructor-card-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.instructor-card-overlay{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:1.2rem;background:linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.35) 55%, transparent 100%);
 }
-.instructor-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.instructor-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text-heading)}
-.instructor-role{display:block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet2);margin:.2rem 0 .7rem}
-.instructor-bio{font-size:.88rem;line-height:1.65;color:var(--gray-mid);margin-bottom:1rem}
-.instructor-creds{display:flex;flex-wrap:wrap;gap:.5rem}
+.instructor-card-pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.7rem}
+.skill-pill{
+  font-size:.65rem;font-weight:600;padding:.28rem .6rem;border-radius:999px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;
+}
+.instructor-card-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;display:block}
+.instructor-card-role{display:block;font-size:.78rem;color:#b9a9ff;margin:.2rem 0 .8rem}
+.instructor-card-link{
+  background:none;border:none;padding:0;color:#fff;font-weight:600;font-size:.82rem;
+  cursor:pointer;text-align:left;width:fit-content;opacity:.9;transition:opacity .2s;
+}
+.instructor-card-link:hover{opacity:1;text-decoration:underline}
+
+.instructor-card.placeholder{
+  background:var(--card);border:1px dashed var(--border2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:1.8rem;
+}
+.instructor-placeholder-icon{
+  width:52px;height:52px;border-radius:12px;border:1px dashed var(--border2);
+  display:flex;align-items:center;justify-content:center;color:var(--gray-mid);
+  font-size:1.4rem;margin-bottom:1rem;
+}
+.instructor-card.placeholder .instructor-card-name{color:var(--text-heading)}
+.instructor-card.placeholder .instructor-card-role{color:var(--violet2);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:.3rem 0 .9rem}
+.instructor-placeholder-text{font-size:.85rem;line-height:1.6;color:var(--gray-mid)}
+
 .cred-pill{
   font-size:.68rem;font-weight:600;padding:.3rem .65rem;border-radius:999px;
   background:rgba(123,97,255,.08);border:1px solid var(--border2);color:var(--gray-mid);
 }
-.instructor-card.placeholder{border-style:dashed;background:transparent}
-.instructor-card.placeholder .instructor-photo{
-  background:transparent;border:1px dashed var(--border2);color:var(--gray-mid);
+
+/* MODAL INSTRUCTOR */
+.instructor-modal-overlay{
+  position:fixed;inset:0;background:rgba(11,16,32,.6);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;z-index:200;padding:1.5rem;
 }
-.instructor-card.placeholder .instructor-bio{margin-bottom:0}
+.instructor-modal-overlay.open{display:flex}
+.instructor-modal{
+  position:relative;background:var(--card);border-radius:20px;max-width:720px;width:100%;
+  max-height:85vh;overflow:auto;display:flex;box-shadow:0 24px 80px rgba(0,0,0,.35);
+}
+@media(max-width:700px){.instructor-modal{flex-direction:column;max-height:90vh}}
+.instructor-modal-close{
+  position:absolute;top:1rem;right:1rem;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--border2);background:var(--card);color:var(--text-heading);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;z-index:1;
+}
+.instructor-modal-photo{flex:0 0 260px}
+.instructor-modal-photo img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:700px){.instructor-modal-photo{flex:0 0 220px}.instructor-modal-photo img{height:220px}}
+.instructor-modal-body{padding:2rem;display:flex;flex-direction:column}
+.instructor-modal-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--text-heading);display:block}
+.instructor-modal-role{display:block;font-style:italic;font-size:.9rem;color:var(--violet2);margin:.3rem 0 1.1rem}
+.instructor-modal-bio{font-size:.92rem;line-height:1.7;color:var(--gray-mid);margin-bottom:1.3rem}
+.instructor-modal-creds{display:flex;flex-wrap:wrap;gap:.5rem;padding-top:1.2rem;border-top:1px solid var(--border)}
 
 /* PROGRAMAS */
 .programas{padding:5rem 2rem;max-width:1100px;margin:0 auto}
@@ -221,7 +280,7 @@ nav{
 }
 
 /* Card destacada */
-.programa-card.featured{background:#0B1020;border:1px solid rgba(123,97,255,.35)}
+.programa-card.featured{background:var(--featured-bg);border:1px solid var(--featured-border);transition:background .3s,border-color .3s}
 .programa-visual{padding:1.4rem 1.4rem 0}
 .programa-visual img{
   width:100%;display:block;border-radius:12px;object-fit:cover;aspect-ratio:16/10;
@@ -324,34 +383,60 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 
 <!-- INSTRUCTORES -->
 <section class="instructores" id="instructores">
-  <span class="section-label">Conoce a los instructores</span>
-  <h2>Quién está <em>detrás del método</em></h2>
-  <div class="instructor-cards">
-    <div class="instructor-card">
-      <div class="instructor-photo">
-        <img src="eddson-sierra.jpg" alt="Eddson Sierra">
-      </div>
-      <div>
-        <span class="instructor-name">Eddson Sierra</span>
-        <span class="instructor-role">Senior BI &amp; Analytics Expert</span>
-        <p class="instructor-bio">Con más de 10 años de experiencia, Eddson ha diseñado soluciones de Business Intelligence en banca, telecomunicaciones, retail de alimentos y grandes corporaciones centroamericanas. Ha trabajado en analítica aplicada a marketing, people analytics y finanzas, convirtiendo datos de estas áreas en decisiones ejecutivas concretas. En los últimos años ha llevado ese trabajo hacia la IA aplicada, construyendo flujos agénticos en BI y analítica que amplifican —no reemplazan— el pensamiento analítico. En Antifluke Learning enseña con las mismas herramientas que usa hoy: Power BI, SQL, Python y modelos como Claude y ChatGPT integrados a flujos reales de trabajo.</p>
-        <div class="instructor-creds">
-          <span class="cred-pill">MicroMasters MIT — Statistics &amp; Data Science</span>
-          <span class="cred-pill">Maestría en Data Science · Universidad Galileo</span>
-          <span class="cred-pill">Power BI · SQL · Python · R · Databricks</span>
-        </div>
-      </div>
+  <div class="instructores-head">
+    <div>
+      <span class="section-label">Conoce a los instructores</span>
+      <h2>Quién está <em>detrás del método</em></h2>
     </div>
-    <div class="instructor-card placeholder">
-      <div class="instructor-photo">+</div>
-      <div>
-        <span class="instructor-name">Próximo instructor</span>
-        <span class="instructor-role">Por confirmar</span>
-        <p class="instructor-bio">Estamos sumando más instructores activos en la industria para ampliar los programas de Antifluke Learning.</p>
-      </div>
+    <div class="instructor-nav">
+      <button class="instructor-nav-btn" id="instructorPrev" aria-label="Instructor anterior">‹</button>
+      <button class="instructor-nav-btn" id="instructorNext" aria-label="Siguiente instructor">›</button>
+    </div>
+  </div>
+
+  <div class="instructor-carousel" id="instructorTrack">
+    <div class="instructor-track">
+
+      <article class="instructor-card">
+        <img class="instructor-card-photo" src="eddson-sierra.jpg" alt="Eddson Sierra">
+        <div class="instructor-card-overlay">
+          <div class="instructor-card-pills">
+            <span class="skill-pill">Power BI</span>
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">Python</span>
+          </div>
+          <span class="instructor-card-name">Eddson Sierra</span>
+          <span class="instructor-card-role">Senior BI &amp; Analytics Expert</span>
+          <button class="instructor-card-link" data-instructor="eddson">Ver biografía completa →</button>
+        </div>
+      </article>
+
+      <article class="instructor-card placeholder">
+        <div class="instructor-placeholder-icon">+</div>
+        <span class="instructor-card-name">Próximo instructor</span>
+        <span class="instructor-card-role">Por confirmar</span>
+        <p class="instructor-placeholder-text">Estamos sumando más instructores activos en la industria para ampliar los programas de Antifluke Learning.</p>
+      </article>
+
     </div>
   </div>
 </section>
+
+<!-- Modal de biografía de instructor -->
+<div class="instructor-modal-overlay" id="instructorModalOverlay">
+  <div class="instructor-modal" role="dialog" aria-modal="true" aria-labelledby="instructorModalName">
+    <button class="instructor-modal-close" id="instructorModalClose" aria-label="Cerrar">✕</button>
+    <div class="instructor-modal-photo">
+      <img id="instructorModalImg" src="" alt="">
+    </div>
+    <div class="instructor-modal-body">
+      <span class="instructor-modal-name" id="instructorModalName"></span>
+      <span class="instructor-modal-role" id="instructorModalRole"></span>
+      <p class="instructor-modal-bio" id="instructorModalBio"></p>
+      <div class="instructor-modal-creds" id="instructorModalCreds"></div>
+    </div>
+  </div>
+</div>
 
 <!-- PROGRAMAS -->
 <section class="programas" id="programas">
@@ -427,11 +512,12 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 <script>
 const html = document.documentElement;
 const btn = document.getElementById('themeToggle');
-const saved = localStorage.getItem('af-theme');
+let saved = null;
+try { saved = localStorage.getItem('af-theme'); } catch (e) {}
 if (saved === 'light') html.classList.remove('dark');
 btn.addEventListener('click', () => {
   const isDark = html.classList.toggle('dark');
-  localStorage.setItem('af-theme', isDark ? 'dark' : 'light');
+  try { localStorage.setItem('af-theme', isDark ? 'dark' : 'light'); } catch (e) {}
 });
 
 const navMenuToggle = document.getElementById('navMenuToggle');
@@ -442,6 +528,63 @@ navMenuToggle.addEventListener('click', () => {
 navMobileMenu.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => navMobileMenu.classList.remove('open'));
 });
+
+const instructorsData = {
+  eddson: {
+    name: 'Eddson Sierra',
+    role: 'Senior BI & Analytics Expert',
+    photo: 'eddson-sierra.jpg',
+    bio: 'Con más de 10 años de experiencia, Eddson ha diseñado soluciones de Business Intelligence en banca, telecomunicaciones, retail de alimentos y grandes corporaciones centroamericanas. Ha trabajado en analítica aplicada a marketing, people analytics y finanzas, convirtiendo datos de estas áreas en decisiones ejecutivas concretas. En los últimos años ha llevado ese trabajo hacia la IA aplicada, construyendo flujos agénticos en BI y analítica que amplifican —no reemplazan— el pensamiento analítico. En Antifluke Learning enseña con las mismas herramientas que usa hoy: Power BI, SQL, Python y modelos como Claude y ChatGPT integrados a flujos reales de trabajo.',
+    creds: [
+      'MicroMasters MIT — Statistics & Data Science',
+      'Maestría en Data Science · Universidad Galileo',
+      'Power BI · SQL · Python · R · Databricks'
+    ]
+  }
+};
+
+const modalOverlay = document.getElementById('instructorModalOverlay');
+document.querySelectorAll('.instructor-card-link').forEach(linkBtn => {
+  linkBtn.addEventListener('click', () => openInstructorModal(linkBtn.dataset.instructor));
+});
+
+function openInstructorModal(id) {
+  const data = instructorsData[id];
+  if (!data) return;
+  document.getElementById('instructorModalImg').src = data.photo;
+  document.getElementById('instructorModalImg').alt = data.name;
+  document.getElementById('instructorModalName').textContent = data.name;
+  document.getElementById('instructorModalRole').textContent = data.role;
+  document.getElementById('instructorModalBio').textContent = data.bio;
+  document.getElementById('instructorModalCreds').innerHTML =
+    data.creds.map(c => `<span class="cred-pill">${c}</span>`).join('');
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeInstructorModal() {
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('instructorModalClose').addEventListener('click', closeInstructorModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeInstructorModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInstructorModal(); });
+
+const instructorTrack = document.getElementById('instructorTrack');
+const instructorPrev = document.getElementById('instructorPrev');
+const instructorNext = document.getElementById('instructorNext');
+function scrollInstructorTrack(dir) {
+  const card = instructorTrack.querySelector('.instructor-card');
+  const step = card.offsetWidth + 24;
+  instructorTrack.scrollBy({ left: dir * step, behavior: 'smooth' });
+}
+instructorPrev.addEventListener('click', () => scrollInstructorTrack(-1));
+instructorNext.addEventListener('click', () => scrollInstructorTrack(1));
+function updateInstructorNavState() {
+  instructorPrev.disabled = instructorTrack.scrollLeft <= 4;
+  instructorNext.disabled = instructorTrack.scrollLeft >= instructorTrack.scrollWidth - instructorTrack.clientWidth - 4;
+}
+instructorTrack.addEventListener('scroll', updateInstructorNavState);
+updateInstructorNavState();
 </script>
 
 </body>
