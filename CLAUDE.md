@@ -54,6 +54,15 @@ RLS: un estudiante autenticado solo puede leer su propio registro (`email = auth
 
 Este CLAUDE.md no mantiene un mapa estático de páginas existentes porque se desactualiza fácil. **Antes de crear o mover cualquier página, correr `ls -R` (o `find . -name "*.html"`) sobre el repo para ver la estructura real** — no asumir rutas ni nombres de archivo.
 
+### Convención de carpetas
+
+Las páginas `.html` (incluidas `index.html`, `404.html` y las legales) viven en la **raíz** del repo — no moverlas a subcarpetas, ya que GitHub Pages requiere `index.html`, `404.html`, `robots.txt` y `sitemap.xml` en la raíz. Los assets sí están organizados en subcarpetas:
+
+- `assets/img/` — imágenes (`logo.png`, `og-preview-masterclass.png`, `eddson-sierra.jpg`, `dashboard-preview.png`).
+- `assets/js/` — JS compartido (`auth-gate.js`).
+
+Al agregar un nuevo asset, seguir esta misma convención (no dejarlo suelto en la raíz).
+
 ### Reestructuración en curso (esta sesión)
 
 Actualmente `index.html` en el repo contiene la landing de venta de la masterclass "Decisiones con Datos" (precio, FAQ, CTA "reservar cupo"). Se va a reestructurar así:
