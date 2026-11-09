@@ -77,6 +77,12 @@ html.dark {
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:300;background:var(--violet);color:#fff;padding:.7rem 1rem;border-radius:0 0 8px 0;font-weight:600;font-size:.9rem;text-decoration:none}
+.skip-link:focus{left:0}
 body{
   font-family:'Inter',sans-serif;
   background:var(--bg-body);
@@ -152,7 +158,11 @@ nav{
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .hero-sub{font-size:1.08rem;color:var(--gray-mid);max-width:480px;margin:0 0 2.2rem;line-height:1.6}
+.hero-audience{font-size:.92rem;color:var(--gray-mid);max-width:480px;margin:-1.2rem 0 2rem;line-height:1.6}
 .hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap}
+.hero-preview{margin-top:3rem;max-width:760px}
+.hero-preview img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--border2)}
+.hero-preview figcaption{font-size:.8rem;color:var(--gray-mid);margin-top:.6rem}
 .btn-primary{
   padding:.85rem 1.6rem;border-radius:10px;font-weight:600;font-size:.95rem;
   background:var(--violet);color:#fff;text-decoration:none;display:inline-block;
@@ -192,6 +202,7 @@ nav{
 }
 .instructor-nav-btn:hover{border-color:var(--violet);transform:translateY(-1px)}
 .instructor-nav-btn:disabled{opacity:.35;cursor:default;transform:none}
+.instructor-nav[hidden]{display:none}
 
 .instructor-carousel{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -2rem;padding:0 2rem}
 .instructor-carousel::-webkit-scrollbar{display:none}
@@ -219,6 +230,7 @@ nav{
   cursor:pointer;text-align:left;width:fit-content;opacity:.9;transition:opacity .2s;
 }
 .instructor-card-link:hover{opacity:1;text-decoration:underline}
+.instructor-card-link{padding:.7rem 0;margin-bottom:-.7rem;min-height:44px;display:inline-flex;align-items:center}
 
 .instructor-card.placeholder{
   background:var(--card);border:1px dashed var(--border2);
@@ -311,7 +323,8 @@ nav{
 .programa-lock svg{width:26px;height:26px;stroke:var(--gray-mid)}
 .programa-card.upcoming h3{font-size:1.15rem;margin-bottom:.6rem}
 .programa-card.upcoming p{font-size:.88rem;color:var(--gray-mid);line-height:1.6;margin-bottom:1.3rem}
-.programa-notify{font-size:.85rem;font-weight:600;color:var(--violet2);text-decoration:none;border-bottom:1px solid var(--border2)}
+.programa-notify{font-size:.85rem;font-weight:600;color:var(--violet2);text-decoration:none;border-bottom:1px solid var(--border2);display:inline-flex;align-items:center;min-height:44px;width:fit-content}
+.programa-status{font-size:.82rem;color:#c9bcff;margin:-.4rem 0 1.1rem;font-weight:600}
 .programa-notify:hover{color:var(--violet)}
 
 /* CTA FINAL */
@@ -332,12 +345,14 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 .footer-col-links{display:flex;flex-direction:column;gap:.7rem}
 .footer-col-links a{font-size:.88rem;color:var(--gray-mid);text-decoration:none;transition:color .2s}
 .footer-col-links a:hover{color:var(--violet2)}
-.footer-col-links span{font-size:.88rem;color:var(--gray-mid);opacity:.55}
+.footer-col-links a{display:inline-flex;align-items:center;min-height:32px}
+.footer-col-links span{font-size:.88rem;color:var(--gray-mid);display:inline-flex;align-items:center;gap:.5rem;min-height:32px}
+.footer-col-links span em{font-style:normal;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .45rem;border-radius:999px;border:1px solid var(--border2);color:var(--gray-mid)}
 .footer-bottom{
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
   padding-top:1.6rem;border-top:1px solid var(--nav-border);
 }
-.footer-copy{font-size:.8rem;color:var(--gray-mid);opacity:.7}
+.footer-copy{font-size:.8rem;color:var(--gray-mid)}
 .footer-icons{display:flex;gap:.6rem}
 .footer-icon-btn{
   width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
@@ -349,11 +364,12 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    <img src="assets/img/logo.png" alt="Antifluke Learning">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo-128.png" alt="Antifluke Learning" width="32" height="32">
     <span class="nav-logo-text">Antifluke Learning</span>
   </a>
   <div class="nav-right">
@@ -375,13 +391,19 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
   </div>
 </nav>
 
+<main id="main">
 <!-- HERO -->
 <section class="hero">
   <h1>No enseñamos herramientas. Enseñamos a <em>resolver problemas</em> con BI, datos e IA.</h1>
-  <p class="hero-sub">Hoy eso significa Decisiones con Datos: una masterclass de Power BI construida sobre el caso real de una cadena guatemalteca de 12 tiendas.</p>
+  <p class="hero-sub">Hoy eso significa Decisiones con Datos: una masterclass de Power BI construida sobre el caso real de una cadena guatemalteca de 12 tiendas. Por ahora, con lista de espera: aún no hay fecha confirmada.</p>
+  <p class="hero-audience">Para quien trabaja con Excel todos los días y quiere pasar a decisiones con Power BI.</p>
   <div class="hero-ctas">
     <a href="#programas" class="btn-primary">Ver programas</a>
   </div>
+  <figure class="hero-preview">
+    <img src="assets/img/dashboard-preview.png" alt="Dashboard de Power BI que se construye en la masterclass Decisiones con Datos" width="1418" height="790" decoding="async">
+    <figcaption>El dashboard que construyes en la masterclass.</figcaption>
+  </figure>
 </section>
 
 <!-- VALORES -->
@@ -398,7 +420,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       <span class="section-label">Conoce a los instructores</span>
       <h2>Quién está <em>detrás del método</em></h2>
     </div>
-    <div class="instructor-nav">
+    <div class="instructor-nav" id="instructorNav">
       <button class="instructor-nav-btn" id="instructorPrev" aria-label="Instructor anterior">‹</button>
       <button class="instructor-nav-btn" id="instructorNext" aria-label="Siguiente instructor">›</button>
     </div>
@@ -408,7 +430,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
     <div class="instructor-track">
 
       <article class="instructor-card">
-        <img class="instructor-card-photo" src="assets/img/eddson-sierra.jpg" alt="Eddson Sierra">
+        <img class="instructor-card-photo" src="assets/img/eddson-sierra.jpg" alt="Eddson Sierra" width="960" height="1280" loading="lazy" decoding="async">
         <div class="instructor-card-overlay">
           <div class="instructor-card-pills">
             <span class="skill-pill">Power BI</span>
@@ -432,22 +454,6 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
   </div>
 </section>
 
-<!-- Modal de biografía de instructor -->
-<div class="instructor-modal-overlay" id="instructorModalOverlay">
-  <div class="instructor-modal" role="dialog" aria-modal="true" aria-labelledby="instructorModalName">
-    <button class="instructor-modal-close" id="instructorModalClose" aria-label="Cerrar">✕</button>
-    <div class="instructor-modal-photo">
-      <img id="instructorModalImg" src="" alt="">
-    </div>
-    <div class="instructor-modal-body">
-      <span class="instructor-modal-name" id="instructorModalName"></span>
-      <span class="instructor-modal-role" id="instructorModalRole"></span>
-      <p class="instructor-modal-bio" id="instructorModalBio"></p>
-      <div class="instructor-modal-creds" id="instructorModalCreds"></div>
-    </div>
-  </div>
-</div>
-
 <!-- PROGRAMAS -->
 <section class="programas" id="programas">
   <span class="section-label">Programas</span>
@@ -456,17 +462,18 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
   <div class="programa-cards">
     <div class="programa-card featured">
       <div class="programa-visual">
-        <img src="assets/img/dashboard-preview.png" alt="Dashboard de Power BI construido en la masterclass Decisiones con Datos">
+        <img src="assets/img/dashboard-preview.png" alt="Dashboard de Power BI construido en la masterclass Decisiones con Datos" width="1418" height="790" loading="lazy" decoding="async">
       </div>
       <div class="programa-body">
         <span class="programa-tag">Masterclass · Power BI</span>
         <h3>Decisiones con Datos</h3>
         <p>Aprende Power BI resolviendo un problema real de negocio, de principio a fin, con un instructor activo en la industria.</p>
+        <p class="programa-status">Lista de espera · próxima fecha por confirmar</p>
         <span class="programa-check">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"></path></svg>
           Certificado solo por capacidad demostrada
         </span>
-        <a href="decisiones-con-datos.html" class="btn-primary">Ver detalles →</a>
+        <a href="decisiones-con-datos.html" class="btn-primary">Ver detalles y unirme a la lista →</a>
       </div>
     </div>
 
@@ -490,6 +497,23 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
   <p>Escríbenos y te ayudamos a elegir el punto de partida correcto para tu equipo o para ti.</p>
   <a href="https://wa.me/50238719307" target="_blank" rel="noopener" class="btn-primary">Escríbenos por WhatsApp</a>
 </section>
+</main>
+
+<!-- Modal de biografía de instructor (fuera de <main> para poder inertizar el resto) -->
+<div class="instructor-modal-overlay" id="instructorModalOverlay">
+  <div class="instructor-modal" role="dialog" aria-modal="true" aria-labelledby="instructorModalName">
+    <button class="instructor-modal-close" id="instructorModalClose" aria-label="Cerrar">✕</button>
+    <div class="instructor-modal-photo">
+      <img id="instructorModalImg" src="" alt="">
+    </div>
+    <div class="instructor-modal-body">
+      <span class="instructor-modal-name" id="instructorModalName"></span>
+      <span class="instructor-modal-role" id="instructorModalRole"></span>
+      <p class="instructor-modal-bio" id="instructorModalBio"></p>
+      <div class="instructor-modal-creds" id="instructorModalCreds"></div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -497,7 +521,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
     <div class="footer-top">
       <div>
         <a href="index.html" class="footer-logo">
-          <img src="assets/img/logo.png" alt="Antifluke Learning">
+          <img src="assets/img/logo-128.png" alt="Antifluke Learning" width="26" height="26" loading="lazy">
           <span class="footer-logo-text">Antifluke Learning</span>
         </a>
         <p class="footer-tagline">Academia de desarrollo profesional en BI, analítica de datos e IA. Certificamos capacidades demostradas, no asistencia.</p>
@@ -507,8 +531,8 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
         <div class="footer-col-links">
           <a href="#programas">Programas</a>
           <a href="#instructores">Instructores</a>
-          <a href="decisiones-con-datos.html#preguntas-frecuentes">Preguntas frecuentes</a>
-          <span>Sobre nosotros</span>
+          <a href="decisiones-con-datos.html#preguntas-frecuentes">Preguntas sobre la masterclass</a>
+          <span aria-disabled="true">Sobre nosotros <em>Próximamente</em></span>
         </div>
       </div>
       <div>
@@ -516,8 +540,8 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
         <div class="footer-col-links">
           <a href="terminos-y-condiciones.html">Términos y condiciones</a>
           <a href="politica-de-privacidad.html">Política de privacidad</a>
-          <span>Política de cookies</span>
-          <span>Aviso legal</span>
+          <span aria-disabled="true">Política de cookies <em>Próximamente</em></span>
+          <span aria-disabled="true">Aviso legal <em>Próximamente</em></span>
         </div>
       </div>
     </div>
@@ -544,6 +568,7 @@ const btn = document.getElementById('themeToggle');
 let saved = null;
 try { saved = localStorage.getItem('af-theme'); } catch (e) {}
 if (saved === 'light') html.classList.remove('dark');
+else if (saved === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) html.classList.remove('dark');
 btn.addEventListener('click', () => {
   const isDark = html.classList.toggle('dark');
   try { localStorage.setItem('af-theme', isDark ? 'dark' : 'light'); } catch (e) {}
@@ -587,12 +612,23 @@ function openInstructorModal(id) {
   document.getElementById('instructorModalBio').textContent = data.bio;
   document.getElementById('instructorModalCreds').innerHTML =
     data.creds.map(c => `<span class="cred-pill">${c}</span>`).join('');
+  modalOpener = document.activeElement;
   modalOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.querySelector('main').inert = true;
+  document.querySelector('nav').inert = true;
+  document.querySelector('footer').inert = true;
+  document.getElementById('instructorModalClose').focus();
 }
+let modalOpener = null;
 function closeInstructorModal() {
+  if (!modalOverlay.classList.contains('open')) return;
   modalOverlay.classList.remove('open');
   document.body.style.overflow = '';
+  document.querySelector('main').inert = false;
+  document.querySelector('nav').inert = false;
+  document.querySelector('footer').inert = false;
+  if (modalOpener && modalOpener.focus) modalOpener.focus();
 }
 document.getElementById('instructorModalClose').addEventListener('click', closeInstructorModal);
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeInstructorModal(); });
@@ -604,15 +640,19 @@ const instructorNext = document.getElementById('instructorNext');
 function scrollInstructorTrack(dir) {
   const card = instructorTrack.querySelector('.instructor-card');
   const step = card.offsetWidth + 24;
-  instructorTrack.scrollBy({ left: dir * step, behavior: 'smooth' });
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  instructorTrack.scrollBy({ left: dir * step, behavior: reduce ? 'auto' : 'smooth' });
 }
 instructorPrev.addEventListener('click', () => scrollInstructorTrack(-1));
 instructorNext.addEventListener('click', () => scrollInstructorTrack(1));
 function updateInstructorNavState() {
+  const overflows = instructorTrack.scrollWidth > instructorTrack.clientWidth + 4;
+  document.getElementById('instructorNav').hidden = !overflows;
   instructorPrev.disabled = instructorTrack.scrollLeft <= 4;
   instructorNext.disabled = instructorTrack.scrollLeft >= instructorTrack.scrollWidth - instructorTrack.clientWidth - 4;
 }
 instructorTrack.addEventListener('scroll', updateInstructorNavState);
+window.addEventListener('resize', updateInstructorNavState);
 updateInstructorNavState();
 </script>
 
