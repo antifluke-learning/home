@@ -274,6 +274,10 @@ nav{
 .instructor-modal-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--text-heading);display:block}
 .instructor-modal-role{display:block;font-style:italic;font-size:.9rem;color:var(--violet2);margin:.3rem 0 1.1rem}
 .instructor-modal-bio{font-size:.92rem;line-height:1.7;color:var(--gray-mid);margin-bottom:1.3rem}
+.instructor-modal-social{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem}
+.social-link{display:inline-flex;align-items:center;gap:.5rem;min-height:40px;padding:.4rem .85rem;border-radius:999px;border:1px solid var(--border2);color:var(--text-heading);font-size:.82rem;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
+.social-link:hover{border-color:var(--violet);color:var(--violet2)}
+.social-link svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
 .instructor-modal-creds{display:flex;flex-wrap:wrap;gap:.5rem;padding-top:1.2rem;border-top:1px solid var(--border)}
 
 /* PROGRAMAS */
@@ -295,7 +299,7 @@ nav{
 .programa-card.featured{background:var(--featured-bg);border:1px solid var(--featured-border);transition:background .3s,border-color .3s}
 .programa-visual{padding:1.4rem 1.4rem 0}
 .programa-visual img{
-  width:100%;display:block;border-radius:12px;object-fit:cover;aspect-ratio:16/10;
+  width:100%;height:auto;display:block;border-radius:12px;object-fit:contain;aspect-ratio:1418/790;
   border:1px solid rgba(255,255,255,.1);
 }
 .programa-card.featured .programa-body{padding:1.6rem 1.8rem 1.9rem}
@@ -511,6 +515,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       <span class="instructor-modal-role" id="instructorModalRole"></span>
       <p class="instructor-modal-bio" id="instructorModalBio"></p>
       <div class="instructor-modal-creds" id="instructorModalCreds"></div>
+      <div class="instructor-modal-social" id="instructorModalSocial"></div>
     </div>
   </div>
 </div>
@@ -593,6 +598,10 @@ const instructorsData = {
       'MicroMasters MIT — Statistics & Data Science',
       'Maestría en Data Science · Universidad Galileo',
       'Power BI · SQL · Python · R · Databricks'
+    ],
+    social: [
+      { label: 'LinkedIn', url: 'https://www.linkedin.com/in/eddsonsierra/', icon: 'M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z' },
+      { label: 'TikTok', url: 'https://www.tiktok.com/@eddsonsierra', icon: 'M19.6 6.7a4.8 4.8 0 0 1-3-1.1 4.8 4.8 0 0 1-1.7-3.1h-3.3v13.1a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.7a6 6 0 1 0 5.2 5.9V9.2a8 8 0 0 0 4.7 1.5V6.7z' }
     ]
   }
 };
@@ -612,6 +621,8 @@ function openInstructorModal(id) {
   document.getElementById('instructorModalBio').textContent = data.bio;
   document.getElementById('instructorModalCreds').innerHTML =
     data.creds.map(c => `<span class="cred-pill">${c}</span>`).join('');
+  document.getElementById('instructorModalSocial').innerHTML = (data.social || []).map(s =>
+    `<a class="social-link" href="${s.url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${s.icon}"></path></svg>${s.label}</a>`).join('');
   modalOpener = document.activeElement;
   modalOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
