@@ -331,6 +331,19 @@ nav{
 .programa-status{font-size:.82rem;color:#c9bcff;margin:-.4rem 0 1.1rem;font-weight:600}
 .programa-notify:hover{color:var(--violet)}
 
+/* TESTIMONIOS */
+.testimonios{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.testimonios h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:2rem;max-width:560px}
+.testi-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:800px){.testi-cards{grid-template-columns:1fr}}
+.testi-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:1.1rem;margin:0}
+.testi-card blockquote{font-size:.98rem;line-height:1.7;color:var(--text-body)}
+.testi-person{display:flex;align-items:center;gap:.8rem}
+.testi-person img{width:48px;height:48px;border-radius:50%;object-fit:cover;filter:grayscale(1);flex-shrink:0;border:1px solid var(--border2)}
+.testi-person span{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--text-heading);font-size:.95rem}
+.testi-more{margin-top:1.4rem}
+.testi-more a{color:var(--violet2);font-weight:600;font-size:.9rem;text-decoration:none;border-bottom:1px solid var(--border2);display:inline-flex;align-items:center;min-height:44px}
+
 /* CTA FINAL */
 .cta-final{background:var(--midnight2);padding:5rem 2rem;text-align:center}
 .cta-final h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:1rem}
@@ -493,6 +506,23 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       <a href="https://tally.so/r/MelrNE" target="_blank" rel="noopener" class="programa-notify">Avisarme →</a>
     </div>
   </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonios" id="testimonios">
+  <span class="section-label">Primera cohorte</span>
+  <h2>Lo que dicen quienes hicieron la masterclass</h2>
+  <div class="testi-cards">
+    <figure class="testi-card">
+      <blockquote>&ldquo;El curso de Antifluke Learning fue de mucho apoyo para m&iacute;, porque me brind&oacute; herramientas pr&aacute;cticas para visualizar y comprender mejor los datos.&rdquo;</blockquote>
+      <figcaption class="testi-person"><img src="data:image/jpeg;base64,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" alt="" width="48" height="48"><span>Diego Nova</span></figcaption>
+    </figure>
+    <figure class="testi-card">
+      <blockquote>&ldquo;No se trata de hacer dashboards bonitos, sino de que los datos nos ayuden a entender qu&eacute; est&aacute; pasando y qu&eacute; podemos hacer al respecto.&rdquo;</blockquote>
+      <figcaption class="testi-person"><img src="data:image/jpeg;base64,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" alt="" width="48" height="48"><span>Antonio Haro</span></figcaption>
+    </figure>
+  </div>
+  <p class="testi-more"><a href="decisiones-con-datos.html#testimonios">Ver los testimonios completos &rarr;</a></p>
 </section>
 
 <!-- CTA FINAL -->
