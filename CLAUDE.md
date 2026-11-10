@@ -100,7 +100,7 @@ Al agregar programas futuros, seguir el mismo patrón para ambas páginas (ej. `
 ## Estilo / marca
 
 - Reutilizar el sistema de diseño ya establecido en el `index.html` actual del repo (contenido de la landing de venta de "Decisiones con Datos", que se mueve a `decisiones-con-datos.html` en esta sesión — ver sección "Mapa del sitio"): tipografía Space Grotesk (headlines) + Inter (body), paleta Midnight/Electric Violet/Intelligence Blue/Frontier Green, soporte de tema claro/oscuro con el mismo patrón de CSS variables y toggle ya implementado ahí. Nota: el archivo nunca existió en el repo bajo el nombre "antifluke-masterclass.html" — ese era solo el nombre de trabajo local antes de subirlo como index.html.
-- Registro "tú" en todo el copy, nunca "vos".
+- Registro "vos" (voseo guatemalteco) en todo el copy, nunca "tú": tenés, querés, podés, aprendé, escribinos, para vos. Aplica también a textos dentro de JS (`auth-gate.js`) y a las páginas legales.
 - No usar `localStorage`/`sessionStorage` para nada relacionado a sesión de auth — eso lo maneja el SDK de Supabase directamente.
 
 ## Qué NO hacer
