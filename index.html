@@ -286,14 +286,22 @@ nav{
   display:block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
   color:var(--violet2);margin-bottom:.7rem;
 }
-.programas h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:2.4rem;max-width:560px}
+.programas h2{font-size:clamp(1.6rem,3.5vw,2.2rem);max-width:560px}
+.programas-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;margin-bottom:2rem}
+@media(max-width:640px){.programas-head{flex-direction:column;align-items:flex-start}}
 
-.programa-cards{display:grid;grid-template-columns:1.15fr 1fr;gap:1.5rem;align-items:stretch}
-@media(max-width:800px){.programa-cards{grid-template-columns:1fr}}
+.programa-carousel{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -2rem;padding:0 2rem}
+.programa-carousel::-webkit-scrollbar{display:none}
+.programa-cards{display:flex;gap:1.5rem;align-items:stretch}
 
 .programa-card{
+  flex:0 0 auto;width:360px;scroll-snap-align:start;
   border-radius:20px;display:flex;flex-direction:column;overflow:hidden;
 }
+@media(max-width:520px){.programa-card{width:290px}}
+.programa-mode{font-weight:500;font-size:.8em;color:#c9bcff}
+.programa-card.upcoming .programa-mode{color:var(--violet2)}
+.programa-thumb{width:100%;height:auto;display:block;aspect-ratio:1418/790;object-fit:cover;border-radius:12px;border:1.5px dashed var(--border2);margin-bottom:1.2rem;opacity:.45;filter:grayscale(.7)}
 
 /* Card destacada */
 .programa-card.featured{background:var(--featured-bg);border:1px solid var(--featured-border);transition:background .3s,border-color .3s}
@@ -321,7 +329,7 @@ nav{
 }
 .programa-card.upcoming .programa-tag{color:var(--gray-mid);background:rgba(123,97,255,.06);border:1px solid var(--border2)}
 .programa-lock{
-  width:100%;aspect-ratio:16/10;border-radius:12px;border:1.5px dashed var(--border2);
+  width:100%;aspect-ratio:1418/790;border-radius:12px;border:1.5px dashed var(--border2);
   display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;background:var(--midnight2);
 }
 .programa-lock svg{width:26px;height:26px;stroke:var(--gray-mid)}
@@ -395,7 +403,6 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
     <div class="nav-desktop-links">
-      <a href="decisiones-con-datos-clase.html" style="font-size:.85rem;font-weight:600;color:var(--violet2);text-decoration:none">Acceder</a>
       <a href="#programas" class="nav-cta">Ver programas</a>
     </div>
     <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Abrir menú">
@@ -403,7 +410,6 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
     </button>
   </div>
   <div class="nav-mobile-menu" id="navMobileMenu">
-    <a href="decisiones-con-datos-clase.html">Acceder</a>
     <a href="#programas" class="nav-cta">Ver programas</a>
   </div>
 </nav>
@@ -473,9 +479,18 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
 
 <!-- PROGRAMAS -->
 <section class="programas" id="programas">
-  <span class="section-label">Programas</span>
-  <h2>Empezá por donde tu trabajo lo necesita</h2>
+  <div class="programas-head">
+    <div>
+      <span class="section-label">Programas</span>
+      <h2>Empezá por donde tu trabajo lo necesita</h2>
+    </div>
+    <div class="instructor-nav" id="programaNav">
+      <button class="instructor-nav-btn" id="programaPrev" aria-label="Programa anterior">‹</button>
+      <button class="instructor-nav-btn" id="programaNext" aria-label="Siguiente programa">›</button>
+    </div>
+  </div>
 
+  <div class="programa-carousel" id="programaTrack">
   <div class="programa-cards">
     <div class="programa-card featured">
       <div class="programa-visual">
@@ -483,7 +498,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       </div>
       <div class="programa-body">
         <span class="programa-tag">Masterclass · Power BI</span>
-        <h3>Decisiones con Datos</h3>
+        <h3>Decisiones con Datos <span class="programa-mode">[Online en Vivo]</span></h3>
         <p>Aprendé Power BI resolviendo un problema real de negocio, de principio a fin, con un instructor activo en la industria.</p>
         <p class="programa-status">Lista de espera · próxima fecha por confirmar</p>
         <span class="programa-check">
@@ -491,6 +506,26 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
           Certificado solo por capacidad demostrada
         </span>
         <a href="decisiones-con-datos.html" class="btn-primary">Ver detalles y unirme a la lista →</a>
+      </div>
+    </div>
+
+    <div class="programa-card upcoming">
+      <div>
+        <span class="programa-tag">Próximamente</span>
+        <img class="programa-thumb" src="assets/img/dashboard-preview.png" alt="" width="1418" height="790" loading="lazy" decoding="async">
+        <h3>Decisiones con Datos <span class="programa-mode">[Asíncrono]</span></h3>
+        <p>La misma masterclass en versión asíncrona: hacela a tu ritmo, sin horario fijo.</p>
+      </div>
+    </div>
+
+    <div class="programa-card upcoming">
+      <div>
+        <span class="programa-tag">Próximamente</span>
+        <div class="programa-lock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M7 10V7a5 5 0 0 1 10 0v3"></path></svg>
+        </div>
+        <h3>Trabajo potenciado con Claude</h3>
+        <p>Aprendé a usar Claude en tu trabajo diario para producir más y mejor.</p>
       </div>
     </div>
 
@@ -505,6 +540,7 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       </div>
       <a href="https://tally.so/r/MelrNE" target="_blank" rel="noopener" class="programa-notify">Avisarme →</a>
     </div>
+  </div>
   </div>
 </section>
 
@@ -585,9 +621,6 @@ footer{background:var(--footer-bg);border-top:1px solid var(--nav-border);paddin
       <div class="footer-icons">
         <a href="https://www.linkedin.com/company/antifluke-learning" target="_blank" rel="noopener" class="footer-icon-btn" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"></rect><line x1="8" y1="11" x2="8" y2="17"></line><line x1="8" y1="7" x2="8" y2="8"></line><path d="M12 17v-4a2 2 0 0 1 4 0v4"></path><line x1="12" y1="11" x2="12" y2="17"></line></svg>
-        </a>
-        <a href="https://www.instagram.com/antifluke.learning" target="_blank" rel="noopener" class="footer-icon-btn" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"></circle></svg>
         </a>
         <a href="https://wa.me/50238719307" target="_blank" rel="noopener" class="footer-icon-btn" aria-label="WhatsApp">
           <svg viewBox="0 0 24 24"><path d="M3 21l1.65-4.8a8.5 8.5 0 1 1 3.4 3.16L3 21z"></path><path d="M8.5 8.2c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .6.45.2.5.7 1.7.75 1.8.05.1.08.25 0 .4-.1.2-.15.32-.3.5-.15.17-.3.38-.45.5-.15.13-.3.27-.13.55.17.3.75 1.2 1.6 1.95 1.1.95 2 1.25 2.3 1.4.3.15.45.12.6-.05.18-.2.7-.8.9-1.08.18-.27.37-.22.6-.13.25.08 1.5.7 1.75.83.25.13.4.2.47.3.06.13.06.6-.15 1.18-.22.57-1.07 1.1-1.55 1.13-.5.05-.96.22-3.2-.7-2.7-1.1-4.4-3.9-4.53-4.08-.13-.18-1.08-1.43-1.08-2.73 0-1.3.68-1.93.92-2.2z" fill="currentColor" stroke="none"></path></svg>
@@ -694,6 +727,30 @@ function updateInstructorNavState() {
 }
 instructorTrack.addEventListener('scroll', updateInstructorNavState);
 window.addEventListener('resize', updateInstructorNavState);
+
+// Carrusel de programas
+(function () {
+  const track = document.getElementById('programaTrack');
+  const nav = document.getElementById('programaNav');
+  const prev = document.getElementById('programaPrev');
+  const next = document.getElementById('programaNext');
+  if (!track) return;
+  function update() {
+    nav.hidden = !(track.scrollWidth > track.clientWidth + 4);
+    prev.disabled = track.scrollLeft <= 4;
+    next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+  }
+  function go(dir) {
+    const card = track.querySelector('.programa-card');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollBy({ left: dir * (card.offsetWidth + 24), behavior: reduce ? 'auto' : 'smooth' });
+  }
+  prev.addEventListener('click', () => go(-1));
+  next.addEventListener('click', () => go(1));
+  track.addEventListener('scroll', update);
+  window.addEventListener('resize', update);
+  update();
+})();
 updateInstructorNavState();
 </script>
 
